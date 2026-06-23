@@ -1,0 +1,87 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <a href="/" class="brand">
+        <span class="brand__mark" aria-hidden="true">A</span>
+        <span>Arnisound<span class="brand__accent">Tools</span></span>
+      </a>
+      <p class="text-muted">Les outils du terrain, par des gens du terrain.</p>
+    </div>
+
+    <nav class="site-footer__col" aria-label="Produits">
+      <h4>Outils</h4>
+      <a href="/speed-rf">Speed RF</a>
+      <a href="/rf-shot">RF Shot</a>
+      <a href="/fiche-tech">Fiche Tech Creator</a>
+    </nav>
+
+    <nav class="site-footer__col" aria-label="Marque">
+      <h4>Arnisound</h4>
+      <a href="/a-propos">À propos</a>
+      <a href="/login">Connexion</a>
+      <a href="/dashboard">Mon compte</a>
+    </nav>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <span>© {year} Arnisound Tools</span>
+    <span class="text-muted">Fait en France · Spectacle vivant &amp; événementiel</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    background: var(--bg-soft);
+    padding-block: 3rem 1.5rem;
+  }
+  .site-footer__inner {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1.5fr 1fr 1fr;
+  }
+  .brand { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 700; }
+  .brand__mark {
+    display: grid; place-items: center;
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-weight: 800;
+    font-family: var(--font-mono);
+  }
+  .brand__accent { color: var(--accent); }
+  .site-footer__brand p { margin-top: 0.75rem; max-width: 30ch; font-size: 0.9rem; }
+
+  .site-footer__col { display: flex; flex-direction: column; gap: 0.6rem; }
+  .site-footer__col h4 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-faint);
+    margin-bottom: 0.25rem;
+  }
+  .site-footer__col a { color: var(--text-muted); font-size: 0.92rem; }
+  .site-footer__col a:hover { color: var(--accent); }
+
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-faint);
+  }
+
+  @media (max-width: 700px) {
+    .site-footer__inner { grid-template-columns: 1fr 1fr; }
+    .site-footer__brand { grid-column: 1 / -1; }
+  }
+</style>

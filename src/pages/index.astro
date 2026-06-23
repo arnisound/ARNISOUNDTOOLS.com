@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import { products, bundle } from '../data/products';
+---
+
+<Base>
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <span class="eyebrow">Spectacle vivant · Événementiel</span>
+      <h1>Les outils du terrain,<br />par des gens du terrain.</h1>
+      <p class="lead">
+        Une suite d'outils web pros pour le son, la lumière et la régie.
+        Simples, en français, accessibles partout — sans installation.
+      </p>
+      <div class="hero__cta">
+        <a href="#outils" class="btn btn--primary">Découvrir les outils</a>
+        <a href="/fiche-tech" class="btn btn--ghost">Commencer gratuitement</a>
+      </div>
+      <p class="hero__note text-muted">
+        Pas de logiciel à installer · fonctionne sur mobile · pensé pour la régie
+      </p>
+    </div>
+    <div class="hero__glow" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===================== OUTILS ===================== -->
+  <section id="outils" class="section">
+    <div class="container">
+      <header class="section-head">
+        <span class="eyebrow">Les outils</span>
+        <h2>Trois outils, un même esprit</h2>
+        <p class="lead">Faire gagner du temps sur le terrain. Rien de superflu.</p>
+      </header>
+
+      <div class="grid grid--3" style="margin-top: 2.5rem;">
+        {products.map((p) => (
+          <a href={`/${p.slug}`} class="card product-card">
+            <div class="product-card__top">
+              <h3>{p.name}</h3>
+              {p.free ? (
+                <span class="badge badge--free">Gratuit</span>
+              ) : (
+                <span class="badge">{p.price}</span>
+              )}
+            </div>
+            <p class="text-muted">{p.tagline}</p>
+            <span class="product-card__link">Voir l'outil →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BUNDLE ===================== -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="bundle card">
+        <div>
+          <span class="eyebrow">Offre</span>
+          <h2>{bundle.name}</h2>
+          <p class="lead">{bundle.note}</p>
+        </div>
+        <div class="bundle__price">
+          <span class="bundle__was">{bundle.was}</span>
+          <span class="bundle__now">{bundle.price}</span>
+          <a href="/speed-rf" class="btn btn--primary">Profiter du bundle</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== POURQUOI ===================== -->
+  <section class="section">
+    <div class="container">
+      <header class="section-head">
+        <span class="eyebrow">Pourquoi Arnisound</span>
+        <h2>Conçu sur le terrain, pas en bureau d'études</h2>
+      </header>
+      <div class="grid grid--3" style="margin-top: 2.5rem;">
+        <div class="card">
+          <h3>En français</h3>
+          <p class="text-muted">Le contexte réglementaire et le vocabulaire métier du secteur, dans votre langue.</p>
+        </div>
+        <div class="card">
+          <h3>Sans installation</h3>
+          <p class="text-muted">Tout tourne dans le navigateur, sur mobile comme sur ordi. Rien à installer.</p>
+        </div>
+        <div class="card">
+          <h3>Prix justes</h3>
+          <p class="text-muted">Pensés pour les budgets du terrain. Paiement unique, pas d'abonnement caché.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA FINAL ===================== -->
+  <section class="section section--soft">
+    <div class="container text-center cta-final">
+      <h2>Prêt à gagner du temps ?</h2>
+      <p class="lead mx-auto">Commencez gratuitement avec Fiche Tech Creator, puis débloquez les outils RF quand vous voulez.</p>
+      <a href="/fiche-tech" class="btn btn--primary" style="margin-top: 1.5rem;">Créer un compte gratuit</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(4rem, 12vw, 8rem);
+  }
+  .hero__inner { position: relative; z-index: 1; max-width: 760px; }
+  .hero h1 { margin-top: 1rem; }
+  .hero .lead { margin-top: 1.25rem; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+  .hero__note { margin-top: 1.25rem; font-size: 0.88rem; }
+  .hero__glow {
+    position: absolute;
+    top: -30%; right: -10%;
+    width: 60vw; height: 60vw;
+    max-width: 700px; max-height: 700px;
+    background: radial-gradient(circle, var(--accent-soft), transparent 65%);
+    pointer-events: none;
+  }
+
+  .section-head { max-width: 60ch; }
+  .section-head h2 { margin-top: 0.75rem; }
+  .section-head .lead { margin-top: 0.75rem; }
+
+  .product-card { display: flex; flex-direction: column; gap: 0.75rem; }
+  .product-card__top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .product-card__link { margin-top: auto; color: var(--accent); font-weight: 600; font-size: 0.92rem; }
+
+  .bundle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 2.5rem;
+  }
+  .bundle__price { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .bundle__was { color: var(--text-faint); text-decoration: line-through; }
+  .bundle__now { font-size: 2rem; font-weight: 800; color: var(--accent); }
+
+  .cta-final { max-width: 640px; }
+</style>
