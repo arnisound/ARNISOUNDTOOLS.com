@@ -6,9 +6,8 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
-      <a href={url('/')} class="brand">
-        <img src={url('/logo.svg')} alt="" class="brand__logo" width="36" height="36" />
-        <span>Arnisound<span class="brand__accent">Tools</span></span>
+      <a href={url('/')} class="brand" aria-label="Arnisound Tools — accueil">
+        <img src={url('/logo.svg')} alt="Arnisound Tools" class="brand__logo" width="196" height="36" />
       </a>
       <p class="text-muted">Les outils du terrain, par des gens du terrain.</p>
     </div>
@@ -45,9 +44,8 @@ const year = new Date().getFullYear();
     gap: 2rem;
     grid-template-columns: 1.5fr 1fr 1fr;
   }
-  .brand { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 700; }
-  .brand__logo { width: 36px; height: 36px; border-radius: 50%; }
-  .brand__accent { color: var(--accent); }
+  .brand { display: inline-flex; align-items: center; }
+  .brand__logo { height: 34px; width: auto; display: block; }
   .site-footer__brand p { margin-top: 0.75rem; max-width: 30ch; font-size: 0.9rem; }
 
   .site-footer__col { display: flex; flex-direction: column; gap: 0.6rem; }

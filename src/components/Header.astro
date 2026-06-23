@@ -15,8 +15,7 @@ const isActive = (href: string) =>
 <header class="site-header">
   <div class="container site-header__inner">
     <a href={url('/')} class="brand" aria-label="Arnisound Tools — accueil">
-      <img src={url('/logo.svg')} alt="" class="brand__logo" width="40" height="40" />
-      <span class="brand__name">Arnisound<span class="brand__accent">Tools</span></span>
+      <img src={url('/logo.svg')} alt="Arnisound Tools" class="brand__logo" width="223" height="41" />
     </a>
 
     <nav class="nav" aria-label="Navigation principale">
@@ -61,10 +60,9 @@ const isActive = (href: string) =>
     gap: 1.5rem;
     height: 68px;
   }
-  .brand { display: inline-flex; align-items: center; gap: 0.65rem; font-weight: 700; }
-  .brand__logo { width: 40px; height: 40px; border-radius: 50%; }
-  .brand__name { font-size: 1.05rem; letter-spacing: -0.01em; }
-  .brand__accent { color: var(--accent); }
+  .brand { display: inline-flex; align-items: center; }
+  .brand__logo { height: 38px; width: auto; display: block; }
+  @media (max-width: 520px) { .brand__logo { height: 32px; } }
 
   .nav { display: flex; gap: 0.4rem; margin-inline: auto; }
   .nav__link {
