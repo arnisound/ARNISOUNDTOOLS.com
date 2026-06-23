@@ -20,6 +20,9 @@ const ctaHref = url('/login'); // TODO: brancher Lemon Squeezy
     <div class="container product-hero__inner">
       <div>
         <a href={url('/')} class="back-link">← Tous les outils</a>
+        {p.image && (
+          <img src={url(p.image)} alt={`Logo ${p.name}`} class="product-badge" width="92" height="92" />
+        )}
         <span class="eyebrow" style="margin-top: 1rem;">{p.audience}</span>
         <h1>{p.name}</h1>
         <p class="lead">{p.tagline}</p>
@@ -43,19 +46,69 @@ const ctaHref = url('/login'); // TODO: brancher Lemon Squeezy
   </section>
 
   <section class="section section--soft">
-    <div class="container product-body">
-      <div>
-        <h2>En bref</h2>
-        <p class="lead" style="margin-top: 0.75rem;">{p.summary}</p>
-      </div>
-      <div>
-        <h2>Ce qu'il fait</h2>
-        <ul class="feature-list">
-          {p.features.map((f) => <li>{f}</li>)}
-        </ul>
-      </div>
+    <div class="container">
+      {p.benefits ? (
+        <div class="intro">
+          <h2>En bref</h2>
+          <p class="lead" style="margin-top: 0.75rem;">{p.summary}</p>
+        </div>
+      ) : (
+        <div class="product-body">
+          <div>
+            <h2>En bref</h2>
+            <p class="lead" style="margin-top: 0.75rem;">{p.summary}</p>
+          </div>
+          <div>
+            <h2>Ce qu'il fait</h2>
+            <ul class="feature-list">
+              {p.features.map((f) => <li>{f}</li>)}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   </section>
+
+  {p.benefits && (
+    <section class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Vos avantages</span>
+          <h2>Pourquoi vous allez l'adopter</h2>
+        </header>
+        <div class="grid grid--3" style="margin-top: 2.5rem;">
+          {p.benefits.map((b) => (
+            <div class="card">
+              <h3>{b.title}</h3>
+              <p class="text-muted" style="margin-top: 0.5rem;">{b.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {p.steps && (
+    <section class="section section--soft">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Aussi simple que ça</span>
+          <h2>Comment ça marche</h2>
+        </header>
+        <ol class="steps">
+          {p.steps.map((s, i) => (
+            <li>
+              <span class="steps__n">{i + 1}</span>
+              <p>{s}</p>
+            </li>
+          ))}
+        </ol>
+        <div style="margin-top: 2.5rem;">
+          <a href={ctaHref} class="btn btn--primary">{ctaLabel}</a>
+        </div>
+      </div>
+    </section>
+  )}
 
   <section class="section">
     <div class="container">
@@ -77,6 +130,7 @@ const ctaHref = url('/login'); // TODO: brancher Lemon Squeezy
   }
   .back-link { color: var(--text-muted); font-size: 0.9rem; }
   .back-link:hover { color: var(--accent); }
+  .product-badge { width: 92px; height: 92px; margin-top: 1.5rem; }
   .product-hero h1 { margin-top: 0.5rem; }
   .product-hero .lead { margin-top: 1rem; }
   .product-hero__cta { display: flex; align-items: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
@@ -85,6 +139,20 @@ const ctaHref = url('/login'); // TODO: brancher Lemon Squeezy
   .price-card__price { font-size: 2.4rem; font-weight: 800; }
 
   .product-body { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .intro { max-width: 68ch; }
+
+  .steps { list-style: none; padding: 0; margin-top: 2.5rem; display: grid; gap: 1.25rem; max-width: 760px; }
+  .steps li { display: flex; align-items: center; gap: 1.1rem; }
+  .steps__n {
+    flex: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.4rem; height: 2.4rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .steps li p { font-size: 1.1rem; }
 
   .feature-list { list-style: none; padding: 0; margin-top: 0.75rem; display: grid; gap: 0.75rem; }
   .feature-list li {

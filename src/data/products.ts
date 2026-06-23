@@ -9,27 +9,66 @@ export interface Product {
   summary: string;
   features: string[];
   differentiator: string;
+  /** Badge/logo produit (chemin public), optionnel. */
+  image?: string;
+  /** Cartes « avantages » orientées bénéfice client (optionnel). */
+  benefits?: { title: string; text: string }[];
+  /** Étapes « aussi simple que ça » (optionnel). */
+  steps?: string[];
 }
 
 export const products: Product[] = [
   {
     slug: 'speed-rf',
     name: 'Speed RF',
-    tagline: 'Coordination HF rapide, sur mobile, sans scan matériel.',
+    tagline:
+      'Des micros sans fil qui marchent du premier coup — en 30 secondes, depuis votre téléphone.',
     price: '9,99 €',
-    priceNote: 'Licence perpétuelle · paiement unique',
+    priceNote: 'Payé une seule fois · à vous pour toujours',
     free: false,
-    audience: 'Musiciens, régisseurs, non-techniciens RF',
+    audience: 'Micros HF · Oreillettes · Sans prise de tête',
+    image: '/products/speed-rf.svg',
     summary:
-      "Trouvez des fréquences HF compatibles en quelques secondes depuis votre téléphone. Pensé pour ceux qui veulent que ça marche, sans plonger dans un logiciel d'ingénieur.",
+      "Un micro qui grésille, se coupe ou siffle en plein évènement ? 9 fois sur 10, c'est une question de fréquences mal choisies. Speed RF vous donne des fréquences propres et compatibles en quelques secondes : vous indiquez votre matériel et votre ville, l'appli s'occupe du reste. Aucun logiciel à installer, aucune compétence technique requise.",
+    benefits: [
+      {
+        title: 'Fini les coupures et le larsen',
+        text: 'Des fréquences sans interférence, calculées pour ne pas se gêner entre elles. Vos micros restent nets du début à la fin.',
+      },
+      {
+        title: 'Prêt en 30 secondes',
+        text: 'Pas de scan, pas de manuel de 200 pages. Trois infos à renseigner et vous avez vos fréquences.',
+      },
+      {
+        title: 'Pensé pour la France',
+        text: 'Évite automatiquement les chaînes TV (TNT) qui brouillent vos micros, selon votre région.',
+      },
+      {
+        title: 'Rien à installer',
+        text: 'Ça tourne directement dans le navigateur de votre téléphone ou de votre ordi. Aucune appli à télécharger.',
+      },
+      {
+        title: 'En français, sans jargon',
+        text: "Chaque étape est expliquée simplement. Pas besoin d'être ingénieur du son pour s'en servir.",
+      },
+      {
+        title: 'Payé une fois, pour toujours',
+        text: '9,99 € une seule fois. Pas d’abonnement, pas de frais cachés, pas de mauvaise surprise.',
+      },
+    ],
+    steps: [
+      'Choisissez votre matériel (marque et modèle de vos micros).',
+      'Indiquez votre ville ou votre région.',
+      'Recevez des fréquences prêtes à régler, compatibles entre elles.',
+    ],
     features: [
-      'Contexte ARCOM / TNT français intégré',
-      'Mobile-first, aucune installation',
       'Calcul de fréquences compatibles instantané',
+      'Contexte TNT français intégré',
+      'Mobile-first, aucune installation',
       'Interface en français, claire et directe',
     ],
     differentiator:
-      'Aucun concurrent sur ce segment : WWB est trop complexe pour cette cible.',
+      "Les logiciels de coordination radio existent, mais ils sont faits pour les ingénieurs et coûtent des centaines d'euros. Speed RF fait l'essentiel — vous donner des fréquences fiables — sans la complexité ni le prix. Si vous voulez juste que vos micros marchent, c'est exactement ça.",
   },
   {
     slug: 'rf-shot',
