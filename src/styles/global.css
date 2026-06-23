@@ -49,8 +49,6 @@
   /* --- Textures (SVG inline, sans fichiers) --- */
   /* Grain métallique fin */
   --tex-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Grain bois (étiré horizontalement → veines) */
-  --tex-wood: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.16' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
 }
 
 /* ---------- Reset léger ---------- */
@@ -211,17 +209,18 @@ h3 { font-size: 1.2rem; }
   border-radius: 4px;
 }
 
-/* ---------- Texture bois (noyer sombre) ---------- */
-/* Dégradé brun chaud modulé par un grain → veines de bois. */
+/* ---------- Texture bois (photo noyer) ---------- */
+/* Vraie photo de bois teintée en noyer sombre (multiply) → grain réaliste.
+   --wood-img est fournie en inline (chemin base-aware) depuis index.astro. */
 .section--wood {
   position: relative;
-  background-color: #1b120a;
-  background-image:
-    var(--tex-wood),
-    linear-gradient(108deg, #3a2515 0%, #241710 38%, #311f12 68%, #1c130b 100%);
-  background-size: 600px 400px, cover;
-  background-blend-mode: overlay, normal;
+  background-color: #34200f;
+  background-image: var(--wood-img);
+  background-size: 760px;
+  background-position: center;
+  background-blend-mode: multiply;
   border-block: 1px solid #3a2a18;
+  box-shadow: inset 0 0 120px 24px rgba(0, 0, 0, 0.5);
 }
 /* Liseré or en haut/bas pour relier la bande au reste de l'identité */
 .section--wood::before,
