@@ -7,7 +7,7 @@ import Base from '../layouts/Base.astro';
   <div class="auth">
     <div class="auth__panel">
       <a href="/" class="brand">
-        <span class="brand__mark" aria-hidden="true">A</span>
+        <img src="/logo.svg" alt="" class="brand__logo" width="38" height="38" />
         <span>Arnisound<span class="brand__accent">Tools</span></span>
       </a>
       <h1>Connexion</h1>
@@ -52,12 +52,7 @@ import Base from '../layouts/Base.astro';
     width: 100%;
   }
   .brand { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 700; margin-bottom: 1.5rem; }
-  .brand__mark {
-    display: grid; place-items: center;
-    width: 32px; height: 32px; border-radius: 8px;
-    background: var(--accent); color: var(--accent-contrast);
-    font-weight: 800; font-family: var(--font-mono);
-  }
+  .brand__logo { width: 38px; height: 38px; border-radius: 50%; }
   .brand__accent { color: var(--accent); }
   .auth__panel h1 { font-size: 2rem; }
 
