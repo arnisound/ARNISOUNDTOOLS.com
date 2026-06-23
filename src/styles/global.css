@@ -45,6 +45,12 @@
   /* --- Layout --- */
   --maxw: 1120px;
   --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  /* --- Textures (SVG inline, sans fichiers) --- */
+  /* Grain métallique fin */
+  --tex-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Grain bois (étiré horizontalement → veines) */
+  --tex-wood: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.16' numOctaves='5' seed='12' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
 }
 
 /* ---------- Reset léger ---------- */
@@ -62,6 +68,19 @@ body {
   text-rendering: optimizeLegibility;
   min-height: 100vh;
 }
+
+/* Grain métallique global, très subtil (brushed metal) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--tex-noise);
+  background-size: 180px 180px;
+  opacity: 0.05;
+}
+body > * { position: relative; z-index: 1; }
 
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -118,27 +137,44 @@ h3 { font-size: 1.2rem; }
 }
 .btn:active { transform: translateY(1px); }
 
+/* Bouton or « métal brossé » : dégradé doré + reflet haut + ombre dorée */
 .btn--primary {
-  background: var(--accent);
-  color: var(--accent-contrast);
+  background:
+    linear-gradient(180deg, #E6B765 0%, #C2832C 50%, #9C6A22 100%);
+  color: #1a1206;
+  border-color: #8a5e1e;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 6px 18px -8px rgba(194, 131, 44, 0.65);
 }
-.btn--primary:hover { background: var(--accent-hover); }
+.btn--primary:hover {
+  background:
+    linear-gradient(180deg, #F0C878 0%, #D2913A 50%, #AC7728 100%);
+}
 
+/* Bouton secondaire « acier brossé » */
 .btn--ghost {
-  background: transparent;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
   color: var(--text);
   border-color: var(--border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 .btn--ghost:hover { border-color: var(--accent); color: var(--accent); }
 
 .btn--block { width: 100%; }
 
 /* ---------- Cartes ---------- */
+/* Cartes : tôle métal légèrement brossée (reflet haut + grain) */
 .card {
-  background: var(--surface);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0) 35%),
+    var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.5rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
 .card:hover { border-color: var(--accent); }
@@ -174,3 +210,30 @@ h3 { font-size: 1.2rem; }
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* ---------- Texture bois (noyer sombre) ---------- */
+/* Dégradé brun chaud modulé par un grain → veines de bois. */
+.section--wood {
+  position: relative;
+  background-color: #1b120a;
+  background-image:
+    var(--tex-wood),
+    linear-gradient(108deg, #3a2515 0%, #241710 38%, #311f12 68%, #1c130b 100%);
+  background-size: 600px 400px, cover;
+  background-blend-mode: overlay, normal;
+  border-block: 1px solid #3a2a18;
+}
+/* Liseré or en haut/bas pour relier la bande au reste de l'identité */
+.section--wood::before,
+.section--wood::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.5;
+}
+.section--wood::before { top: 0; }
+.section--wood::after { bottom: 0; }
+/* Voile sombre pour garder le texte lisible sur le bois */
+.section--wood > .container { position: relative; z-index: 1; }
