@@ -29,11 +29,15 @@ export const products: Product[] = [
     audience: 'Micros HF · Oreillettes · Sans prise de tête',
     image: '/products/speed-rf.svg',
     summary:
-      "Un micro qui grésille, se coupe ou siffle en plein évènement ? 9 fois sur 10, c'est une question de fréquences mal choisies. Speed RF vous donne des fréquences propres et compatibles en quelques secondes : vous indiquez votre matériel et votre ville, l'appli s'occupe du reste. Aucun logiciel à installer, aucune compétence technique requise.",
+      "Un micro qui grésille, se coupe ou capte des parasites en plein évènement ? 9 fois sur 10, c'est une question de fréquences mal choisies. Speed RF vous donne des fréquences propres et compatibles en quelques secondes : vous indiquez votre matériel et votre ville, l'appli s'occupe du reste. Peu importe la marque ou l'âge de vos micros, du haut de gamme au modèle d'entrée de gamme. Aucun logiciel à installer, aucune compétence technique requise.",
     benefits: [
       {
-        title: 'Fini les coupures et le larsen',
-        text: 'Des fréquences sans interférence, calculées pour ne pas se gêner entre elles. Vos micros restent nets du début à la fin.',
+        title: 'Compatible avec toutes les marques',
+        text: 'Sennheiser, Shure, AKG, LD Systems, the t.bone… et même le matériel ancien ou d’entrée de gamme. Si ça émet en HF, Speed RF s’en occupe.',
+      },
+      {
+        title: 'Fini les coupures et les parasites',
+        text: 'Des fréquences sans interférence, calculées pour ne pas se gêner entre elles. Plus de bruits ni de décrochages en plein évènement.',
       },
       {
         title: 'Prêt en 30 secondes',
@@ -50,10 +54,6 @@ export const products: Product[] = [
       {
         title: 'En français, sans jargon',
         text: "Chaque étape est expliquée simplement. Pas besoin d'être ingénieur du son pour s'en servir.",
-      },
-      {
-        title: 'Payé une fois, pour toujours',
-        text: '9,99 € une seule fois. Pas d’abonnement, pas de frais cachés, pas de mauvaise surprise.',
       },
     ],
     steps: [
