@@ -26,7 +26,7 @@ export const products: Product[] = [
     slug: 'speed-rf',
     name: 'Speed RF',
     tagline:
-      'Des micros sans fil qui marchent du premier coup — en 30 secondes, depuis votre téléphone.',
+      'Des fréquences fiables pour vos micros et retours sans fil — en 30 secondes, depuis votre téléphone.',
     price: '9,99 €',
     priceNote: 'Payé une seule fois · à vous pour toujours',
     free: false,
@@ -41,7 +41,7 @@ export const products: Product[] = [
       'Paiement unique, sans abonnement',
     ],
     summary:
-      "Un micro qui grésille, se coupe ou capte des parasites en plein évènement ? 9 fois sur 10, c'est une question de fréquences mal choisies. Speed RF vous donne des fréquences propres et compatibles en quelques secondes : vous indiquez votre matériel et votre ville, l'appli s'occupe du reste. Peu importe la marque ou l'âge de vos micros, du haut de gamme au modèle d'entrée de gamme. Aucun logiciel à installer, aucune compétence technique requise.",
+      "Un micro ou un retour qui grésille, se coupe ou capte des parasites en plein évènement ? 9 fois sur 10, c'est une question de fréquences mal choisies. Speed RF vous donne des fréquences propres et compatibles en quelques secondes : vous indiquez votre matériel et votre ville, l'appli s'occupe du reste. Peu importe la marque ou l'âge de votre matériel, du haut de gamme au modèle d'entrée de gamme. Aucun logiciel à installer, aucune compétence technique requise.",
     benefits: [
       {
         title: 'Compatible avec toutes les marques',
@@ -57,7 +57,7 @@ export const products: Product[] = [
       },
       {
         title: 'Pensé pour la France',
-        text: 'Évite automatiquement les chaînes TV (TNT) qui brouillent vos micros, selon votre région.',
+        text: 'Évite automatiquement les chaînes TV (TNT) qui brouillent vos fréquences, selon votre région.',
       },
       {
         title: 'Rien à installer',
@@ -69,7 +69,7 @@ export const products: Product[] = [
       },
     ],
     steps: [
-      'Choisissez votre matériel (marque et modèle de vos micros).',
+      'Choisissez votre matériel (marques et modèles de vos micros et retours).',
       'Indiquez votre ville ou votre région.',
       'Recevez des fréquences prêtes à régler, compatibles entre elles.',
     ],
@@ -80,67 +80,68 @@ export const products: Product[] = [
       'Interface en français, claire et directe',
     ],
     differentiator:
-      "Les logiciels de coordination radio existent, mais ils sont faits pour les ingénieurs et coûtent des centaines d'euros. Speed RF fait l'essentiel — vous donner des fréquences fiables — sans la complexité ni le prix. Si vous voulez juste que vos micros marchent, c'est exactement ça.",
+      "Les logiciels de coordination radio existent, mais ils sont faits pour les ingénieurs et coûtent des centaines d'euros. Speed RF fait l'essentiel — vous donner des fréquences fiables — sans la complexité ni le prix. Si vous voulez juste que tout marche du premier coup, c'est exactement ça.",
   },
   {
     slug: 'rf-shot',
     name: 'RF Shot',
     tagline:
-      'La coordination avancée quand vous avez beaucoup de micros — sans logiciel d’ingénieur.',
+      'La coordination avancée quand vous gérez beaucoup de fréquences — sans logiciel d’ingénieur.',
     price: '24,99 €',
     priceNote: 'Payé une seule fois · à vous pour toujours',
     free: false,
-    audience: 'Gros plateaux · Multi-micros & retours',
+    audience: 'Gros plateaux · 100+ fréquences coordonnées',
     image: '/products/rf-shot.svg',
     pitch:
-      "Quand vous faites tourner 8, 12 ou 20 micros et retours sans fil en même temps, les fréquences finissent par se gêner — même bien choisies. RF Shot va plus loin que Speed RF : il calcule aussi les intermodulations (ces fréquences « fantômes » qui apparaissent quand plusieurs émetteurs tournent ensemble) et gère plusieurs bandes à la fois. Le tout dans votre navigateur, en français, sans rien installer.",
+      "Quand vous faites tourner des dizaines de fréquences (micros et retours sans fil) en même temps, elles finissent par se gêner — même bien choisies. RF Shot va plus loin que Speed RF : il coordonne plus de 100 fréquences, calcule les intermodulations jusqu’à l’ordre 7 (IM3, IM5, IM7) et les produits à 3 émetteurs (3TX), et gère plusieurs bandes à la fois. Le tout dans votre navigateur, en français, sans rien installer.",
     heroPoints: [
-      'Gère les gros plateaux : 5 à 20 micros et plus',
-      'Calcule les intermodulations (IM3 / IM5)',
+      'Coordonne plus de 100 fréquences (micros & retours)',
+      'Intermodulations jusqu’à l’ordre 7 (IM3 / IM5 / IM7) et 3 émetteurs (3TX)',
       'Plusieurs bandes de fréquences en même temps',
-      'Web, en français, rien à installer',
+      'Enregistrement de session — idéal pour les tournées',
     ],
     summary:
-      "RF Shot, c'est la coordination de fréquences pour les configurations exigeantes, sans la lourdeur d'un logiciel desktop. Il trouve des fréquences qui restent stables même avec beaucoup d'émetteurs, en évitant les intermodulations qui provoquent bruits et décrochages. Pensé pour obtenir un résultat fiable sans devoir devenir ingénieur RF.",
+      "RF Shot, c'est la coordination de fréquences pour les configurations exigeantes, sans la lourdeur d'un logiciel desktop. Il coordonne plus de 100 fréquences qui restent stables même avec énormément d'émetteurs, en évitant les intermodulations (jusqu'à l'ordre 7 et les produits à 3 émetteurs) qui provoquent bruits et décrochages. Pensé pour obtenir un résultat fiable sans devoir devenir ingénieur RF.",
     benefits: [
       {
         title: 'Tient la charge sur les gros plateaux',
-        text: 'Spectacles, comédies musicales, conférences, cultes : RF Shot garde vos fréquences propres même avec 20 émetteurs ou plus.',
+        text: 'Spectacles, comédies musicales, conférences, cultes : RF Shot coordonne plus de 100 fréquences et les garde propres, même sur les configs les plus lourdes.',
       },
       {
-        title: 'Anti-intermodulation (IM3 / IM5)',
-        text: 'Calcule les fréquences parasites qui naissent quand plusieurs micros émettent ensemble — la cause n°1 des bruits sur les grosses configs.',
+        title: 'Anti-intermodulation jusqu’à l’ordre 7',
+        text: 'Calcule les fréquences parasites qui naissent quand plusieurs émetteurs tournent ensemble — IM3, IM5, IM7 et produits à 3 émetteurs (3TX). La cause n°1 des bruits sur les grosses configs.',
       },
       {
         title: 'Plusieurs bandes à la fois',
-        text: 'Mélangez plusieurs marques et plusieurs bandes de fréquences : RF Shot coordonne le tout d’un seul coup.',
+        text: 'Mélangez plusieurs marques et plusieurs bandes : RF Shot coordonne micros et retours d’un seul coup.',
       },
       {
         title: 'Compatible toutes marques',
         text: 'Sennheiser, Shure, Sony, Wisycom… et même le matériel ancien ou d’entrée de gamme.',
       },
       {
-        title: 'Rien à installer',
-        text: 'Tout tourne dans le navigateur, sur ordi comme sur tablette. Aucun logiciel à acheter ni à mettre à jour.',
+        title: 'Enregistrement de session',
+        text: 'Sauvegardez votre plan de fréquences et rechargez-le en un clic. Idéal en tournée : on règle une fois, on rejoue chaque soir.',
       },
       {
-        title: 'Payé une fois, pour toujours',
-        text: '24,99 € une seule fois. Pas d’abonnement, pas de licence annuelle à renouveler.',
+        title: 'Rien à installer',
+        text: 'Tout tourne dans le navigateur, sur ordi comme sur tablette. Aucun logiciel à acheter ni à mettre à jour.',
       },
     ],
     steps: [
       'Listez votre matériel (marques, modèles, nombre d’émetteurs).',
       'Indiquez votre lieu et les bandes que vous utilisez.',
-      'Recevez un plan de fréquences coordonné, sans intermodulation.',
+      'Recevez un plan coordonné sans intermodulation — à enregistrer et rejouer en tournée.',
     ],
     features: [
-      'Calcul des intermodulations IM3 / IM5',
+      'Plus de 100 fréquences coordonnées',
+      'Intermodulations IM3 / IM5 / IM7 et 3 émetteurs (3TX)',
       'Gestion multi-bandes',
-      'Coordination hybride avancée',
+      'Enregistrement de session',
       'Web, en français, sans installation',
     ],
     differentiator:
-      "Les logiciels de coordination pro font le travail, mais ils coûtent des centaines d'euros et demandent une vraie formation. RF Shot vous donne l'essentiel de cette puissance — intermodulations, multi-bandes, gros plateaux — dans une appli web simple et en français. La précision d'un outil pro, sans le prix ni la prise de tête.",
+      "Les logiciels de coordination pro font le travail, mais ils coûtent des centaines d'euros et demandent une vraie formation. RF Shot vous donne l'essentiel de cette puissance — 100+ fréquences, intermodulations avancées, multi-bandes, sessions enregistrables — dans une appli web simple et en français. La précision d'un outil pro, sans le prix ni la prise de tête.",
   },
   {
     slug: 'fiche-tech',
