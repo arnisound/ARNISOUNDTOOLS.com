@@ -11,6 +11,10 @@ export interface Product {
   differentiator: string;
   /** Badge/logo produit (chemin public), optionnel. */
   image?: string;
+  /** Paragraphe « grandes lignes » affiché dans le hero (optionnel). */
+  pitch?: string;
+  /** Points clés scannables affichés dans le hero (optionnel). */
+  heroPoints?: string[];
   /** Cartes « avantages » orientées bénéfice client (optionnel). */
   benefits?: { title: string; text: string }[];
   /** Étapes « aussi simple que ça » (optionnel). */
@@ -26,8 +30,16 @@ export const products: Product[] = [
     price: '9,99 €',
     priceNote: 'Payé une seule fois · à vous pour toujours',
     free: false,
-    audience: 'Micros HF · Oreillettes · Sans prise de tête',
+    audience: 'Micros & retours sans fil',
     image: '/products/speed-rf.svg',
+    pitch:
+      "Speed RF calcule pour vous des fréquences fiables pour vos micros et vos retours sans fil. Vous indiquez votre matériel et votre lieu, l'appli vous donne des canaux qui ne se gênent pas — sans scanner, sans logiciel, sans connaissances techniques.",
+    heroPoints: [
+      'Compatible toutes marques, même ancien ou bas de gamme',
+      'Prêt en 30 secondes, depuis votre téléphone',
+      'Évite les chaînes TV françaises (TNT)',
+      'Paiement unique, sans abonnement',
+    ],
     summary:
       "Un micro qui grésille, se coupe ou capte des parasites en plein évènement ? 9 fois sur 10, c'est une question de fréquences mal choisies. Speed RF vous donne des fréquences propres et compatibles en quelques secondes : vous indiquez votre matériel et votre ville, l'appli s'occupe du reste. Peu importe la marque ou l'âge de vos micros, du haut de gamme au modèle d'entrée de gamme. Aucun logiciel à installer, aucune compétence technique requise.",
     benefits: [
