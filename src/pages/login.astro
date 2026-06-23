@@ -1,13 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
+import { url } from '../lib/site';
 ---
 
 <!-- MAQUETTE — formulaire non branché. Auth (Worker + JWT + D1) à venir. -->
 <Base title="Connexion — Arnisound Tools" bare={true}>
   <div class="auth">
     <div class="auth__panel">
-      <a href="/" class="brand">
-        <img src="/logo.svg" alt="" class="brand__logo" width="38" height="38" />
+      <a href={url('/')} class="brand">
+        <img src={url('/logo.svg')} alt="" class="brand__logo" width="38" height="38" />
         <span>Arnisound<span class="brand__accent">Tools</span></span>
       </a>
       <h1>Connexion</h1>
@@ -29,7 +30,7 @@ import Base from '../layouts/Base.astro';
       </form>
 
       <p class="auth__switch text-muted">
-        Pas encore de compte ? <a href="/dashboard">Créer un compte gratuit</a>
+        Pas encore de compte ? <a href={url('/dashboard')}>Créer un compte gratuit</a>
       </p>
     </div>
     <div class="auth__aside" aria-hidden="true">

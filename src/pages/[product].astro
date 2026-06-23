@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { products, getProduct } from '../data/products';
+import { url } from '../lib/site';
 
 export function getStaticPaths() {
   return products.map((p) => ({ params: { product: p.slug } }));
@@ -11,14 +12,14 @@ const p = getProduct(product!);
 if (!p) return Astro.redirect('/404');
 
 const ctaLabel = p.free ? 'Créer un compte gratuit' : `Acheter — ${p.price}`;
-const ctaHref = p.free ? '/login' : '/login'; // TODO: brancher Lemon Squeezy
+const ctaHref = url('/login'); // TODO: brancher Lemon Squeezy
 ---
 
 <Base title={`${p.name} — Arnisound Tools`} description={p.tagline}>
   <section class="product-hero">
     <div class="container product-hero__inner">
       <div>
-        <a href="/" class="back-link">← Tous les outils</a>
+        <a href={url('/')} class="back-link">← Tous les outils</a>
         <span class="eyebrow" style="margin-top: 1rem;">{p.audience}</span>
         <h1>{p.name}</h1>
         <p class="lead">{p.tagline}</p>

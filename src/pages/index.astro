@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { products, bundle } from '../data/products';
+import { url } from '../lib/site';
 ---
 
 <Base>
@@ -15,7 +16,7 @@ import { products, bundle } from '../data/products';
       </p>
       <div class="hero__cta">
         <a href="#outils" class="btn btn--primary">Découvrir les outils</a>
-        <a href="/fiche-tech" class="btn btn--ghost">Commencer gratuitement</a>
+        <a href={url('/fiche-tech')} class="btn btn--ghost">Commencer gratuitement</a>
       </div>
       <p class="hero__note text-muted">
         Pas de logiciel à installer · fonctionne sur mobile · pensé pour la régie
@@ -35,7 +36,7 @@ import { products, bundle } from '../data/products';
 
       <div class="grid grid--3" style="margin-top: 2.5rem;">
         {products.map((p) => (
-          <a href={`/${p.slug}`} class="card product-card">
+          <a href={url(`/${p.slug}`)} class="card product-card">
             <div class="product-card__top">
               <h3>{p.name}</h3>
               {p.free ? (
@@ -64,7 +65,7 @@ import { products, bundle } from '../data/products';
         <div class="bundle__price">
           <span class="bundle__was">{bundle.was}</span>
           <span class="bundle__now">{bundle.price}</span>
-          <a href="/speed-rf" class="btn btn--primary">Profiter du bundle</a>
+          <a href={url('/speed-rf')} class="btn btn--primary">Profiter du bundle</a>
         </div>
       </div>
     </div>
@@ -99,7 +100,7 @@ import { products, bundle } from '../data/products';
     <div class="container text-center cta-final">
       <h2>Prêt à gagner du temps ?</h2>
       <p class="lead mx-auto">Commencez gratuitement avec Fiche Tech Creator, puis débloquez les outils RF quand vous voulez.</p>
-      <a href="/fiche-tech" class="btn btn--primary" style="margin-top: 1.5rem;">Créer un compte gratuit</a>
+      <a href={url('/fiche-tech')} class="btn btn--primary" style="margin-top: 1.5rem;">Créer un compte gratuit</a>
     </div>
   </section>
 </Base>

@@ -1,12 +1,13 @@
 ---
+import { url } from '../lib/site';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <div class="site-footer__brand">
-      <a href="/" class="brand">
-        <img src="/logo.svg" alt="" class="brand__logo" width="36" height="36" />
+      <a href={url('/')} class="brand">
+        <img src={url('/logo.svg')} alt="" class="brand__logo" width="36" height="36" />
         <span>Arnisound<span class="brand__accent">Tools</span></span>
       </a>
       <p class="text-muted">Les outils du terrain, par des gens du terrain.</p>
@@ -14,16 +15,16 @@ const year = new Date().getFullYear();
 
     <nav class="site-footer__col" aria-label="Produits">
       <h4>Outils</h4>
-      <a href="/speed-rf">Speed RF</a>
-      <a href="/rf-shot">RF Shot</a>
-      <a href="/fiche-tech">Fiche Tech Creator</a>
+      <a href={url('/speed-rf')}>Speed RF</a>
+      <a href={url('/rf-shot')}>RF Shot</a>
+      <a href={url('/fiche-tech')}>Fiche Tech Creator</a>
     </nav>
 
     <nav class="site-footer__col" aria-label="Marque">
       <h4>Arnisound</h4>
-      <a href="/a-propos">À propos</a>
-      <a href="/login">Connexion</a>
-      <a href="/dashboard">Mon compte</a>
+      <a href={url('/a-propos')}>À propos</a>
+      <a href={url('/login')}>Connexion</a>
+      <a href={url('/dashboard')}>Mon compte</a>
     </nav>
   </div>
 

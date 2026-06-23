@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { products } from '../data/products';
+import { url } from '../lib/site';
 
 // MAQUETTE — données fictives. À remplacer par les licences réelles (D1).
 const demoLicenses: Record<string, boolean> = {
@@ -37,9 +38,9 @@ const demoLicenses: Record<string, boolean> = {
               </div>
               <p class="text-muted">{p.tagline}</p>
               {active ? (
-                <a href={`/app/${p.slug}`} class="btn btn--primary btn--block">Lancer l'outil</a>
+                <a href={url(`/app/${p.slug}`)} class="btn btn--primary btn--block">Lancer l'outil</a>
               ) : (
-                <a href={`/${p.slug}`} class="btn btn--ghost btn--block">
+                <a href={url(`/${p.slug}`)} class="btn btn--ghost btn--block">
                   {p.free ? 'Activer (gratuit)' : `Débloquer — ${p.price}`}
                 </a>
               )}
