@@ -173,6 +173,7 @@ export const products: Product[] = [
     priceNote: 'Compte gratuit · sans carte bancaire',
     free: true,
     audience: 'Calculs & formules — son, lumière, vidéo, régie',
+    image: '/products/av-calc.svg',
     appUrl: 'https://arnisound.github.io/AV-CALC/',
     summary:
       "AV Calc regroupe les calculs, formules et pense-bêtes dont on a besoin en régie : plus besoin de chercher une formule sur un coin de table ou de retrouver le bon convertisseur. Tout est réuni dans une seule appli web, claire et rapide, accessible depuis votre téléphone. Gratuit, avec un simple compte.",
