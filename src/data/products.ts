@@ -168,23 +168,66 @@ export const products: Product[] = [
     slug: 'av-calc',
     name: 'AV Calc',
     tagline:
-      'Tous vos calculs, formules et pense-bêtes du terrain, réunis au même endroit.',
+      '71 calculateurs, formules et pense-bêtes du métier, réunis dans une seule appli.',
     price: 'Gratuit',
     priceNote: 'Compte gratuit · sans carte bancaire',
     free: true,
-    audience: 'Calculs & formules — son, lumière, vidéo, régie',
+    audience: 'Boîte à outils du régisseur · 71 calculateurs',
     image: '/products/av-calc.svg',
     appUrl: 'https://arnisound.github.io/AV-CALC/',
+    pitch:
+      "AV Calc réunit 71 calculateurs, formules et pense-bêtes du métier dans une seule appli web. Conversion, son, vidéo, éclairage, électricité, réseau, connectique, structure : le bon outil est toujours à portée de main, en prépa comme sur le terrain. Gratuit, en français, rien à installer.",
+    heroPoints: [
+      '71 outils répartis en 8 catégories',
+      'Son, vidéo, éclairage, élec, réseau, structure…',
+      'Schémas de brochage et de levage inclus',
+      'Repères et réglementation France intégrés',
+    ],
     summary:
-      "AV Calc regroupe les calculs, formules et pense-bêtes dont on a besoin en régie : plus besoin de chercher une formule sur un coin de table ou de retrouver le bon convertisseur. Tout est réuni dans une seule appli web, claire et rapide, accessible depuis votre téléphone. Gratuit, avec un simple compte.",
+      "Fini les formules griffonnées et les dix applis différentes : AV Calc regroupe 71 outils du quotidien de la régie, classés en 8 catégories. Du calcul de delay au brochage d'un Socapex, de la loi d'Ohm à l'angle d'élingage, tout est réuni au même endroit, en français. Gratuit avec un simple compte.",
+    benefits: [
+      {
+        title: 'Conversion — 13 outils',
+        text: 'dB ↔ ratio, BPM → delay, période ↔ fréquence, watts ↔ dBm, fréquence ↔ note, AWG ↔ mm², dBu/dBV/dBµV… les conversions de base, toujours sous la main.',
+      },
+      {
+        title: 'Son — 16 outils',
+        text: 'Générateurs de signal, alignement de delay HP, SPL & cumul de sources, RT60 (Sabine), subs cardio/end-fire, seuil de limiteur, dose & réglementation…',
+      },
+      {
+        title: 'Vidéo — 10 outils',
+        text: 'Vidéoprojecteur (focale/distance), timecode ↔ frames, débit → taille, pixels et pitch d’un mur LED, lumens nécessaires, standards SDI, résolutions…',
+      },
+      {
+        title: 'Éclairage — 6 outils',
+        text: 'Adresse DMX ↔ dipswitch, univers & patch, faisceau → diamètre, lux ↔ lumens, puissance d’un kit lumière, températures de couleur.',
+      },
+      {
+        title: 'Électricité — 12 outils',
+        text: 'Loi d’Ohm, courant mono/tri, chute de tension, calibre disjoncteur, kVA ↔ kW, groupe électrogène, section de câble conseillée, équilibrage triphasé…',
+      },
+      {
+        title: 'Réseau — 6 outils',
+        text: 'Débit Dante/AoIP, canaux max par lien, Art-Net/sACN, budget PoE, calculateur IP et repères réseau pour ne rien saturer.',
+      },
+      {
+        title: 'Connectique — 17 brochages',
+        text: 'Un outil, 17 plans de soudure avec sélecteur : XLR, jack TRS/TS, Speakon NL4, DMX 3/5 pts, RJ45/etherCON, Socapex, Harting, powerCON, BNC, MIDI…',
+      },
+      {
+        title: 'Structure — 7 outils',
+        text: 'Angle d’élingage (avec schéma), charge par appuis, bridle 2 points (avec schéma), centre de gravité, CMU & coefficient, poids de référence.',
+      },
+    ],
     features: [
-      'Calculs et conversions du quotidien (son, lumière, vidéo, régie)',
-      'Formules prêtes à l’emploi, sans se tromper',
-      'Pense-bêtes et mémos terrain à portée de main',
+      '71 outils répartis en 8 catégories',
+      'Son, vidéo, éclairage, électricité, réseau, structure',
+      'Schémas de brochage (connectique) et de levage (structure)',
+      'Repères et réglementation France intégrés',
       'Web, en français — rien à installer',
     ],
     differentiator:
-      "Au lieu d'un tableur bricolé ou d'une appli par calcul, AV Calc rassemble l'essentiel dans un seul outil pensé pour le terrain. Gratuit, en français, dans votre navigateur.",
+      "Au lieu d'une dizaine d'applis payantes ou d'un tableur bricolé, AV Calc rassemble 71 outils du métier — du son au levage — dans une seule appli web claire, en français. Gratuit : il suffit d'un compte.",
   },
 ];
 
