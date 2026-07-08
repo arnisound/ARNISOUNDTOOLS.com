@@ -19,6 +19,8 @@ export interface Product {
   benefits?: { title: string; text: string }[];
   /** Étapes « aussi simple que ça » (optionnel). */
   steps?: string[];
+  /** Lien direct vers l'app (si elle est déjà en ligne, hébergée ailleurs). */
+  appUrl?: string;
 }
 
 export const products: Product[] = [
@@ -161,6 +163,27 @@ export const products: Product[] = [
     ],
     differentiator:
       "Votre point de départ : créez un compte gratuit et découvrez l'écosystème.",
+  },
+  {
+    slug: 'av-calc',
+    name: 'AV Calc',
+    tagline:
+      'Tous vos calculs, formules et pense-bêtes du terrain, réunis au même endroit.',
+    price: 'Gratuit',
+    priceNote: 'Compte gratuit · sans carte bancaire',
+    free: true,
+    audience: 'Calculs & formules — son, lumière, vidéo, régie',
+    appUrl: 'https://arnisound.github.io/AV-CALC/',
+    summary:
+      "AV Calc regroupe les calculs, formules et pense-bêtes dont on a besoin en régie : plus besoin de chercher une formule sur un coin de table ou de retrouver le bon convertisseur. Tout est réuni dans une seule appli web, claire et rapide, accessible depuis votre téléphone. Gratuit, avec un simple compte.",
+    features: [
+      'Calculs et conversions du quotidien (son, lumière, vidéo, régie)',
+      'Formules prêtes à l’emploi, sans se tromper',
+      'Pense-bêtes et mémos terrain à portée de main',
+      'Web, en français — rien à installer',
+    ],
+    differentiator:
+      "Au lieu d'un tableur bricolé ou d'une appli par calcul, AV Calc rassemble l'essentiel dans un seul outil pensé pour le terrain. Gratuit, en français, dans votre navigateur.",
   },
 ];
 

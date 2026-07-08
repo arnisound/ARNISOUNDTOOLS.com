@@ -11,8 +11,14 @@ const { product } = Astro.params;
 const p = getProduct(product!);
 if (!p) return Astro.redirect('/404');
 
-const ctaLabel = p.free ? 'Créer un compte gratuit' : `Acheter — ${p.price}`;
-const ctaHref = url('/login'); // TODO: brancher Lemon Squeezy
+const ctaExternal = Boolean(p.appUrl);
+const ctaLabel = p.appUrl
+  ? "Ouvrir l'app — gratuit"
+  : p.free
+    ? 'Créer un compte gratuit'
+    : `Acheter — ${p.price}`;
+const ctaHref = p.appUrl ?? url('/login'); // TODO: brancher Lemon Squeezy
+const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 ---
 
 <Base title={`${p.name} — Arnisound Tools`} description={p.tagline}>
@@ -30,7 +36,7 @@ const ctaHref = url('/login'); // TODO: brancher Lemon Squeezy
           </ul>
         )}
         <div class="product-hero__cta">
-          <a href={ctaHref} class="btn btn--primary">{ctaLabel}</a>
+          <a href={ctaHref} class="btn btn--primary" {...ctaAttrs}>{ctaLabel}</a>
           {!p.free && <span class="text-muted">{p.priceNote}</span>}
         </div>
       </div>
@@ -47,7 +53,7 @@ const ctaHref = url('/login'); // TODO: brancher Lemon Squeezy
           )}
           <div class="price-card__price">{p.price}</div>
           <p class="text-muted">{p.priceNote}</p>
-          <a href={ctaHref} class="btn btn--primary btn--block">{ctaLabel}</a>
+          <a href={ctaHref} class="btn btn--primary btn--block" {...ctaAttrs}>{ctaLabel}</a>
         </div>
       </aside>
     </div>
@@ -112,7 +118,7 @@ const ctaHref = url('/login'); // TODO: brancher Lemon Squeezy
           ))}
         </ol>
         <div style="margin-top: 2.5rem;">
-          <a href={ctaHref} class="btn btn--primary">{ctaLabel}</a>
+          <a href={ctaHref} class="btn btn--primary" {...ctaAttrs}>{ctaLabel}</a>
         </div>
       </div>
     </section>
