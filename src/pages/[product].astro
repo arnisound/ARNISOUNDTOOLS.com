@@ -11,6 +11,7 @@ const { product } = Astro.params;
 const p = getProduct(product!);
 if (!p) return Astro.redirect('/404');
 
+const comingSoon = Boolean(p.comingSoon);
 const ctaExternal = Boolean(p.appUrl);
 const ctaLabel = p.appUrl
   ? "Ouvrir l'app — gratuit"
@@ -36,8 +37,12 @@ const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } 
           </ul>
         )}
         <div class="product-hero__cta">
-          <a href={ctaHref} class="btn btn--primary" {...ctaAttrs}>{ctaLabel}</a>
-          {!p.free && <span class="text-muted">{p.priceNote}</span>}
+          {comingSoon ? (
+            <span class="btn btn--primary is-disabled" aria-disabled="true">Bientôt disponible</span>
+          ) : (
+            <a href={ctaHref} class="btn btn--primary" {...ctaAttrs}>{ctaLabel}</a>
+          )}
+          {(!p.free || comingSoon) && <span class="text-muted">{p.priceNote}</span>}
         </div>
       </div>
 
@@ -48,12 +53,18 @@ const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } 
         <div class="price-card card">
           {p.free ? (
             <span class="badge badge--free">Gratuit</span>
+          ) : comingSoon ? (
+            <span class="badge">Bientôt</span>
           ) : (
             <span class="badge">Licence perpétuelle</span>
           )}
           <div class="price-card__price">{p.price}</div>
           <p class="text-muted">{p.priceNote}</p>
-          <a href={ctaHref} class="btn btn--primary btn--block" {...ctaAttrs}>{ctaLabel}</a>
+          {comingSoon ? (
+            <span class="btn btn--primary btn--block is-disabled" aria-disabled="true">Bientôt disponible</span>
+          ) : (
+            <a href={ctaHref} class="btn btn--primary btn--block" {...ctaAttrs}>{ctaLabel}</a>
+          )}
         </div>
       </aside>
     </div>
@@ -118,7 +129,11 @@ const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } 
           ))}
         </ol>
         <div style="margin-top: 2.5rem;">
-          <a href={ctaHref} class="btn btn--primary" {...ctaAttrs}>{ctaLabel}</a>
+          {comingSoon ? (
+            <span class="btn btn--primary is-disabled" aria-disabled="true">Bientôt disponible</span>
+          ) : (
+            <a href={ctaHref} class="btn btn--primary" {...ctaAttrs}>{ctaLabel}</a>
+          )}
         </div>
       </div>
     </section>
@@ -225,6 +240,12 @@ const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } 
   }
 
   .diff { padding: 2rem; }
+
+  .btn.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
   @media (max-width: 820px) {
     .product-hero__inner, .product-body { grid-template-columns: 1fr; }

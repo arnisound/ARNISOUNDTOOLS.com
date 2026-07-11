@@ -21,6 +21,8 @@ export interface Product {
   steps?: string[];
   /** Lien direct vers l'app (si elle est déjà en ligne, hébergée ailleurs). */
   appUrl?: string;
+  /** Produit annoncé mais pas encore disponible (affiche « Bientôt », bouton inactif). */
+  comingSoon?: boolean;
 }
 
 export const products: Product[] = [
@@ -228,6 +230,67 @@ export const products: Product[] = [
     ],
     differentiator:
       "Au lieu d'une dizaine d'applis payantes ou d'un tableur bricolé, AV Calc rassemble 71 outils du métier — du son au levage — dans une seule appli web claire, en français. Gratuit : il suffit d'un compte.",
+  },
+  {
+    slug: 'reperages',
+    name: 'Repérages',
+    tagline:
+      'Du terrain au dossier technique, en une seule appli.',
+    price: 'Bientôt',
+    priceNote: 'Licence perpétuelle · disponible bientôt',
+    free: false,
+    comingSoon: true,
+    audience: 'Régie · repérage & plans techniques',
+    pitch:
+      "Repérages vous accompagne de la première visite de site jusqu'au dossier technique final. Sur le terrain, délimitez la zone au GPS et posez vos repères géolocalisés avec photos. La zone devient un plan à l'échelle — sans calibration — où vous implantez scènes, structures, armoires et matériel aux dimensions réelles, sur 9 calques métier. Le câblage, le décompte et le dossier (PDF, image HD, DXF) se construisent presque tout seuls.",
+    heroPoints: [
+      'Repérage GPS sur carte ou satellite, avec photos géolocalisées',
+      'Plan à l’échelle sans calibration (l’échelle vient du GPS)',
+      '9 calques métier + banque de matériel personnalisée',
+      'Câblage intelligent, décompte auto, export PDF / image / DXF',
+    ],
+    summary:
+      "De la visite de repérage au dossier technique, Repérages réunit ce qu'un technicien du spectacle trimballe d'habitude entre carnet, appareil photo, mètre et logiciel de CAO. Vous délimitez le site au GPS, posez vos repères, implantez le matériel aux vraies dimensions, câblez — et l'appli calcule le décompte et génère le dossier. Pensée pour les régisseurs et prestataires son/lumière/vidéo, en français, dans le navigateur.",
+    benefits: [
+      {
+        title: 'Sur le terrain',
+        text: 'Créez l’événement et délimitez la zone à même la carte (plan ou satellite) — au doigt ou en marchant les limites au GPS. Posez des repères géolocalisés (arrivée EDF, point d’eau, accès livraison, contraintes…) avec photos. En intérieur, croquis aux cotes au mètre laser.',
+      },
+      {
+        title: 'Un plan à l’échelle, sans calibration',
+        text: 'La zone délimitée devient votre plan de travail : l’échelle est donnée par le GPS. Placez scènes, chapiteaux, barnums, armoires électriques, groupes électrogènes, enceintes, écrans LED… aux dimensions réelles.',
+      },
+      {
+        title: '9 calques métier',
+        text: 'Implantation, structures, électricité, eau, réseau, vidéo, audio, lumière, sécurité. Rotation au doigt, multi-sélection, annuler/rétablir, superposition de vos plans importés, banque de matériel personnalisée.',
+      },
+      {
+        title: 'Câblage intelligent',
+        text: 'Les câbles s’aimantent aux objets et y restent ancrés : déplacez une armoire, le câble suit. Chaque équipement connaît ses départs réels — une armoire TRI 63A propose ses 2× TRI 32A ou 12× 16A mono, une stagebox ses liaisons Dante/AES50/XLR, un node ArtNet ses sorties DMX.',
+      },
+      {
+        title: 'Le décompte parfait',
+        text: 'Le récap se construit tout seul : objets comptés par calque avec leurs dimensions, câbles découpés en tronçons du commerce (5, 10, 20 m… touret 100 m) avec chute calculée, câbles de secours réglables, bilan de puissance en kW, suivi de montage le jour J.',
+      },
+      {
+        title: 'Le dossier',
+        text: 'Exportez un PDF multi-pages (plan avec zone d’impression A4 + récap matériel complet), une image haute résolution, ou un fichier DXF ouvrable dans AutoCAD — avec en option les bâtiments et voiries alentour.',
+      },
+    ],
+    steps: [
+      'Sur site : créez l’événement, délimitez la zone au GPS et posez vos repères photo.',
+      'Implantez votre matériel aux vraies dimensions sur les 9 calques, puis câblez.',
+      'Exportez le dossier : PDF A4, image HD ou DXF, avec le décompte matériel complet.',
+    ],
+    features: [
+      'Repérage GPS (carte/satellite) + repères photo géolocalisés',
+      'Plan à l’échelle sans calibration, 9 calques métier',
+      'Câblage aimanté avec départs réels par équipement',
+      'Décompte auto (tronçons, chute, secours, bilan kW)',
+      'Export PDF A4, image HD et DXF (AutoCAD)',
+    ],
+    differentiator:
+      "D'habitude, un repérage finit en carnet de notes, photos éparpillées et longues heures de CAO. Repérages relie tout : le relevé terrain devient directement le plan à l'échelle, le câblage et le décompte, jusqu'au dossier prêt à envoyer. Un seul outil, du site au PDF.",
   },
 ];
 
