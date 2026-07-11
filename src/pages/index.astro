@@ -41,6 +41,8 @@ import { url } from '../lib/site';
               <h3>{p.name}</h3>
               {p.free ? (
                 <span class="badge badge--free">Gratuit</span>
+              ) : p.comingSoon ? (
+                <span class="badge">Bientôt</span>
               ) : (
                 <span class="badge">{p.price}</span>
               )}

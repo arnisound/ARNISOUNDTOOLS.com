@@ -236,11 +236,12 @@ export const products: Product[] = [
     name: 'Repérages',
     tagline:
       'Du terrain au dossier technique, en une seule appli.',
-    price: 'Bientôt',
-    priceNote: 'Licence perpétuelle · disponible bientôt',
+    price: '19,99 €',
+    priceNote: 'Offre de lancement · licence perpétuelle · bientôt disponible',
     free: false,
     comingSoon: true,
     audience: 'Régie · repérage & plans techniques',
+    image: '/products/reperages.svg',
     pitch:
       "Repérages vous accompagne de la première visite de site jusqu'au dossier technique final. Sur le terrain, délimitez la zone au GPS et posez vos repères géolocalisés avec photos. La zone devient un plan à l'échelle — sans calibration — où vous implantez scènes, structures, armoires et matériel aux dimensions réelles, sur 9 calques métier. Le câblage, le décompte et le dossier (PDF, image HD, DXF) se construisent presque tout seuls.",
     heroPoints: [
