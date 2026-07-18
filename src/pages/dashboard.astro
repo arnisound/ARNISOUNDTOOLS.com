@@ -18,7 +18,8 @@ import { url } from '../lib/site';
         <button class="btn btn--ghost" data-logout>Se déconnecter</button>
       </header>
 
-      <div class="grid grid--3" style="margin-top: 2.5rem;">
+      <h2 class="dash-section-title">Mes outils</h2>
+      <div class="grid grid--3" style="margin-top: 1.25rem;">
         {products.map((p) => (
           <div class="card dash-card">
             <div class="dash-card__top">
@@ -52,6 +53,51 @@ import { url } from '../lib/site';
         Les licences des outils payants apparaîtront ici automatiquement après l'achat
         (bientôt). Fiche Tech et AV Calc sont inclus avec ton compte gratuit.
       </p>
+
+      <h2 class="dash-section-title" style="margin-top: 3.5rem;">Paramètres du compte</h2>
+      <div class="settings">
+        <!-- Profil -->
+        <form class="card settings__card" data-form="profile">
+          <h3>Profil</h3>
+          <p class="text-muted settings__hint">Ces infos serviront à tes factures et au support.</p>
+          <label><span>Nom / Prénom</span>
+            <input type="text" name="full_name" placeholder="Jean Dupont" autocomplete="name" />
+          </label>
+          <label><span>Société / structure <em>(optionnel)</em></span>
+            <input type="text" name="company" placeholder="Ma boîte de presta" autocomplete="organization" />
+          </label>
+          <label><span>Téléphone <em>(optionnel)</em></span>
+            <input type="tel" name="phone" placeholder="06 12 34 56 78" autocomplete="tel" />
+          </label>
+          <p class="settings__msg" data-msg hidden></p>
+          <button type="submit" class="btn btn--primary">Enregistrer le profil</button>
+        </form>
+
+        <!-- Email -->
+        <form class="card settings__card" data-form="email">
+          <h3>Adresse email</h3>
+          <p class="text-muted settings__hint">Email actuel : <strong data-current-email>…</strong></p>
+          <label><span>Nouvelle adresse email</span>
+            <input type="email" name="email" placeholder="nouvel@email.fr" autocomplete="email" required />
+          </label>
+          <p class="settings__msg" data-msg hidden></p>
+          <button type="submit" class="btn btn--primary">Changer l'email</button>
+        </form>
+
+        <!-- Mot de passe -->
+        <form class="card settings__card" data-form="password">
+          <h3>Mot de passe</h3>
+          <p class="text-muted settings__hint">Au moins 6 caractères.</p>
+          <label><span>Nouveau mot de passe</span>
+            <input type="password" name="password" placeholder="••••••••" autocomplete="new-password" minlength="6" required />
+          </label>
+          <label><span>Confirmer le mot de passe</span>
+            <input type="password" name="password2" placeholder="••••••••" autocomplete="new-password" minlength="6" required />
+          </label>
+          <p class="settings__msg" data-msg hidden></p>
+          <button type="submit" class="btn btn--primary">Changer le mot de passe</button>
+        </form>
+      </div>
     </div>
   </section>
 </Base>
@@ -59,11 +105,43 @@ import { url } from '../lib/site';
 <style>
   .dash-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
   .dash-head h1 { margin-top: 0.5rem; }
+  .dash-section-title { font-size: 1.4rem; }
   .dash-card { display: flex; flex-direction: column; gap: 0.75rem; }
   .dash-card__top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
   .dash-card .btn { margin-top: auto; }
-  .dash-note { margin-top: 2.5rem; font-size: 0.85rem; }
+  .dash-note { margin-top: 2rem; font-size: 0.85rem; }
   .btn.is-disabled { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
+
+  .settings {
+    margin-top: 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .settings__card { display: flex; flex-direction: column; gap: 0.9rem; }
+  .settings__card h3 { font-size: 1.1rem; }
+  .settings__hint { font-size: 0.85rem; margin-top: -0.4rem; }
+  .settings__card label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; }
+  .settings__card label em { color: var(--text-faint); font-style: normal; }
+  .settings__card input {
+    padding: 0.7rem 0.9rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font: inherit;
+  }
+  .settings__card input:focus { outline: none; border-color: var(--accent); }
+  .settings__card .btn { align-self: flex-start; }
+  .settings__msg {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .settings__msg[data-kind='error'] { color: var(--warn, #e0a33e); border-color: color-mix(in srgb, var(--warn, #e0a33e) 40%, transparent); }
+  .settings__msg[data-kind='ok'] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 </style>
 
 <script>
@@ -72,17 +150,90 @@ import { url } from '../lib/site';
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   const go = (path: string) => (window.location.href = base + path);
 
-  // Garde de session : pas connecté → page de connexion
+  // Garde de session
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
     go('/login');
   } else {
+    const user = session.user;
     const emailEl = document.querySelector('[data-user-email]');
-    if (emailEl) emailEl.textContent = session.user.email ?? 'votre compte';
+    if (emailEl) emailEl.textContent = user.email ?? 'votre compte';
+    const curEmail = document.querySelector('[data-current-email]');
+    if (curEmail) curEmail.textContent = user.email ?? '';
+
+    // Pré-remplir le profil
+    const meta = (user.user_metadata ?? {}) as Record<string, string>;
+    const profileForm = document.querySelector<HTMLFormElement>('[data-form="profile"]');
+    if (profileForm) {
+      (profileForm.elements.namedItem('full_name') as HTMLInputElement).value = meta.full_name ?? '';
+      (profileForm.elements.namedItem('company') as HTMLInputElement).value = meta.company ?? '';
+      (profileForm.elements.namedItem('phone') as HTMLInputElement).value = meta.phone ?? '';
+    }
   }
 
   document.querySelector('[data-logout]')?.addEventListener('click', async () => {
     await supabase.auth.signOut();
     go('/login');
+  });
+
+  function feedback(form: HTMLFormElement, text: string, kind: 'ok' | 'error') {
+    const el = form.querySelector<HTMLElement>('[data-msg]');
+    if (!el) return;
+    el.textContent = text;
+    el.dataset.kind = kind;
+    el.hidden = false;
+  }
+  async function withBusy(form: HTMLFormElement, fn: () => Promise<void>) {
+    const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Un instant…';
+    try { await fn(); } finally { btn.disabled = false; btn.textContent = label; }
+  }
+
+  // Profil
+  document.querySelector<HTMLFormElement>('[data-form="profile"]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    const d = new FormData(form);
+    withBusy(form, async () => {
+      const { error } = await supabase.auth.updateUser({
+        data: {
+          full_name: String(d.get('full_name') || '').trim(),
+          company: String(d.get('company') || '').trim(),
+          phone: String(d.get('phone') || '').trim(),
+        },
+      });
+      if (error) feedback(form, error.message, 'error');
+      else feedback(form, 'Profil enregistré ✅', 'ok');
+    });
+  });
+
+  // Email
+  document.querySelector<HTMLFormElement>('[data-form="email"]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    const email = String(new FormData(form).get('email') || '').trim();
+    if (!email) return;
+    withBusy(form, async () => {
+      const { error } = await supabase.auth.updateUser({ email });
+      if (error) feedback(form, error.message, 'error');
+      else feedback(form, 'Un lien de confirmation a été envoyé à ta nouvelle adresse. Clique dessus pour valider le changement.', 'ok');
+    });
+  });
+
+  // Mot de passe
+  document.querySelector<HTMLFormElement>('[data-form="password"]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    const d = new FormData(form);
+    const pw = String(d.get('password') || '');
+    const pw2 = String(d.get('password2') || '');
+    if (pw.length < 6) { feedback(form, 'Le mot de passe doit faire au moins 6 caractères.', 'error'); return; }
+    if (pw !== pw2) { feedback(form, 'Les deux mots de passe ne correspondent pas.', 'error'); return; }
+    withBusy(form, async () => {
+      const { error } = await supabase.auth.updateUser({ password: pw });
+      if (error) feedback(form, error.message, 'error');
+      else { feedback(form, 'Mot de passe mis à jour ✅', 'ok'); form.reset(); }
+    });
   });
 </script>
