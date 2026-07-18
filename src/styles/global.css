@@ -1,0 +1,238 @@
+/* =========================================================
+   Arnisound Tools — Design system
+   Thème : sombre / tech terrain
+   ---------------------------------------------------------
+   Palette dérivée du logo Arnisound :
+     • noir neutre  rgb(1,0,1)      → fonds
+     • blanc cassé  rgb(252,252,252) → texte
+     • or / bronze  rgb(194,131,44) = #C2832C → accent (waveform)
+   Tout est centralisé ici → un seul endroit à modifier.
+   ========================================================= */
+
+:root {
+  /* --- Couleurs de fond (noir neutre, accordé au logo) --- */
+  --bg:            #0A0A0B;   /* fond principal, noir neutre */
+  --bg-soft:       #121214;   /* sections alternées */
+  --surface:       #161618;   /* cartes */
+  --surface-hover: #1E1E21;
+  --border:        #2A2A2E;
+
+  /* --- Texte --- */
+  --text:          #F4F4F5;   /* texte principal, blanc cassé du logo */
+  --text-muted:    #A1A1A6;   /* texte secondaire */
+  --text-faint:    #6B6B70;
+
+  /* --- Accent : or/bronze du logo --- */
+  --accent:        #C2832C;   /* or terrain (waveform) */
+  --accent-hover:  #D99F45;   /* version éclaircie au survol */
+  --accent-soft:   rgba(194, 131, 44, 0.14);
+  --accent-contrast: #0A0A0B; /* texte sur fond accent */
+
+  /* --- Statut --- */
+  --ok:            #3FB950;
+  --warn:          #D29922;
+
+  /* --- Typographie --- */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* --- Rayons & ombres --- */
+  --radius-sm: 8px;
+  --radius:    14px;
+  --radius-lg: 22px;
+  --shadow:    0 10px 30px -12px rgba(0, 0, 0, 0.6);
+
+  /* --- Layout --- */
+  --maxw: 1120px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  /* --- Textures (SVG inline, sans fichiers) --- */
+  /* Grain métallique fin */
+  --tex-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Reset léger ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+/* Grain métallique global, très subtil (brushed metal) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--tex-noise);
+  background-size: 180px 180px;
+  opacity: 0.05;
+}
+body > * { position: relative; z-index: 1; }
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+/* ---------- Typographie ---------- */
+h1, h2, h3 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); }
+h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); }
+h3 { font-size: 1.2rem; }
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ---------- Layout helpers ---------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: clamp(3.5rem, 8vw, 6rem); }
+.section--soft { background: var(--bg-soft); }
+
+.lead {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+  max-width: 60ch;
+}
+
+/* ---------- Boutons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  transition: transform 0.12s ease, background 0.18s ease, border-color 0.18s ease;
+}
+.btn:active { transform: translateY(1px); }
+
+/* Bouton or « métal brossé » : dégradé doré + reflet haut + ombre dorée */
+.btn--primary {
+  background:
+    linear-gradient(180deg, #E6B765 0%, #C2832C 50%, #9C6A22 100%);
+  color: #1a1206;
+  border-color: #8a5e1e;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 6px 18px -8px rgba(194, 131, 44, 0.65);
+}
+.btn--primary:hover {
+  background:
+    linear-gradient(180deg, #F0C878 0%, #D2913A 50%, #AC7728 100%);
+}
+
+/* Bouton secondaire « acier brossé » */
+.btn--ghost {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+  color: var(--text);
+  border-color: var(--border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.btn--ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn--block { width: 100%; }
+
+/* ---------- Cartes ---------- */
+/* Cartes : tôle métal légèrement brossée (reflet haut + grain) */
+.card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0) 35%),
+    var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.card:hover { border-color: var(--accent); }
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.badge--free { background: rgba(63, 185, 80, 0.12); color: var(--ok); }
+.badge--muted { background: var(--surface-hover); color: var(--text-muted); }
+
+/* ---------- Grilles ---------- */
+.grid { display: grid; gap: 1.25rem; }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid--2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+/* ---------- Utilitaires ---------- */
+.text-muted { color: var(--text-muted); }
+.text-center { text-align: center; }
+.mx-auto { margin-inline: auto; }
+.stack > * + * { margin-top: 1rem; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------- Texture bois (photo noyer) ---------- */
+/* Vraie photo de bois teintée en noyer sombre (multiply) → grain réaliste.
+   --wood-img est fournie en inline (chemin base-aware) depuis index.astro. */
+.section--wood {
+  position: relative;
+  background-color: #34200f;
+  background-image: var(--wood-img);
+  background-size: 760px;
+  background-position: center;
+  background-blend-mode: multiply;
+  border-block: 1px solid #3a2a18;
+  box-shadow: inset 0 0 120px 24px rgba(0, 0, 0, 0.5);
+}
+/* Liseré or en haut/bas pour relier la bande au reste de l'identité */
+.section--wood::before,
+.section--wood::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.5;
+}
+.section--wood::before { top: 0; }
+.section--wood::after { bottom: 0; }
+/* Voile sombre pour garder le texte lisible sur le bois */
+.section--wood > .container { position: relative; z-index: 1; }

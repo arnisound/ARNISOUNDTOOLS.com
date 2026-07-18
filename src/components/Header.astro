@@ -1,0 +1,136 @@
+---
+import { url } from '../lib/site';
+const { pathname } = Astro.url;
+const links = [
+  { href: '/speed-rf', label: 'Speed RF' },
+  { href: '/rf-shot', label: 'RF Shot' },
+  { href: '/fiche-tech', label: 'Fiche Tech' },
+  { href: '/av-calc', label: 'AV Calc' },
+  { href: '/reperages', label: 'Repérages' },
+  { href: '/a-propos', label: 'À propos' },
+];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const isActive = (href: string) =>
+  pathname === base + href || pathname === base + href + '/';
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href={url('/')} class="brand" aria-label="Arnisound Tools — accueil">
+      <img src={url('/logo.svg')} alt="Arnisound Tools" class="brand__logo" width="223" height="41" />
+    </a>
+
+    <nav class="nav" aria-label="Navigation principale">
+      {links.map((l) => (
+        <a href={url(l.href)} class:list={['nav__link', { 'is-active': isActive(l.href) }]}>
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="site-header__actions">
+      <a href={url('/login')} class="btn btn--ghost">Connexion</a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" data-nav-toggle>
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-nav" data-mobile-nav hidden>
+    {links.map((l) => <a href={url(l.href)} class="mobile-nav__link">{l.label}</a>)}
+    <a href={url('/login')} class="btn btn--primary btn--block">Connexion</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)),
+      rgba(12, 12, 14, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: 68px;
+  }
+  .brand { display: inline-flex; align-items: center; }
+  .brand__logo { height: 38px; width: auto; display: block; }
+  @media (max-width: 520px) { .brand__logo { height: 32px; } }
+
+  .nav { display: flex; gap: 0.4rem; margin-inline: auto; }
+  .nav__link {
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .nav__link:hover { color: var(--text); background: var(--surface); }
+  .nav__link.is-active { color: var(--accent); }
+
+  .site-header__actions { display: flex; }
+  .site-header__actions .btn { padding: 0.55rem 1.1rem; }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 6px;
+  }
+  .nav-toggle span {
+    width: 24px; height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem var(--gutter) 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-soft);
+  }
+  .mobile-nav__link {
+    padding: 0.75rem 0.5rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-nav__link:hover { color: var(--text); }
+
+  @media (max-width: 860px) {
+    .nav, .site-header__actions { display: none; }
+    .nav-toggle { display: flex; }
+    .mobile-nav[data-open] { display: flex; }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const menu = document.querySelector('[data-mobile-nav]');
+  toggle?.addEventListener('click', () => {
+    const open = menu?.hasAttribute('data-open');
+    if (open) {
+      menu?.removeAttribute('data-open');
+      menu?.setAttribute('hidden', '');
+      toggle.setAttribute('aria-expanded', 'false');
+    } else {
+      menu?.setAttribute('data-open', '');
+      menu?.removeAttribute('hidden');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+  });
+</script>

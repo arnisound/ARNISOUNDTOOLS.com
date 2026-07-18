@@ -1,0 +1,58 @@
+name: Deploy to GitHub Pages
+
+# Construit le site Astro et le publie sur GitHub Pages à chaque push.
+on:
+  push:
+    branches: [claude/relaxed-cray-u37ahp]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Une seule publication à la fois, mais on laisse un déploiement en cours
+# se TERMINER (cancel-in-progress: false) au lieu de l'annuler en plein vol —
+# sinon GitHub Pages peut rester coincé « in progress » et bloquer les suivants.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build (base = nom du dépôt pour l'URL projet)
+        env:
+          PAGES_BASE: /ARNISOUNDTOOLS.com/
+          PAGES_SITE: https://arnisound.github.io
+        run: npm run build
+
+      # Active Pages automatiquement si ce n'est pas déjà fait
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

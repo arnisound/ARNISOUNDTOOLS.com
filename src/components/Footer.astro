@@ -1,0 +1,89 @@
+---
+import { url } from '../lib/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <a href={url('/')} class="brand" aria-label="Arnisound Tools — accueil">
+        <img src={url('/logo.svg')} alt="Arnisound Tools" class="brand__logo" width="196" height="36" />
+      </a>
+      <p class="text-muted">Les outils du terrain, par des gens du terrain.</p>
+    </div>
+
+    <nav class="site-footer__col" aria-label="Produits">
+      <h4>Outils</h4>
+      <a href={url('/speed-rf')}>Speed RF</a>
+      <a href={url('/rf-shot')}>RF Shot</a>
+      <a href={url('/fiche-tech')}>Fiche Tech Creator</a>
+      <a href={url('/av-calc')}>AV Calc</a>
+      <a href={url('/reperages')}>Repérages</a>
+    </nav>
+
+    <nav class="site-footer__col" aria-label="Marque">
+      <h4>Arnisound</h4>
+      <a href={url('/a-propos')}>À propos</a>
+      <a href={url('/login')}>Connexion</a>
+      <a href={url('/dashboard')}>Mon compte</a>
+    </nav>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <span>© {year} Arnisound Tools</span>
+    <nav class="site-footer__legal" aria-label="Informations légales">
+      <a href={url('/mentions-legales')}>Mentions légales</a>
+      <a href={url('/confidentialite')}>Confidentialité</a>
+      <a href={url('/cgv')}>CGV</a>
+    </nav>
+    <span class="text-muted">Fait en France · Spectacle vivant, audiovisuel &amp; événementiel</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    background: var(--bg-soft);
+    padding-block: 3rem 1.5rem;
+  }
+  .site-footer__inner {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1.5fr 1fr 1fr;
+  }
+  .brand { display: inline-flex; align-items: center; }
+  .brand__logo { height: 34px; width: auto; display: block; }
+  .site-footer__brand p { margin-top: 0.75rem; max-width: 30ch; font-size: 0.9rem; }
+
+  .site-footer__col { display: flex; flex-direction: column; gap: 0.6rem; }
+  .site-footer__col h4 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-faint);
+    margin-bottom: 0.25rem;
+  }
+  .site-footer__col a { color: var(--text-muted); font-size: 0.92rem; }
+  .site-footer__col a:hover { color: var(--accent); }
+
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-faint);
+  }
+  .site-footer__legal { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+  .site-footer__legal a { color: var(--text-muted); }
+  .site-footer__legal a:hover { color: var(--accent); }
+
+  @media (max-width: 700px) {
+    .site-footer__inner { grid-template-columns: 1fr 1fr; }
+    .site-footer__brand { grid-column: 1 / -1; }
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import { products } from '../data/products';
+import { url } from '../lib/site';
+
+// MAQUETTE — données fictives. À remplacer par les licences réelles (D1).
+const demoLicenses: Record<string, boolean> = {
+  'fiche-tech': true, // accordée automatiquement à l'inscription
+  'speed-rf': false,
+  'rf-shot': false,
+};
+---
+
+<Base title="Mon compte — Arnisound Tools">
+  <section class="section">
+    <div class="container">
+      <header class="dash-head">
+        <div>
+          <span class="eyebrow">Mon compte</span>
+          <h1>Tableau de bord</h1>
+          <p class="text-muted">Gérez vos outils et vos licences.</p>
+        </div>
+        <span class="badge badge--muted">Maquette · démo</span>
+      </header>
+
+      <div class="grid grid--3" style="margin-top: 2.5rem;">
+        {products.map((p) => {
+          const active = demoLicenses[p.slug];
+          return (
+            <div class="card dash-card">
+              <div class="dash-card__top">
+                <h3>{p.name}</h3>
+                {active ? (
+                  <span class="badge badge--free">Activé</span>
+                ) : (
+                  <span class="badge badge--muted">Non activé</span>
+                )}
+              </div>
+              <p class="text-muted">{p.tagline}</p>
+              {active ? (
+                <a href={url(`/app/${p.slug}`)} class="btn btn--primary btn--block">Lancer l'outil</a>
+              ) : (
+                <a href={url(`/${p.slug}`)} class="btn btn--ghost btn--block">
+                  {p.free ? 'Activer (gratuit)' : `Débloquer — ${p.price}`}
+                </a>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <p class="dash-note text-muted">
+        🔧 Données de démonstration. Les licences réelles viendront de Cloudflare D1
+        après branchement de l'authentification et de Lemon Squeezy.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .dash-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .dash-head h1 { margin-top: 0.5rem; }
+  .dash-card { display: flex; flex-direction: column; gap: 0.75rem; }
+  .dash-card__top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .dash-card .btn { margin-top: auto; }
+  .dash-note { margin-top: 2.5rem; font-size: 0.85rem; }
+</style>
