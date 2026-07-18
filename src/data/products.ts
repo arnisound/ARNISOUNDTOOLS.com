@@ -155,6 +155,7 @@ export const products: Product[] = [
     priceNote: 'Compte gratuit · sans carte bancaire',
     free: true,
     audience: 'Tous niveaux, amateurs inclus',
+    image: '/products/fiche-tech.svg',
     summary:
       "Créez des fiches techniques claires et exportables en PDF, sans Word ni mise en page laborieuse. La porte d'entrée de l'écosystème Arnisound.",
     features: [
