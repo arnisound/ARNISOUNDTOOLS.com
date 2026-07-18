@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Politique de confidentialité — Arnisound Tools" description="Comment Arnisound Tools collecte et protège vos données personnelles (RGPD).">
+  <section class="section">
+    <div class="container legal">
+      <span class="eyebrow">Vos données</span>
+      <h1>Politique de confidentialité</h1>
+      <p class="updated">Dernière mise à jour : 18 juillet 2026</p>
+
+      <p class="lead">
+        Arnisound Tools attache de l'importance à la protection de vos données personnelles.
+        Cette page explique quelles données sont collectées, pourquoi, et quels sont vos droits,
+        conformément au Règlement général sur la protection des données (RGPD).
+      </p>
+
+      <h2>Responsable du traitement</h2>
+      <p>
+        Arnisound Tools — contact : <a href="mailto:arnisound.tools@gmail.com">arnisound.tools@gmail.com</a>.
+        Coordonnées complètes : voir les <a href="/mentions-legales">mentions légales</a>.
+      </p>
+
+      <h2>Données collectées</h2>
+      <ul>
+        <li><strong>Compte</strong> : adresse e-mail et mot de passe (stocké de façon chiffrée).</li>
+        <li><strong>Achats et licences</strong> : produits acquis et licences associées à votre compte.</li>
+        <li><strong>Données d'usage techniques</strong> : informations nécessaires au bon fonctionnement des outils. <mark>[À PRÉCISER selon les outils]</mark></li>
+        <li><strong>Paiement</strong> : traité par notre prestataire de paiement ; Arnisound Tools ne stocke pas vos données bancaires. <mark>[À COMPLÉTER — Stripe / Lemon Squeezy]</mark></li>
+      </ul>
+
+      <h2>Finalités et base légale</h2>
+      <ul>
+        <li>Créer et gérer votre compte (exécution du contrat).</li>
+        <li>Fournir les outils et gérer vos licences (exécution du contrat).</li>
+        <li>Assurer le support et vous répondre (intérêt légitime).</li>
+        <li>Respecter nos obligations légales (comptabilité, facturation).</li>
+      </ul>
+
+      <h2>Durée de conservation</h2>
+      <p>
+        Vos données sont conservées le temps nécessaire aux finalités ci-dessus, puis archivées ou
+        supprimées selon les délais légaux. <mark>[À COMPLÉTER — durées précises]</mark>
+      </p>
+
+      <h2>Destinataires et sous-traitants</h2>
+      <p>
+        Vos données ne sont jamais vendues. Elles peuvent être traitées par nos prestataires techniques
+        strictement pour le fonctionnement du service : hébergeur, prestataire d'authentification et
+        prestataire de paiement. <mark>[À COMPLÉTER — liste des sous-traitants]</mark>
+      </p>
+
+      <h2>Cookies</h2>
+      <p>
+        Le site utilise uniquement les cookies nécessaires à son fonctionnement (par exemple la session
+        de connexion). <mark>[À COMPLÉTER si ajout de mesure d'audience ou d'outils tiers]</mark>
+      </p>
+
+      <h2>Vos droits</h2>
+      <p>
+        Vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition
+        et de portabilité de vos données. Pour les exercer, écrivez à
+        <a href="mailto:arnisound.tools@gmail.com">arnisound.tools@gmail.com</a>.
+      </p>
+      <p>
+        Vous pouvez également introduire une réclamation auprès de la CNIL
+        (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">www.cnil.fr</a>).
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal { max-width: 780px; }
+  .legal h1 { margin-top: 0.75rem; }
+  .legal h2 { margin-top: 2.5rem; }
+  .legal .lead { margin-top: 1.25rem; color: var(--text); }
+  .legal p { color: var(--text-muted); line-height: 1.7; margin-top: 0.75rem; }
+  .legal p strong, .legal li strong { color: var(--text); }
+  .legal ul { margin-top: 0.9rem; padding-left: 1.25rem; display: grid; gap: 0.5rem; }
+  .legal li { color: var(--text-muted); line-height: 1.6; }
+  .legal a { color: var(--accent); }
+  .legal .updated { font-size: 0.9rem; color: var(--text-faint); margin-top: 0.5rem; }
+  .legal mark {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 0.05em 0.4em;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+</style>
