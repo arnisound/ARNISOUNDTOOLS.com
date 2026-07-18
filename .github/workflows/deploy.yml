@@ -11,10 +11,12 @@ permissions:
   pages: write
   id-token: write
 
-# Une seule publication à la fois
+# Une seule publication à la fois, mais on laisse un déploiement en cours
+# se TERMINER (cancel-in-progress: false) au lieu de l'annuler en plein vol —
+# sinon GitHub Pages peut rester coincé « in progress » et bloquer les suivants.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
