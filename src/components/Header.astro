@@ -29,7 +29,7 @@ const isActive = (href: string) =>
     </nav>
 
     <div class="site-header__actions">
-      <a href={url('/login')} class="btn btn--ghost">Connexion</a>
+      <a href={url('/login')} class="btn btn--ghost" data-auth-link>Connexion</a>
     </div>
 
     <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" data-nav-toggle>
@@ -39,7 +39,7 @@ const isActive = (href: string) =>
 
   <div class="mobile-nav" data-mobile-nav hidden>
     {links.map((l) => <a href={url(l.href)} class="mobile-nav__link">{l.label}</a>)}
-    <a href={url('/login')} class="btn btn--primary btn--block">Connexion</a>
+    <a href={url('/login')} class="btn btn--primary btn--block" data-auth-link>Connexion</a>
   </div>
 </header>
 
@@ -133,4 +133,24 @@ const isActive = (href: string) =>
       toggle.setAttribute('aria-expanded', 'true');
     }
   });
+</script>
+
+<script>
+  // Bandeau conscient de la session : « Connexion » ↔ « Mon compte ».
+  import { supabase } from '../lib/supabase';
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  async function refreshAuthLinks() {
+    const { data: { session } } = await supabase.auth.getSession();
+    document.querySelectorAll<HTMLAnchorElement>('[data-auth-link]').forEach((a) => {
+      if (session) {
+        a.href = base + '/dashboard';
+        a.textContent = 'Mon compte';
+      } else {
+        a.href = base + '/login';
+        a.textContent = 'Connexion';
+      }
+    });
+  }
+  refreshAuthLinks();
+  supabase.auth.onAuthStateChange(() => refreshAuthLinks());
 </script>

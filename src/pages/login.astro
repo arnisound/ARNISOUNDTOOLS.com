@@ -3,35 +3,37 @@ import Base from '../layouts/Base.astro';
 import { url } from '../lib/site';
 ---
 
-<!-- MAQUETTE — formulaire non branché. Auth (Worker + JWT + D1) à venir. -->
 <Base title="Connexion — Arnisound Tools" bare={true}>
   <div class="auth">
     <div class="auth__panel">
       <a href={url('/')} class="brand" aria-label="Arnisound Tools — accueil">
         <img src={url('/logo.svg')} alt="Arnisound Tools" class="brand__logo" width="261" height="48" />
       </a>
-      <h1>Connexion</h1>
-      <p class="text-muted">Accédez à vos outils et licences.</p>
 
-      <form class="auth__form" data-demo>
+      <h1 data-title>Connexion</h1>
+      <p class="text-muted" data-subtitle>Accédez à vos outils et licences.</p>
+
+      <form class="auth__form" data-auth-form novalidate>
         <label>
           <span>Email</span>
           <input type="email" name="email" placeholder="vous@exemple.fr" autocomplete="email" required />
         </label>
         <label>
           <span>Mot de passe</span>
-          <input type="password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+          <input type="password" name="password" placeholder="••••••••" autocomplete="current-password" minlength="6" required />
         </label>
-        <button type="submit" class="btn btn--primary btn--block">Se connecter</button>
-        <p class="auth__demo-note" data-demo-note hidden>
-          🔧 Démo : l'authentification sera branchée sur Cloudflare Workers + D1.
-        </p>
+
+        <p class="auth__msg" data-msg hidden></p>
+
+        <button type="submit" class="btn btn--primary btn--block" data-submit>Se connecter</button>
       </form>
 
       <p class="auth__switch text-muted">
-        Pas encore de compte ? <a href={url('/dashboard')}>Créer un compte gratuit</a>
+        <span data-switch-text>Pas encore de compte ?</span>
+        <a href="#" data-switch-link>Créer un compte gratuit</a>
       </p>
     </div>
+
     <div class="auth__aside" aria-hidden="true">
       <div class="auth__glow"></div>
       <blockquote>« Les outils du terrain, par des gens du terrain. »</blockquote>
@@ -66,10 +68,18 @@ import { url } from '../lib/site';
     font: inherit;
   }
   .auth__form input:focus { outline: none; border-color: var(--accent); }
-  .auth__demo-note { font-size: 0.85rem; color: var(--warn); }
+
+  .auth__msg {
+    font-size: 0.88rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .auth__msg[data-kind='error'] { color: var(--warn, #e0a33e); border-color: color-mix(in srgb, var(--warn, #e0a33e) 40%, transparent); }
+  .auth__msg[data-kind='ok'] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 
   .auth__switch { margin-top: 1.5rem; font-size: 0.9rem; }
-  .auth__switch a { color: var(--accent); }
+  .auth__switch a { color: var(--accent); cursor: pointer; }
 
   .auth__aside { position: relative; overflow: hidden; border-left: 1px solid var(--border); background: var(--bg-soft); display: grid; place-items: center; padding: 3rem; }
   .auth__glow { position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, var(--accent-soft), transparent 60%); }
@@ -82,11 +92,99 @@ import { url } from '../lib/site';
 </style>
 
 <script>
-  // Démo : empêche l'envoi réel tant que l'auth n'est pas branchée.
-  const form = document.querySelector('[data-demo]');
-  const note = document.querySelector('[data-demo-note]');
-  form?.addEventListener('submit', (e) => {
+  import { supabase } from '../lib/supabase';
+
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const go = (path: string) => (window.location.href = base + path);
+
+  // Déjà connecté ? → tableau de bord
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) go('/dashboard');
+
+  const form = document.querySelector<HTMLFormElement>('[data-auth-form]');
+  const submit = document.querySelector<HTMLButtonElement>('[data-submit]');
+  const msg = document.querySelector<HTMLParagraphElement>('[data-msg]');
+  const title = document.querySelector('[data-title]');
+  const subtitle = document.querySelector('[data-subtitle]');
+  const switchText = document.querySelector('[data-switch-text]');
+  const switchLink = document.querySelector<HTMLAnchorElement>('[data-switch-link]');
+
+  let mode: 'login' | 'signup' = 'login';
+
+  function showMsg(text: string, kind: 'error' | 'ok') {
+    if (!msg) return;
+    msg.textContent = text;
+    msg.dataset.kind = kind;
+    msg.hidden = false;
+  }
+  function clearMsg() { if (msg) msg.hidden = true; }
+
+  function setMode(next: 'login' | 'signup') {
+    mode = next;
+    clearMsg();
+    if (mode === 'login') {
+      title!.textContent = 'Connexion';
+      subtitle!.textContent = 'Accédez à vos outils et licences.';
+      submit!.textContent = 'Se connecter';
+      switchText!.textContent = 'Pas encore de compte ?';
+      switchLink!.textContent = 'Créer un compte gratuit';
+      form!.querySelector<HTMLInputElement>('[name=password]')!.autocomplete = 'current-password';
+    } else {
+      title!.textContent = 'Créer un compte';
+      subtitle!.textContent = 'Gratuit — accédez à Fiche Tech et AV Calc.';
+      submit!.textContent = 'Créer mon compte';
+      switchText!.textContent = 'Déjà un compte ?';
+      switchLink!.textContent = 'Se connecter';
+      form!.querySelector<HTMLInputElement>('[name=password]')!.autocomplete = 'new-password';
+    }
+  }
+
+  switchLink?.addEventListener('click', (e) => {
     e.preventDefault();
-    note?.removeAttribute('hidden');
+    setMode(mode === 'login' ? 'signup' : 'login');
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearMsg();
+    const data = new FormData(form);
+    const email = String(data.get('email') || '').trim();
+    const password = String(data.get('password') || '');
+    if (!email || password.length < 6) {
+      showMsg('Renseigne un email valide et un mot de passe d’au moins 6 caractères.', 'error');
+      return;
+    }
+
+    submit!.disabled = true;
+    const label = submit!.textContent;
+    submit!.textContent = 'Un instant…';
+
+    try {
+      if (mode === 'login') {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        go('/dashboard');
+      } else {
+        const { data: res, error } = await supabase.auth.signUp({ email, password });
+        if (error) throw error;
+        if (res.session) {
+          go('/dashboard'); // confirmation email désactivée → connecté direct
+        } else {
+          showMsg('Compte créé ! Vérifie ta boîte mail pour confirmer ton adresse, puis connecte-toi.', 'ok');
+          setMode('login');
+        }
+      }
+    } catch (err: any) {
+      const m = String(err?.message || '');
+      let fr = 'Une erreur est survenue. Réessaie.';
+      if (/invalid login credentials/i.test(m)) fr = 'Email ou mot de passe incorrect.';
+      else if (/already registered|already exists|user already/i.test(m)) fr = 'Un compte existe déjà avec cet email. Connecte-toi.';
+      else if (/rate limit/i.test(m)) fr = 'Trop de tentatives, patiente un instant.';
+      else if (m) fr = m;
+      showMsg(fr, 'error');
+    } finally {
+      submit!.disabled = false;
+      submit!.textContent = label;
+    }
   });
 </script>
