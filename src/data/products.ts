@@ -177,7 +177,7 @@ export const products: Product[] = [
     free: true,
     audience: 'Boîte à outils du régisseur · 71 calculateurs',
     image: '/products/av-calc.svg',
-    appUrl: 'https://arnisound.github.io/AV-CALC/',
+    appUrl: 'https://avcalc.arnisoundtools.com/',
     pitch:
       "AV Calc réunit 71 calculateurs, formules et pense-bêtes du métier dans une seule appli web. Conversion, son, vidéo, éclairage, électricité, réseau, connectique, structure : le bon outil est toujours à portée de main, en prépa comme sur le terrain. Gratuit, en français, rien à installer.",
     heroPoints: [
