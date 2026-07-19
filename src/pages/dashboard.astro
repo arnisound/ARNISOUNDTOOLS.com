@@ -20,38 +20,43 @@ import { url } from '../lib/site';
 
       <h2 class="dash-section-title">Mes outils</h2>
       <div class="grid grid--3" style="margin-top: 1.25rem;">
-        {products.map((p) => (
-          <div class="card dash-card">
-            <div class="dash-card__top">
-              <h3>{p.name}</h3>
-              {p.comingSoon ? (
-                <span class="badge">Bientôt</span>
-              ) : p.free ? (
-                <span class="badge badge--free">Inclus</span>
-              ) : (
-                <span class="badge badge--muted">À débloquer</span>
-              )}
-            </div>
-            <p class="text-muted">{p.tagline}</p>
+        {products.map((p) => {
+          const paid = !p.free && !p.comingSoon;
+          return (
+            <div class="card dash-card" data-product={p.slug} data-paid={paid ? '' : undefined} data-appurl={p.appUrl ?? ''}>
+              <div class="dash-card__top">
+                <h3>{p.name}</h3>
+                {p.comingSoon ? (
+                  <span class="badge" data-badge>Bientôt</span>
+                ) : p.free ? (
+                  <span class="badge badge--free" data-badge>Inclus</span>
+                ) : (
+                  <span class="badge badge--muted" data-badge>À débloquer</span>
+                )}
+              </div>
+              <p class="text-muted">{p.tagline}</p>
 
-            {p.comingSoon ? (
-              <span class="btn btn--ghost btn--block is-disabled" aria-disabled="true">Bientôt disponible</span>
-            ) : p.free ? (
-              p.appUrl ? (
-                <a href={p.appUrl} target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--block">Lancer {p.name}</a>
-              ) : (
-                <span class="btn btn--ghost btn--block is-disabled" aria-disabled="true">Bientôt en ligne</span>
-              )
-            ) : (
-              <a href={url(`/${p.slug}`)} class="btn btn--ghost btn--block">Débloquer — {p.price}</a>
-            )}
-          </div>
-        ))}
+              <div data-action>
+                {p.comingSoon ? (
+                  <span class="btn btn--ghost btn--block is-disabled" aria-disabled="true">Bientôt disponible</span>
+                ) : p.free ? (
+                  p.appUrl ? (
+                    <a href={p.appUrl} target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--block">Lancer {p.name}</a>
+                  ) : (
+                    <span class="btn btn--ghost btn--block is-disabled" aria-disabled="true">Bientôt en ligne</span>
+                  )
+                ) : (
+                  <a href={url(`/${p.slug}`)} class="btn btn--ghost btn--block">Débloquer — {p.price}</a>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <p class="dash-note text-muted">
-        Les licences des outils payants apparaîtront ici automatiquement après l'achat
-        (bientôt). Fiche Tech et AV Calc sont inclus avec ton compte gratuit.
+        Les licences des outils payants apparaissent ici automatiquement dès l'achat.
+        Fiche Tech et AV Calc sont inclus avec ton compte gratuit.
       </p>
 
       <h2 class="dash-section-title" style="margin-top: 3.5rem;">Paramètres du compte</h2>
@@ -108,7 +113,7 @@ import { url } from '../lib/site';
   .dash-section-title { font-size: 1.4rem; }
   .dash-card { display: flex; flex-direction: column; gap: 0.75rem; }
   .dash-card__top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-  .dash-card .btn { margin-top: auto; }
+  .dash-card [data-action] { margin-top: auto; }
   .dash-note { margin-top: 2rem; font-size: 0.85rem; }
   .btn.is-disabled { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
 
@@ -169,6 +174,31 @@ import { url } from '../lib/site';
       (profileForm.elements.namedItem('company') as HTMLInputElement).value = meta.company ?? '';
       (profileForm.elements.namedItem('phone') as HTMLInputElement).value = meta.phone ?? '';
     }
+
+    // Récupérer les licences actives et débloquer les outils payants concernés
+    try {
+      const { data: licenses, error } = await supabase
+        .from('licenses')
+        .select('product')
+        .eq('active', true);
+      if (!error && licenses) {
+        const owned = new Set(licenses.map((l: { product: string }) => l.product));
+        document.querySelectorAll<HTMLElement>('.dash-card[data-paid]').forEach((card) => {
+          const slug = card.getAttribute('data-product') || '';
+          if (!owned.has(slug)) return;
+          const badge = card.querySelector<HTMLElement>('[data-badge]');
+          if (badge) { badge.className = 'badge badge--free'; badge.textContent = 'Activé'; }
+          const action = card.querySelector<HTMLElement>('[data-action]');
+          const appurl = card.getAttribute('data-appurl');
+          const name = card.querySelector('h3')?.textContent ?? "l'outil";
+          if (action) {
+            action.innerHTML = appurl
+              ? `<a href="${appurl}" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--block">Lancer ${name}</a>`
+              : `<span class="btn btn--ghost btn--block is-disabled" aria-disabled="true">Bientôt en ligne</span>`;
+          }
+        });
+      }
+    } catch { /* table absente ou hors-ligne : on garde l'état par défaut */ }
   }
 
   document.querySelector('[data-logout]')?.addEventListener('click', async () => {
