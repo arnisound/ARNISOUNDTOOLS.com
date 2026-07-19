@@ -156,6 +156,7 @@ export const products: Product[] = [
     free: true,
     audience: 'Tous niveaux, amateurs inclus',
     image: '/products/fiche-tech.svg',
+    appUrl: 'https://fichetechcreator.arnisoundtools.com/',
     summary:
       "Créez des fiches techniques claires et exportables en PDF, sans Word ni mise en page laborieuse. La porte d'entrée de l'écosystème Arnisound.",
     features: [
