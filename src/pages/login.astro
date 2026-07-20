@@ -176,11 +176,14 @@ import { url } from '../lib/site';
       }
     } catch (err: any) {
       const m = String(err?.message || '');
+      const status = Number(err?.status) || 0;
       let fr = 'Une erreur est survenue. Réessaie.';
       if (/invalid login credentials/i.test(m)) fr = 'Email ou mot de passe incorrect.';
       else if (/already registered|already exists|user already/i.test(m)) fr = 'Un compte existe déjà avec cet email. Connecte-toi.';
       else if (/rate limit/i.test(m)) fr = 'Trop de tentatives, patiente un instant.';
-      else if (m) fr = m;
+      else if (status >= 500 || /error sending|smtp|confirmation email/i.test(m) || m === '{}' || m === '')
+        fr = "Impossible d'envoyer l'email de confirmation pour le moment. Réessaie dans un instant.";
+      else fr = m;
       showMsg(fr, 'error');
     } finally {
       submit!.disabled = false;
