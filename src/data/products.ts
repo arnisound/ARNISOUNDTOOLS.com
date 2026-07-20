@@ -36,6 +36,7 @@ export const products: Product[] = [
     free: false,
     audience: 'Micros & retours sans fil',
     image: '/products/speed-rf.svg',
+    appUrl: 'https://speedrf.arnisoundtools.com/',
     pitch:
       "Speed RF calcule pour vous des fréquences fiables pour vos micros et vos retours sans fil. Vous indiquez votre matériel et votre lieu, l'appli vous donne des canaux qui ne se gênent pas — sans scanner, sans logiciel, sans connaissances techniques.",
     heroPoints: [
@@ -96,6 +97,7 @@ export const products: Product[] = [
     free: false,
     audience: 'Gros plateaux · 100+ fréquences coordonnées',
     image: '/products/rf-shot.svg',
+    appUrl: 'https://rfshot.arnisoundtools.com/',
     pitch:
       "Quand vous faites tourner des dizaines de fréquences (micros et retours sans fil) en même temps, elles finissent par se gêner — même bien choisies. RF Shot va plus loin que Speed RF : il coordonne plus de 100 fréquences, calcule les intermodulations jusqu’à l’ordre 7 (IM3, IM5, IM7) et les produits à 3 émetteurs (3TX), et gère plusieurs bandes à la fois. Le tout dans votre navigateur, en français, sans rien installer.",
     heroPoints: [

@@ -12,13 +12,16 @@ const p = getProduct(product!);
 if (!p) return Astro.redirect('/404');
 
 const comingSoon = Boolean(p.comingSoon);
-const ctaExternal = Boolean(p.appUrl);
-const ctaLabel = p.appUrl
+// Une app gratuite déjà hébergée s'ouvre directement. Les apps payantes
+// gardent « Acheter » : leur appUrl ne sert qu'au lancement depuis le compte.
+const isOpenApp = Boolean(p.appUrl) && p.free;
+const ctaExternal = isOpenApp;
+const ctaLabel = isOpenApp
   ? "Ouvrir l'app — gratuit"
   : p.free
     ? 'Créer un compte gratuit'
     : `Acheter — ${p.price}`;
-const ctaHref = p.appUrl ?? url('/login'); // TODO: brancher Lemon Squeezy
+const ctaHref = isOpenApp ? p.appUrl! : url('/login'); // TODO: brancher Lemon Squeezy
 const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 ---
 
