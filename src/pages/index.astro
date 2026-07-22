@@ -2,6 +2,13 @@
 import Base from '../layouts/Base.astro';
 import { products, bundle } from '../data/products';
 import { url } from '../lib/site';
+
+// Ordre d'affichage : les 2 outils RF (phares) d'abord, puis les gratuits,
+// et Repérages (bientôt) en dernier.
+const order = ['speed-rf', 'rf-shot', 'av-calc', 'fiche-tech', 'reperages'];
+const outils = order
+  .map((slug) => products.find((p) => p.slug === slug))
+  .filter((p): p is (typeof products)[number] => Boolean(p));
 ---
 
 <Base>
@@ -35,10 +42,12 @@ import { url } from '../lib/site';
       </header>
 
       <div class="grid grid--3" style="margin-top: 2.5rem;">
-        {products.map((p) => (
+        {outils.map((p) => (
           <a href={url(`/${p.slug}`)} class="card product-card">
-            <div class="product-card__top">
-              <h3>{p.name}</h3>
+            <div class="product-card__head">
+              {p.image && (
+                <img src={url(p.image)} alt="" class="product-card__logo" width="54" height="54" loading="lazy" />
+              )}
               {p.free ? (
                 <span class="badge badge--free">Gratuit</span>
               ) : p.comingSoon ? (
@@ -47,6 +56,7 @@ import { url } from '../lib/site';
                 <span class="badge">{p.price}</span>
               )}
             </div>
+            <h3 class="product-card__name">{p.name}</h3>
             <p class="text-muted">{p.tagline}</p>
             <span class="product-card__link">Voir l'outil →</span>
           </a>
@@ -101,7 +111,7 @@ import { url } from '../lib/site';
   <section class="section section--soft">
     <div class="container text-center cta-final">
       <h2>Prêt à gagner du temps ?</h2>
-      <p class="lead mx-auto">Commencez gratuitement avec Fiche Tech Creator, puis débloquez les outils RF quand vous voulez.</p>
+      <p class="lead mx-auto">Créez votre compte gratuit : accédez à Fiche Tech et AV Calc, puis débloquez les outils RF quand vous voulez.</p>
       <a href={url('/login')} class="btn btn--primary" style="margin-top: 1.5rem;">Créer un compte gratuit</a>
     </div>
   </section>
@@ -131,8 +141,10 @@ import { url } from '../lib/site';
   .section-head h2 { margin-top: 0.75rem; }
   .section-head .lead { margin-top: 0.75rem; }
 
-  .product-card { display: flex; flex-direction: column; gap: 0.75rem; }
-  .product-card__top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .product-card { display: flex; flex-direction: column; gap: 0.6rem; }
+  .product-card__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.3rem; }
+  .product-card__logo { width: 54px; height: 54px; flex: none; filter: drop-shadow(0 4px 14px rgba(194, 131, 44, 0.18)); }
+  .product-card__name { font-size: 1.25rem; }
   .product-card__link { margin-top: auto; color: var(--accent); font-weight: 600; font-size: 0.92rem; }
 
   .bundle {
