@@ -97,9 +97,29 @@ import { url } from '../lib/site';
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   const go = (path: string) => (window.location.href = base + path);
 
-  // Déjà connecté ? → tableau de bord
+  // Redirection après connexion : « next » peut pointer vers une app du domaine
+  // arnisoundtools.com (sous-domaines) ou un chemin interne. Tout le reste est ignoré.
+  const params = new URLSearchParams(location.search);
+  function safeNext(raw: string | null): string | null {
+    if (!raw) return null;
+    if (raw.startsWith('/') && !raw.startsWith('//')) return raw;
+    try {
+      const u = new URL(raw);
+      const okHost = u.hostname === 'arnisoundtools.com' || u.hostname.endsWith('.arnisoundtools.com');
+      if (u.protocol === 'https:' && okHost) return u.href;
+    } catch { /* ignore */ }
+    return null;
+  }
+  const nextTarget = safeNext(params.get('next'));
+  const wantSignup = params.get('mode') === 'signup';
+  const goAfterAuth = () => {
+    if (nextTarget) window.location.href = nextTarget;
+    else go('/dashboard');
+  };
+
+  // Déjà connecté ? → destination demandée (ou tableau de bord)
   const { data: { session } } = await supabase.auth.getSession();
-  if (session) go('/dashboard');
+  if (session) goAfterAuth();
 
   const form = document.querySelector<HTMLFormElement>('[data-auth-form]');
   const submit = document.querySelector<HTMLButtonElement>('[data-submit]');
@@ -144,6 +164,9 @@ import { url } from '../lib/site';
     setMode(mode === 'login' ? 'signup' : 'login');
   });
 
+  // Arrivée depuis un bouton « Essayer gratuitement » → ouvrir en mode inscription
+  if (wantSignup) setMode('signup');
+
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearMsg();
@@ -163,12 +186,12 @@ import { url } from '../lib/site';
       if (mode === 'login') {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        go('/dashboard');
+        goAfterAuth();
       } else {
         const { data: res, error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
         if (res.session) {
-          go('/dashboard'); // confirmation email désactivée → connecté direct
+          goAfterAuth(); // confirmation email désactivée → connecté direct
         } else {
           showMsg('Compte créé ! Vérifie ta boîte mail pour confirmer ton adresse, puis connecte-toi.', 'ok');
           setMode('login');
