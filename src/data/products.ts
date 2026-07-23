@@ -36,6 +36,7 @@ export const products: Product[] = [
     free: false,
     audience: 'Micros & retours sans fil',
     image: '/products/speed-rf.svg',
+    appUrl: 'https://speedrf.arnisoundtools.com/',
     pitch:
       "Speed RF calcule pour vous des fréquences fiables pour vos micros et vos retours sans fil. Vous indiquez votre matériel et votre lieu, l'appli vous donne des canaux qui ne se gênent pas — sans scanner, sans logiciel, sans connaissances techniques.",
     heroPoints: [
@@ -96,6 +97,7 @@ export const products: Product[] = [
     free: false,
     audience: 'Gros plateaux · 100+ fréquences coordonnées',
     image: '/products/rf-shot.svg',
+    appUrl: 'https://rfshot.arnisoundtools.com/',
     pitch:
       "Quand vous faites tourner des dizaines de fréquences (micros et retours sans fil) en même temps, elles finissent par se gêner — même bien choisies. RF Shot va plus loin que Speed RF : il coordonne plus de 100 fréquences, calcule les intermodulations jusqu’à l’ordre 7 (IM3, IM5, IM7) et les produits à 3 émetteurs (3TX), et gère plusieurs bandes à la fois. Le tout dans votre navigateur, en français, sans rien installer.",
     heroPoints: [
@@ -156,6 +158,7 @@ export const products: Product[] = [
     free: true,
     audience: 'Tous niveaux, amateurs inclus',
     image: '/products/fiche-tech.svg',
+    appUrl: 'https://fichetechcreator.arnisoundtools.com/',
     summary:
       "Créez des fiches techniques claires et exportables en PDF, sans Word ni mise en page laborieuse. La porte d'entrée de l'écosystème Arnisound.",
     features: [
@@ -177,7 +180,7 @@ export const products: Product[] = [
     free: true,
     audience: 'Boîte à outils du régisseur · 71 calculateurs',
     image: '/products/av-calc.svg',
-    appUrl: 'https://arnisound.github.io/AV-CALC/',
+    appUrl: 'https://avcalc.arnisoundtools.com/',
     pitch:
       "AV Calc réunit 71 calculateurs, formules et pense-bêtes du métier dans une seule appli web. Conversion, son, vidéo, éclairage, électricité, réseau, connectique, structure : le bon outil est toujours à portée de main, en prépa comme sur le terrain. Gratuit, en français, rien à installer.",
     heroPoints: [

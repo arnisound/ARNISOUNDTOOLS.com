@@ -12,14 +12,18 @@ const p = getProduct(product!);
 if (!p) return Astro.redirect('/404');
 
 const comingSoon = Boolean(p.comingSoon);
-const ctaExternal = Boolean(p.appUrl);
-const ctaLabel = p.appUrl
-  ? "Ouvrir l'app — gratuit"
+// Les apps gratuites nécessitent un compte : le bouton mène à l'inscription,
+// puis renvoie vers l'app une fois le compte créé (paramètre « next »). Les apps
+// payantes gardent « Acheter » : leur appUrl ne sert qu'au lancement depuis le compte.
+const freeApp = Boolean(p.appUrl) && p.free;
+const ctaLabel = freeApp
+  ? 'Essayer gratuitement'
   : p.free
     ? 'Créer un compte gratuit'
     : `Acheter — ${p.price}`;
-const ctaHref = p.appUrl ?? url('/login'); // TODO: brancher Lemon Squeezy
-const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+const ctaHref = freeApp
+  ? `${url('/login')}?mode=signup&next=${encodeURIComponent(p.appUrl!)}`
+  : url('/login'); // TODO: brancher Lemon Squeezy
 ---
 
 <Base title={`${p.name} — Arnisound Tools`} description={p.tagline}>
@@ -40,7 +44,7 @@ const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } 
           {comingSoon ? (
             <span class="btn btn--primary is-disabled" aria-disabled="true">Bientôt disponible</span>
           ) : (
-            <a href={ctaHref} class="btn btn--primary" {...ctaAttrs}>{ctaLabel}</a>
+            <a href={ctaHref} class="btn btn--primary">{ctaLabel}</a>
           )}
           {(!p.free || comingSoon) && <span class="text-muted">{p.priceNote}</span>}
         </div>
@@ -63,7 +67,7 @@ const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } 
           {comingSoon ? (
             <span class="btn btn--primary btn--block is-disabled" aria-disabled="true">Bientôt disponible</span>
           ) : (
-            <a href={ctaHref} class="btn btn--primary btn--block" {...ctaAttrs}>{ctaLabel}</a>
+            <a href={ctaHref} class="btn btn--primary btn--block">{ctaLabel}</a>
           )}
         </div>
       </aside>
@@ -132,7 +136,7 @@ const ctaAttrs = ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } 
           {comingSoon ? (
             <span class="btn btn--primary is-disabled" aria-disabled="true">Bientôt disponible</span>
           ) : (
-            <a href={ctaHref} class="btn btn--primary" {...ctaAttrs}>{ctaLabel}</a>
+            <a href={ctaHref} class="btn btn--primary">{ctaLabel}</a>
           )}
         </div>
       </div>

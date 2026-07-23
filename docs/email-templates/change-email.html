@@ -1,0 +1,34 @@
+<!-- Onglet Supabase : « Change Email Address » -->
+<!-- Subject : Confirme ta nouvelle adresse — Arnisound Tools -->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Confirme le changement d'adresse email de ton compte Arnisound Tools.</div>
+<div style="margin:0;padding:24px;background:#f4f0e8;font-family:Helvetica,Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:14px;overflow:hidden;border:1px solid #ece5d8;">
+    <tr>
+      <td style="background:#171310;padding:22px 32px;text-align:center;">
+        <span style="color:#ffffff;font-size:18px;font-weight:800;letter-spacing:1px;">ARNISOUND</span><span style="color:#cb8a27;font-size:18px;font-weight:800;letter-spacing:1px;"> TOOLS</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:36px 32px 12px;">
+        <h1 style="margin:0 0 12px;font-size:22px;color:#171310;">Nouvelle adresse email</h1>
+        <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#4a453d;">
+          Tu as demandé à utiliser <strong>{{ .NewEmail }}</strong> comme nouvelle adresse pour ton compte Arnisound Tools. Confirme ce changement en cliquant ci-dessous.
+        </p>
+        <p style="text-align:center;margin:28px 0;">
+          <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#cb8a27;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:13px 28px;border-radius:9px;">Confirmer la nouvelle adresse</a>
+        </p>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:#8a8378;">
+          Si le bouton ne fonctionne pas, copie ce lien dans ton navigateur :<br>
+          <a href="{{ .ConfirmationURL }}" style="color:#cb8a27;word-break:break-all;">{{ .ConfirmationURL }}</a>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:20px 32px 30px;border-top:1px solid #ece5d8;">
+        <p style="margin:0;font-size:12px;line-height:1.6;color:#a9a293;">
+          Si tu n'es pas à l'origine de cette demande, ignore ce message : ton adresse actuelle reste active.
+        </p>
+      </td>
+    </tr>
+  </table>
+</div>
