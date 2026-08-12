@@ -89,6 +89,7 @@ Deno.serve(async (req) => {
     product,
     active: true,
     order_id: orderId,
+    expires_at: null, // un achat = licence permanente (écrase un éventuel essai)
   }));
 
   const { error } = await supabase

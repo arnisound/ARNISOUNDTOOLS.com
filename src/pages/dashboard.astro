@@ -175,19 +175,35 @@ import { url } from '../lib/site';
       (profileForm.elements.namedItem('phone') as HTMLInputElement).value = meta.phone ?? '';
     }
 
-    // Récupérer les licences actives et débloquer les outils payants concernés
+    // Récupérer les licences actives et débloquer les outils payants concernés.
+    // On ignore les licences temporaires expirées (expires_at dépassé).
     try {
       const { data: licenses, error } = await supabase
         .from('licenses')
-        .select('product')
+        .select('product, expires_at')
         .eq('active', true);
       if (!error && licenses) {
-        const owned = new Set(licenses.map((l: { product: string }) => l.product));
+        const now = Date.now();
+        const owned = new Map<string, string | null>();
+        (licenses as { product: string; expires_at: string | null }[]).forEach((l) => {
+          if (l.expires_at && new Date(l.expires_at).getTime() <= now) return; // expirée → ignorée
+          owned.set(l.product, l.expires_at);
+        });
         document.querySelectorAll<HTMLElement>('.dash-card[data-paid]').forEach((card) => {
           const slug = card.getAttribute('data-product') || '';
           if (!owned.has(slug)) return;
+          const expiresAt = owned.get(slug) ?? null;
           const badge = card.querySelector<HTMLElement>('[data-badge]');
-          if (badge) { badge.className = 'badge badge--free'; badge.textContent = 'Activé'; }
+          if (badge) {
+            if (expiresAt) {
+              const d = new Date(expiresAt).toLocaleDateString('fr-FR');
+              badge.className = 'badge';
+              badge.textContent = `Essai — jusqu'au ${d}`;
+            } else {
+              badge.className = 'badge badge--free';
+              badge.textContent = 'Activé';
+            }
+          }
           const action = card.querySelector<HTMLElement>('[data-action]');
           const appurl = card.getAttribute('data-appurl');
           const name = card.querySelector('h3')?.textContent ?? "l'outil";
