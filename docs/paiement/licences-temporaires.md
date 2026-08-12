@@ -45,6 +45,23 @@ join auth.users u on u.id = l.user_id
 order by l.created_at desc;
 ```
 
+## Essai en self-service via un code Lemon Squeezy
+
+En plus du SQL manuel, un **essai du bundle** (Speed RF + RF Shot) est distribuable
+par **code** :
+
+- Produit d'essai Lemon Squeezy — variant `2009872`.
+- Le webhook le mappe sur `speed-rf` + `rf-shot`, **valable 15 jours**.
+- Tu crées un **code de réduction 100 %** dans Lemon Squeezy (limité en nombre
+  d'usages / date si tu veux) et tu le diffuses. La personne l'utilise au
+  checkout → les deux outils s'activent 15 jours sur son compte.
+
+Garde-fou : si la personne possède déjà une licence **permanente** sur un de ces
+outils, l'essai ne la rétrograde pas (elle reste permanente).
+
+Pour changer la durée : `days: 15` dans `VARIANT_MAP`
+(`supabase/functions/lemonsqueezy-webhook/index.ts`), puis redéploie la fonction.
+
 ## Bon à savoir
 
 - L'utilisateur voit **« Essai — jusqu'au JJ/MM/AAAA »** sur son tableau de bord.

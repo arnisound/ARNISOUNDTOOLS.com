@@ -20,11 +20,13 @@ const SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
 // Mapping Variant ID Lemon Squeezy → slug(s) de produit.
 // Un variant peut débloquer PLUSIEURS produits (bundle).
-const VARIANT_TO_PRODUCTS: Record<string, string[]> = {
-  '2009773': ['speed-rf'],
-  '2009790': ['rf-shot'],
-  '2009850': ['speed-rf', 'rf-shot'], // Bundle Speed RF + RF Shot
-  // '<variant Repérages>': ['reperages'],  // à ajouter quand l'app sera en ligne
+// `days` (facultatif) = licence temporaire d'essai ; sinon licence permanente.
+const VARIANT_MAP: Record<string, { products: string[]; days?: number }> = {
+  '2009773': { products: ['speed-rf'] },
+  '2009790': { products: ['rf-shot'] },
+  '2009850': { products: ['speed-rf', 'rf-shot'] },            // Bundle (achat)
+  '2009872': { products: ['speed-rf', 'rf-shot'], days: 15 },  // Essai bundle 15 jours
+  // '<variant Repérages>': { products: ['reperages'] },  // quand l'app sera en ligne
 };
 
 // Vérifie la signature HMAC-SHA256 envoyée dans l'en-tête X-Signature.
@@ -61,8 +63,8 @@ Deno.serve(async (req) => {
 
   const attributes = event?.data?.attributes ?? {};
   const variantId = String(attributes?.first_order_item?.variant_id ?? '');
-  const productsToGrant = VARIANT_TO_PRODUCTS[variantId];
-  if (!productsToGrant) {
+  const entry = VARIANT_MAP[variantId];
+  if (!entry) {
     console.log('variant inconnu:', variantId);
     return new Response('unknown variant', { status: 200 });
   }
@@ -83,13 +85,37 @@ Deno.serve(async (req) => {
     return new Response('user not found', { status: 200 });
   }
 
+  // Essai (days défini) : licence temporaire. Achat : licence permanente.
+  const expiresAt = entry.days
+    ? new Date(Date.now() + entry.days * 86_400_000).toISOString()
+    : null;
+
+  // Pour un essai, ne pas rétrograder une licence déjà permanente en cours.
+  let productsToGrant = entry.products;
+  if (entry.days) {
+    const { data: existing } = await supabase
+      .from('licenses')
+      .select('product, expires_at, active')
+      .eq('user_id', userId)
+      .in('product', entry.products);
+    const permanent = new Set(
+      (existing ?? [])
+        .filter((l) => l.active && l.expires_at === null)
+        .map((l) => l.product),
+    );
+    productsToGrant = entry.products.filter((p) => !permanent.has(p));
+    if (productsToGrant.length === 0) {
+      return new Response('already owned', { status: 200 });
+    }
+  }
+
   const orderId = String(event?.data?.id ?? '');
   const rows = productsToGrant.map((product) => ({
     user_id: userId,
     product,
     active: true,
     order_id: orderId,
-    expires_at: null, // un achat = licence permanente (écrase un éventuel essai)
+    expires_at: expiresAt,
   }));
 
   const { error } = await supabase
