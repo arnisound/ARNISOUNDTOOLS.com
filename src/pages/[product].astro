@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { products, getProduct } from '../data/products';
 import { url } from '../lib/site';
+import { checkoutLive, checkoutUrl } from '../lib/checkout';
 
 export function getStaticPaths() {
   return products.map((p) => ({ params: { product: p.slug } }));
@@ -12,18 +13,28 @@ const p = getProduct(product!);
 if (!p) return Astro.redirect('/404');
 
 const comingSoon = Boolean(p.comingSoon);
-// Les apps gratuites nécessitent un compte : le bouton mène à l'inscription,
-// puis renvoie vers l'app une fois le compte créé (paramètre « next »). Les apps
-// payantes gardent « Acheter » : leur appUrl ne sert qu'au lancement depuis le compte.
+// - App gratuite : le bouton mène à l'inscription puis renvoie vers l'app (« next »).
+// - App payante : « Acheter » → checkout Lemon Squeezy si la boutique est active
+//   (LEMONSQUEEZY_STORE renseigné), sinon repli sur /login tant qu'elle ne l'est pas.
 const freeApp = Boolean(p.appUrl) && p.free;
-const ctaLabel = freeApp
-  ? 'Essayer gratuitement'
-  : p.free
-    ? 'Créer un compte gratuit'
-    : `Acheter — ${p.price}`;
-const ctaHref = freeApp
-  ? `${url('/login')}?mode=signup&next=${encodeURIComponent(p.appUrl!)}`
-  : url('/login'); // TODO: brancher Lemon Squeezy
+const canCheckout = !p.free && !comingSoon && checkoutLive && Boolean(p.variantId);
+
+let ctaLabel: string;
+let ctaHref: string;
+if (freeApp) {
+  ctaLabel = 'Essayer gratuitement';
+  ctaHref = `${url('/login')}?mode=signup&next=${encodeURIComponent(p.appUrl!)}`;
+} else if (canCheckout) {
+  ctaLabel = `Acheter — ${p.price}`;
+  ctaHref = checkoutUrl(p.variantId!); // le script y ajoute email + user_id si connecté
+} else if (p.free) {
+  ctaLabel = 'Créer un compte gratuit';
+  ctaHref = url('/login');
+} else {
+  ctaLabel = `Acheter — ${p.price}`;
+  ctaHref = url('/login'); // boutique Lemon Squeezy pas encore active
+}
+const checkoutAttrs = canCheckout ? { 'data-checkout': true } : {};
 ---
 
 <Base title={`${p.name} — Arnisound Tools`} description={p.tagline}>
@@ -44,7 +55,7 @@ const ctaHref = freeApp
           {comingSoon ? (
             <span class="btn btn--primary is-disabled" aria-disabled="true">Bientôt disponible</span>
           ) : (
-            <a href={ctaHref} class="btn btn--primary">{ctaLabel}</a>
+            <a href={ctaHref} class="btn btn--primary" {...checkoutAttrs}>{ctaLabel}</a>
           )}
           {(!p.free || comingSoon) && <span class="text-muted">{p.priceNote}</span>}
         </div>
@@ -67,7 +78,7 @@ const ctaHref = freeApp
           {comingSoon ? (
             <span class="btn btn--primary btn--block is-disabled" aria-disabled="true">Bientôt disponible</span>
           ) : (
-            <a href={ctaHref} class="btn btn--primary btn--block">{ctaLabel}</a>
+            <a href={ctaHref} class="btn btn--primary btn--block" {...checkoutAttrs}>{ctaLabel}</a>
           )}
         </div>
       </aside>
@@ -136,7 +147,7 @@ const ctaHref = freeApp
           {comingSoon ? (
             <span class="btn btn--primary is-disabled" aria-disabled="true">Bientôt disponible</span>
           ) : (
-            <a href={ctaHref} class="btn btn--primary">{ctaLabel}</a>
+            <a href={ctaHref} class="btn btn--primary" {...checkoutAttrs}>{ctaLabel}</a>
           )}
         </div>
       </div>
@@ -152,6 +163,30 @@ const ctaHref = freeApp
     </div>
   </section>
 </Base>
+
+<script>
+  // Boutons « Acheter » : si la boutique Lemon Squeezy est active, on complète
+  // le lien de checkout avec l'email + le user_id du compte connecté (pour que
+  // le webhook rattache la licence). Non connecté → passage par /login d'abord.
+  const nodes = document.querySelectorAll('a[data-checkout]');
+  if (nodes.length) {
+    const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+    const { supabase } = await import('../lib/supabase');
+    const { data: { session } } = await supabase.auth.getSession();
+    nodes.forEach((node) => {
+      const el = node as HTMLAnchorElement;
+      const target = el.getAttribute('href') || '';
+      if (session?.user) {
+        const params = new URLSearchParams();
+        params.set('checkout[email]', session.user.email ?? '');
+        params.set('checkout[custom][user_id]', session.user.id);
+        el.setAttribute('href', target + (target.includes('?') ? '&' : '?') + params.toString());
+      } else {
+        el.setAttribute('href', `${base}/login?next=${encodeURIComponent(target)}`);
+      }
+    });
+  }
+</script>
 
 <style>
   .product-hero { padding-block: clamp(3rem, 8vw, 5rem); }
