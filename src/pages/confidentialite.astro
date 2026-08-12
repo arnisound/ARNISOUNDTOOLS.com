@@ -7,7 +7,7 @@ import Base from '../layouts/Base.astro';
     <div class="container legal">
       <span class="eyebrow">Vos données</span>
       <h1>Politique de confidentialité</h1>
-      <p class="updated">Dernière mise à jour : 18 juillet 2026</p>
+      <p class="updated">Dernière mise à jour : 12 août 2026</p>
 
       <p class="lead">
         Arnisound Tools attache de l'importance à la protection de vos données personnelles.
@@ -17,16 +17,17 @@ import Base from '../layouts/Base.astro';
 
       <h2>Responsable du traitement</h2>
       <p>
-        Arnisound Tools — contact : <a href="mailto:arnisound.tools@gmail.com">arnisound.tools@gmail.com</a>.
+        Théo Arnissolle (Arnisound Tools), entrepreneur individuel — contact :
+        <a href="mailto:contact@arnisoundtools.com">contact@arnisoundtools.com</a>.
         Coordonnées complètes : voir les <a href="/mentions-legales">mentions légales</a>.
       </p>
 
       <h2>Données collectées</h2>
       <ul>
         <li><strong>Compte</strong> : adresse e-mail et mot de passe (stocké de façon chiffrée).</li>
+        <li><strong>Profil (facultatif)</strong> : nom, société et téléphone que vous renseignez pour le support et la facturation.</li>
         <li><strong>Achats et licences</strong> : produits acquis et licences associées à votre compte.</li>
-        <li><strong>Données d'usage techniques</strong> : informations nécessaires au bon fonctionnement des outils. <mark>[À PRÉCISER selon les outils]</mark></li>
-        <li><strong>Paiement</strong> : traité par notre prestataire de paiement ; Arnisound Tools ne stocke pas vos données bancaires. <mark>[À COMPLÉTER — Stripe / Lemon Squeezy]</mark></li>
+        <li><strong>Paiement</strong> : traité par notre prestataire Lemon Squeezy ; Arnisound Tools ne stocke jamais vos données bancaires.</li>
       </ul>
 
       <h2>Finalités et base légale</h2>
@@ -39,28 +40,35 @@ import Base from '../layouts/Base.astro';
 
       <h2>Durée de conservation</h2>
       <p>
-        Vos données sont conservées le temps nécessaire aux finalités ci-dessus, puis archivées ou
-        supprimées selon les délais légaux. <mark>[À COMPLÉTER — durées précises]</mark>
+        Les données de compte sont conservées tant que votre compte est actif, puis supprimées sur
+        votre demande. Les données de facturation sont conservées 10 ans conformément aux obligations
+        comptables légales.
       </p>
 
       <h2>Destinataires et sous-traitants</h2>
       <p>
-        Vos données ne sont jamais vendues. Elles peuvent être traitées par nos prestataires techniques
-        strictement pour le fonctionnement du service : hébergeur, prestataire d'authentification et
-        prestataire de paiement. <mark>[À COMPLÉTER — liste des sous-traitants]</mark>
+        Vos données ne sont jamais vendues. Elles sont traitées par nos prestataires techniques
+        strictement pour le fonctionnement du service :
       </p>
+      <ul>
+        <li><strong>Cloudflare, Inc.</strong> — hébergement du site.</li>
+        <li><strong>Supabase</strong> — authentification et base de données (comptes, licences).</li>
+        <li><strong>Lemon Squeezy</strong> — paiement et facturation (« Merchant of Record »).</li>
+        <li><strong>Brevo</strong> — envoi des e-mails transactionnels (confirmation, réinitialisation).</li>
+      </ul>
 
       <h2>Cookies</h2>
       <p>
         Le site utilise uniquement les cookies nécessaires à son fonctionnement (par exemple la session
-        de connexion). <mark>[À COMPLÉTER si ajout de mesure d'audience ou d'outils tiers]</mark>
+        de connexion, partagée entre le site et les applications). Aucun cookie publicitaire ni de
+        mesure d'audience tierce n'est déposé.
       </p>
 
       <h2>Vos droits</h2>
       <p>
         Vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition
         et de portabilité de vos données. Pour les exercer, écrivez à
-        <a href="mailto:arnisound.tools@gmail.com">arnisound.tools@gmail.com</a>.
+        <a href="mailto:contact@arnisoundtools.com">contact@arnisoundtools.com</a>.
       </p>
       <p>
         Vous pouvez également introduire une réclamation auprès de la CNIL
