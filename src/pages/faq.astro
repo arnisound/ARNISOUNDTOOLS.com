@@ -1,0 +1,208 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/site';
+
+const sections = [
+  {
+    title: 'Général',
+    items: [
+      {
+        q: 'C’est quoi Arnisound Tools ?',
+        a: 'Des outils web pour les métiers du spectacle vivant, de l’audiovisuel et de l’événementiel : son, lumière, vidéo, régie. Simples, en français, pensés par un professionnel du terrain — et rien à installer.',
+      },
+      {
+        q: 'Faut-il installer un logiciel ?',
+        a: 'Non. Tout fonctionne directement dans le navigateur, sur ordinateur, tablette ou téléphone. Un simple compte suffit.',
+      },
+      {
+        q: 'C’est bien en français ?',
+        a: 'Oui, entièrement : le vocabulaire métier comme le contexte réglementaire français (ARCOM/ANFR, TNT…).',
+      },
+    ],
+  },
+  {
+    title: 'Compte & outils gratuits',
+    items: [
+      {
+        q: 'Le compte est-il gratuit ?',
+        a: 'Oui, la création de compte est gratuite et sans carte bancaire. Elle donne accès aux outils gratuits et sert à recevoir tes licences.',
+      },
+      {
+        q: 'Quels outils sont gratuits ?',
+        a: 'AV Calc (71 calculateurs) et Fiche Tech Creator sont gratuits avec un compte. Speed RF, RF Shot et Repérages sont payants.',
+      },
+    ],
+  },
+  {
+    title: 'Achat & licences',
+    items: [
+      {
+        q: 'Abonnement ou paiement unique ?',
+        a: 'Paiement unique. Pas d’abonnement, pas de frais cachés.',
+      },
+      {
+        q: 'La licence est-elle à vie ?',
+        a: 'Oui : licence perpétuelle. Tu paies une fois, l’outil est à toi pour toujours, rattaché à ton compte.',
+      },
+      {
+        q: 'Comment j’accède à mon outil après l’achat ?',
+        a: 'La licence s’active automatiquement sur ton compte après le paiement. Connecte-toi avec l’email de ton achat : l’outil apparaît dans « Mon compte », prêt à lancer.',
+      },
+      {
+        q: 'Sur combien d’appareils puis-je l’utiliser ?',
+        a: 'La licence est liée à ton compte, pas à un appareil. Tu peux te connecter depuis n’importe quel appareil.',
+      },
+      {
+        q: 'Le paiement est-il sécurisé ?',
+        a: 'Oui. Le paiement est géré par Lemon Squeezy, un prestataire sécurisé. Arnisound Tools ne voit ni ne stocke tes données bancaires.',
+      },
+      {
+        q: 'Vais-je recevoir une facture ?',
+        a: 'Oui, un reçu/facture est envoyé par email juste après l’achat.',
+      },
+      {
+        q: 'Puis-je être remboursé ?',
+        a: 'Les produits étant numériques et accessibles immédiatement, le droit de rétractation ne s’applique plus une fois l’outil activé. En cas de souci, écris-nous à contact@arnisoundtools.com : on trouve toujours une solution.',
+      },
+      {
+        q: 'Y a-t-il une offre groupée ?',
+        a: 'Oui : le bundle Speed RF + RF Shot réunit les deux outils RF en un seul achat, à prix réduit (29,99 € au lieu de 34,98 €).',
+      },
+    ],
+  },
+  {
+    title: 'Les outils',
+    items: [
+      {
+        q: 'Speed RF est-il compatible avec ma marque de micros ?',
+        a: 'Oui, toutes marques : Sennheiser, Shure, AKG, LD Systems, the t.bone… et même le matériel ancien ou d’entrée de gamme. S’il émet en HF, Speed RF s’en occupe.',
+      },
+      {
+        q: 'Quelle différence entre Speed RF et RF Shot ?',
+        a: 'Speed RF sort un plan de fréquences simple et rapide pour tes micros et retours. RF Shot va plus loin pour les grosses configs : plus de 100 fréquences, intermodulations jusqu’à l’ordre 7, multi-bandes et sessions enregistrables.',
+      },
+      {
+        q: 'Les fréquences proposées sont-elles utilisables en France ?',
+        a: 'Les outils tiennent compte du contexte français (TNT, bandes PMSE) pour éviter les interférences. Il reste de ta responsabilité de vérifier les bandes autorisées selon ton matériel et ton lieu.',
+      },
+      {
+        q: 'Repérages, c’est disponible ?',
+        a: 'Pas encore : l’application arrive bientôt, avec une offre de lancement à 19,99 €.',
+      },
+    ],
+  },
+  {
+    title: 'Données & support',
+    items: [
+      {
+        q: 'Mes données sont-elles protégées ?',
+        a: 'Oui. On applique le RGPD et on ne vend jamais tes données. Les détails sont sur la page Confidentialité.',
+      },
+      {
+        q: 'Comment vous contacter ?',
+        a: 'Par email à contact@arnisoundtools.com — on répond vite.',
+      },
+    ],
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: sections.flatMap((s) => s.items).map((it) => ({
+    '@type': 'Question',
+    name: it.q,
+    acceptedAnswer: { '@type': 'Answer', text: it.a },
+  })),
+};
+---
+
+<Base
+  title="FAQ — Arnisound Tools"
+  description="Questions fréquentes sur Arnisound Tools : comptes, licences, paiement, compatibilité des outils et support."
+>
+  <section class="section">
+    <div class="container faq">
+      <span class="eyebrow">Aide</span>
+      <h1>Questions fréquentes</h1>
+      <p class="lead">Tout ce qu’on nous demande le plus souvent. Une question qui n’y est pas ? Écris-nous.</p>
+
+      {sections.map((s) => (
+        <div class="faq__group">
+          <h2>{s.title}</h2>
+          {s.items.map((it) => (
+            <details class="faq__item">
+              <summary>{it.q}</summary>
+              <p>{it.a}</p>
+            </details>
+          ))}
+        </div>
+      ))}
+
+      <div class="faq__contact card">
+        <div>
+          <h2>Tu ne trouves pas ta réponse ?</h2>
+          <p class="text-muted">Écris-nous, on répond vite.</p>
+        </div>
+        <a href="mailto:contact@arnisoundtools.com" class="btn btn--primary">Nous contacter</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Base>
+
+<style>
+  .faq { max-width: 780px; }
+  .faq h1 { margin-top: 0.75rem; }
+  .faq .lead { margin-top: 1rem; color: var(--text-muted); }
+  .faq__group { margin-top: 2.5rem; }
+  .faq__group h2 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+
+  .faq__item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    margin-top: 0.7rem;
+    overflow: hidden;
+  }
+  .faq__item summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 1rem 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary::after {
+    content: '+';
+    color: var(--accent);
+    font-size: 1.3rem;
+    line-height: 1;
+    flex: none;
+    transition: transform 0.2s ease;
+  }
+  .faq__item[open] summary::after { transform: rotate(45deg); }
+  .faq__item summary:hover { color: var(--accent); }
+  .faq__item p {
+    padding: 0 1.2rem 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .faq__contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    padding: 2rem;
+  }
+  .faq__contact h2 { font-size: 1.2rem; }
+</style>
