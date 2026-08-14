@@ -17,7 +17,7 @@ const comingSoon = Boolean(p.comingSoon);
 // - App payante : « Acheter » → checkout Lemon Squeezy si la boutique est active
 //   (LEMONSQUEEZY_STORE renseigné), sinon repli sur /login tant qu'elle ne l'est pas.
 const freeApp = Boolean(p.appUrl) && p.free;
-const canCheckout = !p.free && !comingSoon && checkoutLive && Boolean(p.variantId);
+const canCheckout = !p.free && !comingSoon && checkoutLive && Boolean(p.checkoutId);
 
 let ctaLabel: string;
 let ctaHref: string;
@@ -26,7 +26,7 @@ if (freeApp) {
   ctaHref = `${url('/login')}?mode=signup&next=${encodeURIComponent(p.appUrl!)}`;
 } else if (canCheckout) {
   ctaLabel = `Acheter — ${p.price}`;
-  ctaHref = checkoutUrl(p.variantId!); // le script y ajoute email + user_id si connecté
+  ctaHref = checkoutUrl(p.checkoutId!); // le script y ajoute email + user_id si connecté
 } else if (p.free) {
   ctaLabel = 'Créer un compte gratuit';
   ctaHref = url('/login');

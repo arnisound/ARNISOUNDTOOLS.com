@@ -14,10 +14,10 @@ export const checkoutLive = LEMONSQUEEZY_CHECKOUT_HOST.length > 0;
  * permettent au webhook de rattacher la licence au bon compte.
  */
 export function checkoutUrl(
-  variantId: string,
+  checkoutId: string,
   opts: { email?: string; userId?: string } = {},
 ): string {
-  const base = `https://${LEMONSQUEEZY_CHECKOUT_HOST}/checkout/buy/${variantId}`;
+  const base = `https://${LEMONSQUEEZY_CHECKOUT_HOST}/checkout/buy/${checkoutId}`;
   const params = new URLSearchParams();
   if (opts.email) params.set('checkout[email]', opts.email);
   if (opts.userId) params.set('checkout[custom][user_id]', opts.userId);
