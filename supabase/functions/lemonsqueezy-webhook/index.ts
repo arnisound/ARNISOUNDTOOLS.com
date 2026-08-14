@@ -22,10 +22,10 @@ const SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 // Un variant peut débloquer PLUSIEURS produits (bundle).
 // `days` (facultatif) = licence temporaire d'essai ; sinon licence permanente.
 const VARIANT_MAP: Record<string, { products: string[]; days?: number }> = {
-  '2009773': { products: ['speed-rf'] },
-  '2009790': { products: ['rf-shot'] },
-  '2009850': { products: ['speed-rf', 'rf-shot'] },            // Bundle (achat)
-  '2009872': { products: ['speed-rf', 'rf-shot'], days: 15 },  // Essai bundle 15 jours
+  '2018262': { products: ['speed-rf'] },
+  '2018260': { products: ['rf-shot'] },
+  '2018256': { products: ['speed-rf', 'rf-shot'] },            // Bundle (achat)
+  '2018257': { products: ['speed-rf', 'rf-shot'], days: 15 },  // Essai bundle 15 jours
   // '<variant Repérages>': { products: ['reperages'] },  // quand l'app sera en ligne
 };
 

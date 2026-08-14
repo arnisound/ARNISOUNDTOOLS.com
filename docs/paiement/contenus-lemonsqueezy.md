@@ -16,7 +16,7 @@
 
 - **Nom** : `Speed RF`
 - **Prix** : `9,99 €` (paiement unique)
-- **Variant ID** : `2009773`
+- **Variant ID** : `2018262`
 - **Bouton** : `Obtenir Speed RF`
 - **Visuel** : `speed-rf.svg`
 
@@ -50,7 +50,7 @@ Un micro qui grésille, un retour qui décroche en plein spectacle ? 9 fois sur 
 
 - **Nom** : `RF Shot`
 - **Prix** : `24,99 €` (paiement unique)
-- **Variant ID** : `2009790`
+- **Variant ID** : `2018260`
 - **Bouton** : `Obtenir RF Shot`
 - **Visuel** : `rf-shot.svg`
 
@@ -84,7 +84,7 @@ Quand vous faites tourner des dizaines de micros et de retours sans fil en même
 
 - **Nom** : `Bundle Speed RF + RF Shot`
 - **Prix** : `29,99 €` (au lieu de 34,98 €)
-- **Variant ID** : `2009850`
+- **Variant ID** : `2018256`
 - **Bouton** : `Obtenir le bundle RF`
 - **Visuel** : les deux logos ou le logo Arnisound
 

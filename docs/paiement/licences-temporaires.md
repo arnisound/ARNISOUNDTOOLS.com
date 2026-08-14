@@ -50,7 +50,7 @@ order by l.created_at desc;
 En plus du SQL manuel, un **essai du bundle** (Speed RF + RF Shot) est distribuable
 par **code** :
 
-- Produit d'essai Lemon Squeezy — variant `2009872`.
+- Produit d'essai Lemon Squeezy — variant `2018257`.
 - Le webhook le mappe sur `speed-rf` + `rf-shot`, **valable 15 jours**.
 - Tu crées un **code de réduction 100 %** dans Lemon Squeezy (limité en nombre
   d'usages / date si tu veux) et tu le diffuses. La personne l'utilise au

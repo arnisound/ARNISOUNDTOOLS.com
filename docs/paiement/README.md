@@ -28,11 +28,12 @@ navigateur. La clé `service_role` vit uniquement dans l'Edge Function.
 
 ## Variant IDs Lemon Squeezy
 
-| Produit | Prix | Variant ID |
+| Produit | Prix | Variant ID (live) |
 |---|---|---|
-| Speed RF | 9,99 € | `2009773` |
-| RF Shot | 24,99 € | `2009790` |
-| Bundle Speed RF + RF Shot | 29,99 € | `2009850` |
+| Speed RF | 9,99 € | `2018262` |
+| RF Shot | 24,99 € | `2018260` |
+| Bundle Speed RF + RF Shot | 29,99 € | `2018256` |
+| Essai bundle 15 jours | 0 € (code) | `2018257` |
 | Repérages | 19,99 € | *(à créer quand l'app sera en ligne)* |
 
 Le mapping variant → produit(s) est dans `lemonsqueezy-webhook/index.ts`
