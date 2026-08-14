@@ -2,6 +2,12 @@
 import Base from '../layouts/Base.astro';
 import { products, bundle } from '../data/products';
 import { url } from '../lib/site';
+import { checkoutLive, checkoutUrl } from '../lib/checkout';
+
+// Bouton du bundle : checkout Lemon Squeezy si la boutique est active,
+// sinon repli sur /login (le script client ajoute email + user_id si connecté).
+const bundleCheckout = checkoutLive && Boolean(bundle.checkoutId);
+const bundleHref = bundleCheckout ? checkoutUrl(bundle.checkoutId!) : url('/login');
 
 // Ordre d'affichage : les 2 outils RF (phares) d'abord, puis les gratuits,
 // et Repérages (bientôt) en dernier.
@@ -77,7 +83,7 @@ const outils = order
         <div class="bundle__price">
           <span class="bundle__was">{bundle.was}</span>
           <span class="bundle__now">{bundle.price}</span>
-          <a href={url('/speed-rf')} class="btn btn--primary">Profiter du bundle</a>
+          <a href={bundleHref} class="btn btn--primary" {...(bundleCheckout ? { 'data-checkout': true } : {})}>Profiter du bundle</a>
         </div>
       </div>
     </div>
@@ -116,6 +122,29 @@ const outils = order
     </div>
   </section>
 </Base>
+
+<script>
+  // Bouton « Acheter » (bundle) : ajoute l'email + le user_id du compte connecté
+  // à l'URL de checkout. Non connecté → passage par /login d'abord.
+  const nodes = document.querySelectorAll('a[data-checkout]');
+  if (nodes.length) {
+    const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+    const { supabase } = await import('../lib/supabase');
+    const { data: { session } } = await supabase.auth.getSession();
+    nodes.forEach((node) => {
+      const el = node as HTMLAnchorElement;
+      const target = el.getAttribute('href') || '';
+      if (session?.user) {
+        const params = new URLSearchParams();
+        params.set('checkout[email]', session.user.email ?? '');
+        params.set('checkout[custom][user_id]', session.user.id);
+        el.setAttribute('href', target + (target.includes('?') ? '&' : '?') + params.toString());
+      } else {
+        el.setAttribute('href', `${base}/login?next=${encodeURIComponent(target)}`);
+      }
+    });
+  }
+</script>
 
 <style>
   .hero {
