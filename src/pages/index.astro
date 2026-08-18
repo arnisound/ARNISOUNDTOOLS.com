@@ -9,6 +9,32 @@ import { checkoutLive, checkoutUrl } from '../lib/checkout';
 const bundleCheckout = checkoutLive && Boolean(bundle.checkoutId);
 const bundleHref = bundleCheckout ? checkoutUrl(bundle.checkoutId!) : url('/login');
 
+// Données structurées : identité de la marque + site (SEO).
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://arnisoundtools.com/#organization',
+      name: 'Arnisound Tools',
+      url: 'https://arnisoundtools.com',
+      logo: 'https://arnisoundtools.com/favicon-512.png',
+      email: 'contact@arnisoundtools.com',
+      slogan: 'Les outils du terrain, par des gens du terrain.',
+      description:
+        "Outils web pour le spectacle vivant, l'audiovisuel et l'événementiel : son, lumière, vidéo, régie.",
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://arnisoundtools.com/#website',
+      name: 'Arnisound Tools',
+      url: 'https://arnisoundtools.com',
+      inLanguage: 'fr-FR',
+      publisher: { '@id': 'https://arnisoundtools.com/#organization' },
+    },
+  ],
+};
+
 // Ordre d'affichage : les 2 outils RF (phares) d'abord, puis les gratuits,
 // et Repérages (bientôt) en dernier.
 const order = ['speed-rf', 'rf-shot', 'av-calc', 'fiche-tech', 'reperages'];
@@ -121,6 +147,7 @@ const outils = order
       <a href={url('/login')} class="btn btn--primary" style="margin-top: 1.5rem;">Créer un compte gratuit</a>
     </div>
   </section>
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
 </Base>
 
 <script>

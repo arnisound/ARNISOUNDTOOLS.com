@@ -35,6 +35,25 @@ if (freeApp) {
   ctaHref = url('/login'); // boutique Lemon Squeezy pas encore active
 }
 const checkoutAttrs = canCheckout ? { 'data-checkout': true } : {};
+
+// Données structurées produit (SEO).
+const SITE = 'https://arnisoundtools.com';
+const priceNum = p.free ? '0' : p.price.replace(/[^\d,]/g, '').replace(',', '.');
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: p.name,
+  description: p.tagline,
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'Web',
+  url: `${SITE}/${p.slug}/`,
+  offers: {
+    '@type': 'Offer',
+    price: priceNum,
+    priceCurrency: 'EUR',
+    availability: comingSoon ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock',
+  },
+};
 ---
 
 <Base title={`${p.name} — Arnisound Tools`} description={p.tagline}>
@@ -162,6 +181,8 @@ const checkoutAttrs = canCheckout ? { 'data-checkout': true } : {};
       </div>
     </div>
   </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
 </Base>
 
 <script>

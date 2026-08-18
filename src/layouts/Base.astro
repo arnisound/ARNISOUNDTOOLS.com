@@ -9,12 +9,15 @@ interface Props {
   description?: string;
   /** Masque l'en-tête/pied (pages app immersives type login/dashboard) */
   bare?: boolean;
+  /** Empêche l'indexation par les moteurs (pages privées : login, compte) */
+  noindex?: boolean;
 }
 
 const {
   title = 'Arnisound Tools — Les outils du terrain',
   description = "Suite d'outils web professionnels pour le spectacle vivant et l'événementiel. Simples, en français, pensés pour le terrain.",
   bare = false,
+  noindex = false,
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://arnisoundtools.com');
@@ -33,6 +36,7 @@ const canonical = new URL(Astro.url.pathname, site).href;
     <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
