@@ -11,7 +11,7 @@ vivant, de l'audiovisuel et de l'événementiel : son, lumière, vidéo et régi
 Conçus par un technicien du spectacle, ces outils sont **simples, en français et
 accessibles depuis n'importe quel navigateur, sans installation**. La marque
 propose notamment des solutions de coordination de fréquences pour micros sans
-fil (Speed RF, RF Shot), une boîte à 71 calculateurs métier (AV Calc) et un
+fil (Speed RF, RF Shot), une boîte à 71 calculateurs pro (AV Calc) et un
 générateur de fiches techniques (Fiche Tech Creator). Lancée en 2026 par Théo
 Arnissolle, Arnisound Tools veut rendre accessibles à tous les budgets des outils
 d'ordinaire chers, complexes et souvent réservés aux ingénieurs.
@@ -25,25 +25,27 @@ d'ordinaire chers, complexes et souvent réservés aux ingénieurs.
 
 ## L'histoire
 
-Tout part du terrain. Un plan de fréquences à refaire en urgence avant l'ouverture
-des portes, un calcul de puissance vérifié trois fois sur un coin de table, une
-fiche technique bricolée sur Word à minuit. Les logiciels « pros » existent, mais
-ils sont **chers, complexes, et souvent en anglais** — pensés pour des ingénieurs,
-pas pour le technicien qui doit aller vite entre deux montages.
+Tout part du terrain. Un plan de fréquences à refaire en urgence, un calcul de
+puissance vérifié trois fois sur un coin de table, une fiche technique bricolée sur
+Word à minuit. Les logiciels « pros » existent, mais ils sont **complexes, pas
+multimarques et souvent en anglais** — pensés pour des techniciens expérimentés,
+pas pour celui qui doit aller vite entre deux montages.
 
 Théo Arnissolle, technicien du spectacle, a conçu Arnisound Tools pour combler ce
 manque : des outils **rapides, clairs et en français**, faits par quelqu'un qui
 connaît la régie de l'intérieur. Pas de fonctionnalités gadget : ce qui sert,
-point. Le premier objectif — que « ça marche du premier coup » — guide chaque outil.
+point. Le premier objectif : que « ça marche du premier coup ».
 
 ## Le problème → la solution
 
 - **Le problème :** sur le terrain, on manque de temps, de budget et d'outils
-  adaptés. Les micros HF grésillent ou décrochent, les calculs se font à la main,
-  les logiciels de coordination coûtent des centaines d'euros.
+  adaptés. Les micros HF ou les in-ears grésillent ou décrochent, les calculs de
+  tous les jours se font à la main ou avec la calculette du téléphone, et les
+  logiciels de coordination coûtent des centaines d'euros — ou, quand ils viennent
+  des constructeurs, ne sont pas adaptés à la France.
 - **La solution :** des applications web qui font l'essentiel, tout de suite, sans
   installation ni formation. On renseigne quelques infos, on obtient un résultat
-  fiable — en secondes.
+  fiable en quelques secondes.
 
 ---
 
@@ -54,7 +56,7 @@ point. Le premier objectif — que « ça marche du premier coup » — guide ch
 | **Speed RF** | Un plan de fréquences fiable pour micros et retours sans fil, en quelques secondes. | 9,99 € (achat unique) |
 | **RF Shot** | La coordination avancée : 100+ fréquences, intermodulations jusqu'à l'ordre 7, multi-bandes. | 24,99 € (achat unique) |
 | **AV Calc** | 71 calculateurs, formules et pense-bêtes métier (son, vidéo, élec, réseau, structure…). | Gratuit |
-| **Fiche Tech Creator** | Générer des fiches techniques claires, exportables en PDF. | Gratuit |
+| **Fiche Tech Creator** | Générer des fiches techniques claires en quelques minutes, exportables en PDF. | Gratuit |
 | **Repérages** *(bientôt)* | Du relevé GPS sur site au dossier technique (plan à l'échelle, câblage, PDF/DXF). | 19,99 € (lancement) |
 
 ---
@@ -73,17 +75,17 @@ point. Le premier objectif — que « ça marche du premier coup » — guide ch
 
 ## Citation du fondateur *(à ajuster librement)*
 
-> « Sur le terrain, on n'a ni le temps ni l'envie d'ouvrir un logiciel compliqué en
-> anglais. Je voulais des outils que je serais fier d'utiliser moi-même en régie :
-> simples, rapides, en français. Arnisound Tools, c'est ça — les outils du terrain,
-> par des gens du terrain. »
+> « Sur le terrain, on n'a pas toujours le temps ni les moyens d'ouvrir des
+> logiciels constructeurs, parfois longs à configurer. Je voulais des outils que je
+> serais fier d'utiliser moi-même en régie : simples, rapides, en français.
+> Arnisound Tools, c'est ça : les outils du terrain, par des gens du terrain. »
 > — Théo Arnissolle, fondateur d'Arnisound Tools
 
 ---
 
 ## Pour qui
 
-Techniciens du spectacle, régisseurs son/lumière/vidéo, intermittents,
+Techniciens du spectacle, régisseurs son/lumière/vidéo, musiciens, intermittents,
 prestataires événementiels, écoles et associations. Du grand plateau au petit
 événement, de l'amateur éclairé au professionnel.
 
