@@ -52,6 +52,58 @@ Coordination de fréquences HF, micros sans fil, retours in-ear, régie son, ré
 lumière, régie vidéo, spectacle vivant, événementiel, audiovisuel, calculateurs
 techniques, fiches techniques, intermittents du spectacle, PMSE, outils web métier.
 
+## Post LinkedIn de lancement (à publier)
+
+> 🎛️ **J'ai lancé Arnisound Tools.**
+>
+> Technicien du spectacle, j'ai passé des années à refaire des plans de fréquences
+> en urgence, à vérifier des calculs sur un coin de table, à bricoler des fiches
+> techniques sur Word à minuit.
+>
+> Les logiciels « pros » existent. Mais ils sont chers, compliqués, souvent en
+> anglais — pensés pour des ingénieurs, pas pour celui qui doit aller vite entre
+> deux montages.
+>
+> Alors j'ai créé les outils que j'aurais voulu avoir : simples, en français,
+> directement dans le navigateur, sans rien installer.
+>
+> 👉 Speed RF — un plan de fréquences fiable pour micros et retours sans fil, en quelques secondes
+> 👉 RF Shot — la coordination des gros plateaux (100+ fréquences, intermodulations)
+> 👉 AV Calc — 71 calculateurs métier (gratuit)
+> 👉 Fiche Tech Creator — des fiches techniques propres (gratuit)
+> Et bientôt Repérages, du relevé terrain au dossier technique.
+>
+> Paiement unique, licence à vie, pas d'abonnement. Parce que les outils du terrain
+> doivent rester accessibles.
+>
+> Si tu bosses dans le son, la lumière, la vidéo ou la régie — jette un œil, dis-moi
+> ce que tu en penses, et n'hésite pas à partager 🙏
+>
+> arnisoundtools.com
+>
+> #spectaclevivant #régie #evenementiel #technicienduspectacle #sonorisation #microHF
+
+---
+
+# Descriptif des services
+
+*(Utilisable dans la section « Services » de ton profil LinkedIn, ou partout où on
+te demande de décrire ton offre.)*
+
+Arnisound Tools met à disposition des outils web professionnels pour le spectacle
+vivant, l'audiovisuel et l'événementiel. Simples, en français, accessibles dans le
+navigateur, sans installation — en paiement unique (licence perpétuelle).
+
+- **Coordination de fréquences HF (Speed RF, RF Shot)** — des plans de fréquences
+  fiables pour micros et retours sans fil, du petit événement au gros plateau
+  (100+ fréquences, intermodulations, multi-bandes).
+- **Calculateurs techniques (AV Calc)** — 71 outils métier gratuits : son, lumière,
+  vidéo, électricité, réseau, connectique, structure.
+- **Fiches techniques (Fiche Tech Creator)** — génération de fiches claires,
+  exportables en PDF. Gratuit.
+- **Repérages (bientôt)** — du relevé terrain géolocalisé au dossier technique
+  (plan à l'échelle, câblage, export PDF/DXF).
+
 ---
 
 # Google Business Profile — Services
