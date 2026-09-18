@@ -4,7 +4,7 @@ description: "Qu'est-ce qu'une fiche technique (et un rider) ? Que doit-elle con
 slug: creer-fiche-technique-spectacle
 keywords: [fiche technique, rider technique, spectacle vivant, son lumière plateau, régie, accueil technique]
 statut: publie
-date: 2026-08-20
+date: 2026-09-01
 ---
 
 # Créer une fiche technique de spectacle qui passe partout

@@ -4,7 +4,7 @@ description: "Quelles bandes de fréquences a-t-on le droit d'utiliser pour ses 
 slug: frequences-micro-hf-france-guide
 keywords: [fréquences micro HF, PMSE, France, ANFR, ARCEP, TNT, UHF, bande 700, micro sans fil légal]
 statut: publie
-date: 2026-08-20
+date: 2026-09-08
 ---
 
 # Fréquences micro HF autorisées en France : le guide clair (2026)

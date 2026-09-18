@@ -4,7 +4,7 @@ description: "Comment régler le delay de vos enceintes de rappel pour un son ne
 slug: calculer-delay-enceinte-methode
 keywords: [calcul delay enceinte, delay speaker, vitesse du son, effet Haas, effet de précédence, sonorisation, time alignment]
 statut: publie
-date: 2026-08-20
+date: 2026-09-04
 ---
 
 # Calculer le delay d'une enceinte : la méthode simple (et pourquoi ça marche)

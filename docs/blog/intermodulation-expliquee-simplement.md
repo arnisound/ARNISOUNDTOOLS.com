@@ -4,7 +4,7 @@ description: "Vos micros HF grésillent quand ils sont tous allumés, alors qu'i
 slug: intermodulation-expliquee-simplement
 keywords: [intermodulation, IM3, micro HF, coordination de fréquences, produits d'intermodulation, PMSE, RF]
 statut: publie
-date: 2026-08-20
+date: 2026-09-12
 ---
 
 # L'intermodulation expliquée simplement (et pourquoi vos micros se gênent)

@@ -4,7 +4,7 @@ description: "Pourquoi un micro sans fil grésille ou décroche ? Les cinq cause
 slug: micros-hf-gresillent-decrochent
 keywords: [micro HF, micro sans fil, grésillement, décrochage, fréquences, intermodulation, PMSE, ANFR, TNT]
 statut: publie
-date: 2026-08-20
+date: 2026-09-18
 ---
 
 # Micros HF qui grésillent ou décrochent : les vraies causes et comment les régler
