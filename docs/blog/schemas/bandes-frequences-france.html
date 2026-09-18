@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bandes de fréquences micros HF — France (470–900 MHz)</title>
+<style>
+  :root{
+    --bg:#0c0c0e; --panel:#141318; --border:#2a2620;
+    --text:#f4f0e8; --muted:#a9a29a; --faint:#8f887e;
+    --ok:#3fae6b; --shared:#cb8a27; --no:#d9503c; --other:#5a5650;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:'Helvetica Neue',Arial,sans-serif;padding:18px}
+  .wrap{max-width:920px;margin:0 auto;background:var(--panel);
+    border:1px solid var(--border);border-radius:16px;padding:20px}
+  h2{font-size:1.15rem;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:.9rem;margin:0 0 20px;line-height:1.5}
+  .track{position:relative;height:66px;width:100%;margin-bottom:2px}
+  .seg{position:absolute;top:0;height:66px;border-radius:5px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+    font-size:.72rem;font-weight:700;color:#0c0c0e;text-align:center;padding:0 4px;
+    border:2px solid transparent;transition:filter .12s,border-color .12s;outline:none}
+  .seg:hover,.seg.active{filter:brightness(1.12);border-color:#f4f0e8}
+  .seg.ok{background:var(--ok)} .seg.shared{background:var(--shared)}
+  .seg.no{background:var(--no)} .seg.other{background:var(--other);color:#d8d2c8}
+  .ruler{position:relative;height:22px;width:100%;margin-bottom:16px}
+  .tick{position:absolute;top:0;transform:translateX(-50%);font-size:10px;color:var(--faint)}
+  .tick::before{content:"";position:absolute;top:-4px;left:50%;width:1px;height:4px;background:#3a352c}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.78rem;color:var(--muted);margin-bottom:16px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .info{border:1px solid var(--border);border-radius:12px;padding:14px 16px;min-height:96px;background:#100f13}
+  .info h3{margin:0 0 6px;font-size:1rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .info .badge{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:999px}
+  .badge.ok{background:rgba(63,174,107,.18);color:#5fce8a}
+  .badge.shared{background:rgba(203,138,39,.18);color:#e0a94b}
+  .badge.no{background:rgba(217,80,60,.18);color:#f0705c}
+  .badge.other{background:rgba(140,134,124,.2);color:#bdb6ac}
+  .info .range{color:var(--faint);font-weight:600;font-size:.85rem}
+  .info p{margin:6px 0 0;color:var(--muted);font-size:.88rem;line-height:1.55}
+  .note{font-size:.78rem;color:var(--faint);margin-top:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2>Fréquences des micros HF en France : où a-t-on le droit ?</h2>
+  <p class="sub">Le spectre UHF de 470 à 900 MHz, tel qu'il est réparti en France. Cliquez sur une bande
+    pour voir à quoi elle correspond et si les micros sans fil (PMSE) y sont autorisés.</p>
+
+  <div class="track" id="track"></div>
+  <div class="ruler" id="ruler"></div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--shared)"></span>Micros OK — partagé avec la TNT</span>
+    <span><span class="dot" style="background:var(--ok)"></span>Micros OK — bande dédiée</span>
+    <span><span class="dot" style="background:var(--no)"></span>Interdit (téléphonie mobile)</span>
+    <span><span class="dot" style="background:var(--other)"></span>Autres services</span>
+  </div>
+
+  <div class="info" id="info"></div>
+
+  <p class="note">Repères indicatifs — la réglementation évolue (réattribution de bandes, autorisations
+    temporaires…). Vérifiez toujours l'état à jour auprès de l'ANFR et de l'ARCEP. À noter : une autre
+    bande dédiée aux micros existe hors de ce graphique, autour de <b>1785–1805 MHz</b>.</p>
+</div>
+
+<script>
+(function(){
+  const LO=470, HI=900, span=HI-LO;
+  const pct=f=>(f-LO)/span*100;
+  const segs=[
+    {from:470,to:694,cls:"shared",label:"470–694 · UHF (TNT)",badge:"Micros OK — partagé",
+     title:"UHF 470–694 MHz — partagée avec la TNT",
+     text:"La bande principale des micros sans fil en France. Elle est partagée avec la télévision numérique terrestre (TNT) : vos micros doivent se placer dans les canaux TV non utilisés localement — et ces canaux libres changent d'une ville à l'autre. Usage professionnel sans licence individuelle."},
+    {from:694,to:790,cls:"no",label:"694–790 · Bande 700",badge:"Interdit",
+     title:"Bande 700 (694–790 MHz) — téléphonie mobile",
+     text:"Réattribuée à la téléphonie mobile (4G/5G) lors du « dividende numérique ». Interdite aux micros : y émettre brouille les réseaux et vous expose à des interférences. Vérifiez que votre matériel ancien ne l'utilise pas."},
+    {from:790,to:823,cls:"no",label:"790–823",badge:"Interdit",
+     title:"790–823 MHz — téléphonie mobile (800)",
+     text:"Bande de téléphonie mobile. Non disponible pour les micros sans fil."},
+    {from:823,to:832,cls:"ok",label:"823–832",badge:"Micros OK — dédiée",
+     title:"823–832 MHz — bande PMSE dédiée",
+     text:"Petite bande réservée aux micros et liaisons audio de spectacle (PMSE), sans licence, à puissance limitée. Utile en complément quand l'UHF est saturée. Cadre : décision ARCEP n° 2015-0830."},
+    {from:832,to:862,cls:"no",label:"832–862",badge:"Interdit",
+     title:"832–862 MHz — téléphonie mobile (800)",
+     text:"Bande de téléphonie mobile (voie montante). Non disponible pour les micros."},
+    {from:862,to:900,cls:"other",label:"862–900",badge:"Autres services",
+     title:"862–900 MHz — autres services",
+     text:"Zone occupée par divers usages (dispositifs à courte portée, services non dédiés au spectacle). Pas destinée aux micros HF professionnels."}
+  ];
+
+  const track=document.getElementById("track"), ruler=document.getElementById("ruler"),
+        info=document.getElementById("info");
+
+  segs.forEach((s,i)=>{
+    const d=document.createElement("div");
+    d.className="seg "+s.cls; d.tabIndex=0;
+    d.style.left=pct(s.from)+"%"; d.style.width=(pct(s.to)-pct(s.from))+"%";
+    if(pct(s.to)-pct(s.from) > 7) d.textContent=s.label;
+    d.addEventListener("click",()=>select(i));
+    d.addEventListener("mouseenter",()=>show(i));
+    d.addEventListener("focus",()=>select(i));
+    d.dataset.i=i;
+    track.appendChild(d);
+  });
+
+  for(let f=470;f<=900;f+=50){
+    const t=document.createElement("div");
+    t.className="tick"; t.style.left=pct(f)+"%"; t.textContent=f;
+    ruler.appendChild(t);
+  }
+  const mhz=document.createElement("div");
+  mhz.className="tick"; mhz.style.left="100%"; mhz.style.transform="translateX(-100%)";
+  mhz.textContent="MHz"; mhz.style.top="10px"; ruler.appendChild(mhz);
+
+  function show(i){
+    const s=segs[i];
+    info.innerHTML=`<h3>${s.title} <span class="badge ${s.cls}">${s.badge}</span></h3>`+
+      `<div class="range">${s.from} – ${s.to} MHz</div><p>${s.text}</p>`;
+  }
+  function select(i){
+    [...track.children].forEach(c=>c.classList.toggle("active",+c.dataset.i===i));
+    show(i);
+  }
+  select(0);
+})();
+</script>
+</body>
+</html>

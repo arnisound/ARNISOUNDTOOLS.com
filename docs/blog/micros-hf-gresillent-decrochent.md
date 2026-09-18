@@ -9,9 +9,6 @@ date: 2026-08-20
 
 # Micros HF qui grésillent ou décrochent : les vraies causes et comment les régler
 
-> ✏️ *Emplacement idéal pour une courte anecdote personnelle en ouverture —
-> à ajouter pour ancrer l'article dans le vécu.*
-
 Un micro qui se met à grésiller pendant un discours, un retour in-ear qui décroche en
 plein morceau : c'est le genre d'incident qui gâche une prestation autrement réussie.
 Après plusieurs années en régie, j'en ai tiré une conviction : quand une liaison HF
@@ -63,6 +60,12 @@ parasites, absentes au départ [4]. Si l'une d'elles tombe sur un canal utilisé
 le perturbe. Plus les émetteurs sont nombreux et rapprochés, plus le phénomène
 s'intensifie [4][5].
 
+<!-- SCHÉMA INTERACTIF : docs/blog/schemas/intermodulation-spectre.html
+     Spectre de 8 micros et de leurs produits d'intermodulation IM3 (2 et 3 émetteurs),
+     avec bascule « plan naïf / plan coordonné » qui montre les collisions.
+     → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
+> 📊 **[Schéma interactif à insérer ici : « Spectre d'intermodulation — 8 micros »]**
+
 C'est pourquoi un plan qui fonctionne à huit fréquences peut se dégrader nettement à
 vingt-cinq. Au-delà de quelques canaux, le calcul manuel atteint vite ses limites :
 les fabricants eux-mêmes recommandent un logiciel de coordination [5]. Sur les
@@ -76,9 +79,9 @@ du récepteur. De nombreux décrochages proviennent d'antennes mal positionnées
 dissimulées dans un flight case, repliées contre une surface métallique, ou trop
 éloignées de la scène.
 
-La recommandation de Shure est claire : l'antenne doit se trouver dans le même espace
-que le micro et « voir » l'artiste [6]. En pratique : antenne en hauteur, dégagée,
-éloignée du métal et des structures ; et, si la scène est distante, antennes
+Les recommandations des constructeurs sont claires : l'antenne doit se trouver dans le
+même espace que le micro et « voir » l'artiste [6]. En pratique : antenne en hauteur,
+dégagée, éloignée du métal et des structures ; et, si la scène est distante, antennes
 déportées vers l'avant, avec un câblage adapté et, au-delà d'une certaine longueur, un
 amplificateur d'antenne.
 
@@ -105,8 +108,8 @@ scan RF avant la représentation.
 
 ## Méthode de dépannage en direct
 
-Le principe, recommandé par Shure, consiste à isoler les variables une à une [6].
-Concrètement :
+Le principe, recommandé par les constructeurs, consiste à isoler les variables une à
+une [6]. Concrètement :
 
 1. **Observer l'indicateur RF du récepteur.** S'il chute au moment du grésillement,
    le problème est radio (fréquence, antenne, distance) ; s'il reste stable, il se
@@ -127,6 +130,12 @@ individuelle, réservé à un usage professionnel et encadré par l'ARCEP [2] :
 - **470–694 MHz** : bande principale, partagée avec la TNT.
 - **823–832 MHz** et **1785–1805 MHz** : bandes dédiées, à puissance limitée [3].
 - **694–790 MHz** : interdite (réattribuée à la téléphonie mobile).
+
+<!-- SCHÉMA INTERACTIF : docs/blog/schemas/bandes-frequences-france.html
+     Répartition du spectre 470–900 MHz en France : bandes autorisées / partagées TNT /
+     interdites, cliquables avec explication.
+     → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
+> 📊 **[Schéma interactif à insérer ici : « Bandes de fréquences micros HF — France 470–900 MHz »]**
 
 Le cadre est fixé par la décision ARCEP n° 2015-0830 [3]. Ces bandes et ces
 puissances évoluant régulièrement, il est prudent de vérifier leur état à jour auprès

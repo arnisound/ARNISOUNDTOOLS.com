@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spectre d'intermodulation — 8 micros HF</title>
+<style>
+  :root{
+    --bg:#0c0c0e; --panel:#141318; --border:#2a2620; --border-soft:#221f1a;
+    --text:#f4f0e8; --muted:#a9a29a; --faint:#8f887e;
+    --gold:#cb8a27; --gold-soft:rgba(203,138,39,.16);
+    --im2:#4aa3d0; --im3:#7d6bd0; --danger:#e0533e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:'Helvetica Neue',Arial,sans-serif;padding:18px;}
+  .wrap{max-width:920px;margin:0 auto;background:var(--panel);
+    border:1px solid var(--border);border-radius:16px;padding:20px 20px 8px;}
+  h2{font-size:1.15rem;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:.9rem;margin:0 0 16px;line-height:1.5}
+  .controls{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-bottom:14px}
+  .seg{display:inline-flex;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .seg button{background:transparent;color:var(--muted);border:0;padding:8px 14px;
+    font:inherit;font-size:.85rem;cursor:pointer}
+  .seg button.on{background:var(--gold-soft);color:var(--gold);font-weight:700}
+  .chk{display:inline-flex;align-items:center;gap:7px;font-size:.85rem;color:var(--muted);cursor:pointer;user-select:none}
+  .chk input{accent-color:var(--gold);width:15px;height:15px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .readout{margin-left:auto;font-size:.86rem;color:var(--muted)}
+  .readout b{color:var(--text)}
+  .readout .col{color:var(--danger);font-weight:700}
+  .chart{position:relative;width:100%}
+  svg{width:100%;height:auto;display:block;touch-action:none}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:6px 2px 12px;font-size:.8rem;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .tip{position:absolute;pointer-events:none;background:#000;border:1px solid var(--border);
+    border-radius:8px;padding:7px 9px;font-size:.78rem;color:var(--text);
+    transform:translate(-50%,-115%);white-space:nowrap;opacity:0;transition:opacity .1s;z-index:5}
+  .tip .warn{color:var(--danger)}
+  .note{font-size:.78rem;color:var(--faint);margin:2px 2px 12px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2>Intermodulation : 8 micros qui fabriquent leurs propres parasites</h2>
+  <p class="sub">Chaque micro (M1–M8) émet sur une fréquence. En se mélangeant, les émetteurs créent
+    des <b>produits d'intermodulation</b> du 3ᵉ ordre : à 2 émetteurs (2·f₁−f₂) et à 3 émetteurs
+    (f₁+f₂−f₃). Quand un produit tombe <b style="color:var(--danger)">sur</b> un micro, c'est le grésillement.</p>
+
+  <div class="controls">
+    <div class="seg" id="plan">
+      <button data-plan="naif" class="on">Plan naïf (équidistant)</button>
+      <button data-plan="coord">Plan coordonné</button>
+    </div>
+    <label class="chk"><input type="checkbox" id="c2" checked><span class="dot" style="background:var(--im2)"></span>IM3 · 2 émetteurs</label>
+    <label class="chk"><input type="checkbox" id="c3" checked><span class="dot" style="background:var(--im3)"></span>IM3 · 3 émetteurs</label>
+    <div class="readout" id="readout"></div>
+  </div>
+
+  <div class="chart">
+    <svg id="svg" viewBox="0 0 1000 320" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="tip" id="tip"></div>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--gold)"></span>Micro (porteuse)</span>
+    <span><span class="dot" style="background:var(--im2)"></span>Produit 2 émetteurs</span>
+    <span><span class="dot" style="background:var(--im3)"></span>Produit 3 émetteurs</span>
+    <span><span class="dot" style="background:var(--danger)"></span>Collision (parasite sur un micro)</span>
+  </div>
+  <p class="note">Passez la souris sur une barre pour le détail. Bascule « naïf / coordonné » pour voir
+    comment un plan bien choisi supprime les collisions — le principe même de la coordination de fréquences.</p>
+</div>
+
+<script>
+(function(){
+  const svgNS="http://www.w3.org/2000/svg";
+  const svg=document.getElementById("svg"), tip=document.getElementById("tip"),
+        readout=document.getElementById("readout"), chart=svg.parentElement;
+  const GUARD=0.1; // MHz : tolérance de collision (±100 kHz)
+  let state={plan:"naif", show2:true, show3:true};
+
+  // --- Génère les 8 fréquences selon le plan ---
+  function naif(){ const a=[]; for(let i=0;i<8;i++) a.push(+(502+i*0.6).toFixed(3)); return a; }
+  function coord(){
+    // greedy : on ajoute des fréquences en évitant que tout produit IM3 (2TX & 3TX) tombe sur une porteuse
+    const chans=[], guard=0.15;
+    for(let f=500; f<=610 && chans.length<8; f=+(f+0.05).toFixed(3)){
+      const t=[...chans,f]; let ok=true;
+      // 2TX
+      for(let i=0;i<t.length&&ok;i++)for(let j=0;j<t.length&&ok;j++){ if(i===j)continue;
+        const p=2*t[i]-t[j]; for(const c of t){ if(Math.abs(p-c)<guard){ok=false;break;} } }
+      // 3TX
+      for(let i=0;i<t.length&&ok;i++)for(let j=i+1;j<t.length&&ok;j++)for(let k=0;k<t.length&&ok;k++){
+        if(k===i||k===j)continue; const p=t[i]+t[j]-t[k];
+        for(const c of t){ if(Math.abs(p-c)<guard){ok=false;break;} } }
+      if(ok) chans.push(f);
+    }
+    return chans;
+  }
+
+  function computeProducts(car){
+    const prods=[];
+    for(let i=0;i<car.length;i++)for(let j=0;j<car.length;j++){ if(i===j)continue;
+      prods.push({f:+(2*car[i]-car[j]).toFixed(3),type:2,label:`2·M${i+1} − M${j+1}`}); }
+    for(let i=0;i<car.length;i++)for(let j=i+1;j<car.length;j++)for(let k=0;k<car.length;k++){
+      if(k===i||k===j)continue;
+      prods.push({f:+(car[i]+car[j]-car[k]).toFixed(3),type:3,label:`M${i+1} + M${j+1} − M${k+1}`}); }
+    // marque les collisions (produit tombant sur une porteuse)
+    prods.forEach(p=>{ p.hit=car.some(c=>Math.abs(p.f-c)<=GUARD); });
+    return prods;
+  }
+
+  function render(){
+    const car = state.plan==="naif"?naif():coord();
+    const prods = computeProducts(car);
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+    // fenêtre = plage des porteuses + marge
+    const lo=Math.min(...car)-3, hi=Math.max(...car)+3;
+    const W=1000,H=320, padL=24,padR=24, base=250, top=60;
+    const x=f=> padL + (f-lo)/(hi-lo)*(W-padL-padR);
+    const inWin=f=> f>=lo && f<=hi;
+
+    // axe
+    const axis=document.createElementNS(svgNS,"line");
+    axis.setAttribute("x1",padL);axis.setAttribute("x2",W-padR);
+    axis.setAttribute("y1",base);axis.setAttribute("y2",base);
+    axis.setAttribute("stroke","#3a352c");axis.setAttribute("stroke-width","1.5");
+    svg.appendChild(axis);
+    // graduations MHz
+    const step=(hi-lo)>40?10:2;
+    for(let f=Math.ceil(lo/step)*step; f<=hi; f+=step){
+      const gx=x(f);
+      const t=document.createElementNS(svgNS,"line");
+      t.setAttribute("x1",gx);t.setAttribute("x2",gx);t.setAttribute("y1",base);t.setAttribute("y2",base+5);
+      t.setAttribute("stroke","#3a352c");svg.appendChild(t);
+      const lbl=document.createElementNS(svgNS,"text");
+      lbl.setAttribute("x",gx);lbl.setAttribute("y",base+20);lbl.setAttribute("fill","#8f887e");
+      lbl.setAttribute("font-size","11");lbl.setAttribute("text-anchor","middle");
+      lbl.textContent=f; svg.appendChild(lbl);
+    }
+    const unit=document.createElementNS(svgNS,"text");
+    unit.setAttribute("x",W-padR);unit.setAttribute("y",base+34);unit.setAttribute("fill","#8f887e");
+    unit.setAttribute("font-size","11");unit.setAttribute("text-anchor","end");unit.textContent="MHz";
+    svg.appendChild(unit);
+
+    function bar(f,y2,color,w,meta){
+      if(!inWin(f))return;
+      const gx=x(f);
+      const l=document.createElementNS(svgNS,"line");
+      l.setAttribute("x1",gx);l.setAttribute("x2",gx);
+      l.setAttribute("y1",base);l.setAttribute("y2",y2);
+      l.setAttribute("stroke",color);l.setAttribute("stroke-width",w);
+      l.setAttribute("stroke-linecap","round");l.style.cursor="pointer";
+      l.addEventListener("mousemove",e=>showTip(e,meta));
+      l.addEventListener("mouseleave",hideTip);
+      svg.appendChild(l);
+      return gx;
+    }
+
+    // quels produits sont actuellement affichés ?
+    const active = p => (p.type===2&&state.show2)||(p.type===3&&state.show3);
+    // un micro est "parasité" si un produit affiché tombe dessus
+    const hitCar = car.map(c => prods.some(p=>active(p) && Math.abs(p.f-c)<=GUARD));
+
+    // produits (dessous, plus courts)
+    prods.forEach(p=>{
+      if(!active(p)) return;
+      const color = p.type===2? "var(--im2)":"var(--im3)";
+      const h = p.type===2? 150:175;
+      bar(p.f,h,color,2,{
+        title:(p.type===2?"IM3 (2 émetteurs)":"IM3 (3 émetteurs)"),
+        formula:`${p.label} = ${p.f.toFixed(3)} MHz`,
+        hit:p.hit
+      });
+    });
+
+    // porteuses (micros) par-dessus, hautes — rouges si parasitées
+    car.forEach((f,i)=>{
+      const hit=hitCar[i];
+      const gx=bar(f,top, hit?"var(--danger)":"var(--gold)", 4,
+        {title:`Micro M${i+1}`+(hit?" — parasité":""),formula:`${f.toFixed(3)} MHz`,hit});
+      if(hit){ // triangle d'alerte au-dessus
+        const tri=document.createElementNS(svgNS,"path");
+        tri.setAttribute("d",`M${gx-6},${top-16} L${gx+6},${top-16} L${gx},${top-6} Z`);
+        tri.setAttribute("fill","var(--danger)"); svg.appendChild(tri);
+      }
+      const lbl=document.createElementNS(svgNS,"text");
+      lbl.setAttribute("x",gx);lbl.setAttribute("y",top-22);
+      lbl.setAttribute("fill",hit?"#e0533e":"#cb8a27");
+      lbl.setAttribute("font-size","11");lbl.setAttribute("font-weight","700");lbl.setAttribute("text-anchor","middle");
+      lbl.textContent="M"+(i+1); svg.appendChild(lbl);
+    });
+
+    const touched=hitCar.filter(Boolean).length;
+    const shown=prods.filter(active).length;
+    readout.innerHTML=`<b>${shown}</b> produits · `+
+      (touched>0?`<span class="col">${touched}/8 micros parasités</span>`
+                :`<b style="color:#5bbf7a">0 micro parasité ✓</b>`);
+  }
+
+  function showTip(e,m){
+    const r=chart.getBoundingClientRect();
+    tip.innerHTML=`<b>${m.title}</b><br>${m.formula}`+(m.hit?`<br><span class="warn">⚠ tombe sur un micro</span>`:"");
+    tip.style.left=(e.clientX-r.left)+"px";
+    tip.style.top=(e.clientY-r.top)+"px";
+    tip.style.opacity="1";
+  }
+  function hideTip(){ tip.style.opacity="0"; }
+
+  document.getElementById("plan").addEventListener("click",e=>{
+    const b=e.target.closest("button"); if(!b)return;
+    [...e.currentTarget.children].forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); state.plan=b.dataset.plan; render();
+  });
+  document.getElementById("c2").addEventListener("change",e=>{state.show2=e.target.checked;render();});
+  document.getElementById("c3").addEventListener("change",e=>{state.show3=e.target.checked;render();});
+
+  render();
+})();
+</script>
+</body>
+</html>
