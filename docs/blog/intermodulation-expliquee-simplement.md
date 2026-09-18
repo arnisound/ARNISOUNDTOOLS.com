@@ -3,7 +3,7 @@ title: "L'intermodulation expliquée simplement (et pourquoi vos micros se gêne
 description: "Vos micros HF grésillent quand ils sont tous allumés, alors qu'ils vont bien séparément ? C'est l'intermodulation. Explication simple, exemples et solutions, sources à l'appui."
 slug: intermodulation-expliquee-simplement
 keywords: [intermodulation, IM3, micro HF, coordination de fréquences, produits d'intermodulation, PMSE, RF]
-statut: brouillon
+statut: publie
 date: 2026-08-20
 ---
 
@@ -57,11 +57,10 @@ combinaison. Leur somme définit l'**ordre** du produit. Ici, 2 + 1 = 3 : on est
 en jeu. Voyons les autres ordres, puis les produits qui mettent **trois émetteurs** en
 cause.
 
-<!-- SCHÉMA INTERACTIF : docs/blog/schemas/intermodulation-spectre.html
-     Spectre de 8 micros et de leurs produits d'intermodulation IM3 (2 et 3 émetteurs),
-     avec bascule « plan naïf / plan coordonné » qui montre les collisions.
-     → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Spectre d'intermodulation, 8 micros »]**
+<figure class="schema">
+  <iframe class="schema-embed" src="/blog/schemas/intermodulation-spectre.html" title="Spectre d'intermodulation, 8 micros" loading="lazy" scrolling="no"></iframe>
+  <figcaption>Schéma interactif : Spectre d'intermodulation, 8 micros</figcaption>
+</figure>
 
 ---
 

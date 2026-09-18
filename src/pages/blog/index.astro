@@ -1,0 +1,123 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/site';
+import { getCollection } from 'astro:content';
+
+// Ordre éditorial (article phare en tête), puis le reste par date décroissante.
+const ORDER = [
+  'micros-hf-gresillent-decrochent',
+  'frequences-micro-hf-france-guide',
+  'intermodulation-expliquee-simplement',
+  'calculer-delay-enceinte-methode',
+  'creer-fiche-technique-spectacle',
+];
+
+const posts = (await getCollection('blog'))
+  .filter((p) => p.data.statut === 'publie')
+  .sort((a, b) => {
+    const ia = ORDER.indexOf(a.data.slug);
+    const ib = ORDER.indexOf(b.data.slug);
+    if (ia !== -1 && ib !== -1) return ia - ib;
+    if (ia !== -1) return -1;
+    if (ib !== -1) return 1;
+    return b.data.date.getTime() - a.data.date.getTime();
+  });
+
+const fmt = (d: Date) =>
+  new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+
+const readMin = (body: string) => Math.max(1, Math.round((body || '').split(/\s+/).length / 200));
+
+const SITE = 'https://arnisoundtools.com';
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Le blog Arnisound Tools',
+  description:
+    "Guides et fiches pratiques sur la HF, les fréquences, le calage des délais et la régie du spectacle vivant.",
+  url: `${SITE}/blog/`,
+  publisher: { '@type': 'Organization', name: 'Arnisound Tools', url: SITE },
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.data.title,
+    description: p.data.description,
+    datePublished: p.data.date.toISOString().slice(0, 10),
+    url: `${SITE}/blog/${p.data.slug}/`,
+  })),
+};
+---
+
+<Base
+  title="Blog : guides HF, fréquences & régie | Arnisound Tools"
+  description="Guides pratiques et sourcés sur les micros HF, les fréquences en France, l'intermodulation, le calage des délais et la fiche technique. Écrits par un professionnel du terrain."
+>
+  <section class="section">
+    <div class="container blog-index">
+      <span class="eyebrow">Le blog</span>
+      <h1>Guides du terrain</h1>
+      <p class="lead">
+        Des articles clairs et sourcés sur la HF, les fréquences, le calage des délais et la régie,
+        pensés pour être utiles avant le prochain montage.
+      </p>
+
+      <div class="posts">
+        {posts.map((p, i) => (
+          <a href={url('/blog/' + p.data.slug)} class:list={['post-card', { 'post-card--lead': i === 0 }]}>
+            <div class="post-card__meta">
+              <time datetime={p.data.date.toISOString().slice(0, 10)}>{fmt(p.data.date)}</time>
+              <span aria-hidden="true">·</span>
+              <span>{readMin(p.body ?? '')} min de lecture</span>
+            </div>
+            <h2 class="post-card__title">{p.data.title}</h2>
+            <p class="post-card__excerpt">{p.data.description}</p>
+            <span class="post-card__cta">Lire l’article →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
+</Base>
+
+<style>
+  .blog-index { max-width: 900px; }
+  .blog-index h1 { margin-top: 0.75rem; }
+  .blog-index .lead { margin-top: 1rem; }
+
+  .posts {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
+  }
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .post-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .post-card--lead { grid-column: 1 / -1; }
+  .post-card--lead .post-card__title { font-size: 1.55rem; }
+
+  .post-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-faint);
+  }
+  .post-card__title { font-size: 1.2rem; line-height: 1.3; color: var(--text); }
+  .post-card__excerpt { color: var(--text-muted); line-height: 1.6; font-size: 0.94rem; }
+  .post-card__cta { margin-top: auto; color: var(--accent); font-weight: 600; font-size: 0.92rem; }
+
+  @media (max-width: 680px) {
+    .posts { grid-template-columns: 1fr; }
+    .post-card--lead .post-card__title { font-size: 1.35rem; }
+  }
+</style>

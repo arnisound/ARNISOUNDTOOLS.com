@@ -3,7 +3,7 @@ title: "Micros HF qui grésillent ou décrochent : les vraies causes et comment 
 description: "Pourquoi un micro sans fil grésille ou décroche ? Les cinq causes principales, expliquées par un technicien, avec les solutions concrètes et le cadre légal des fréquences en France."
 slug: micros-hf-gresillent-decrochent
 keywords: [micro HF, micro sans fil, grésillement, décrochage, fréquences, intermodulation, PMSE, ANFR, TNT]
-statut: brouillon
+statut: publie
 date: 2026-08-20
 ---
 
@@ -60,11 +60,10 @@ parasites, absentes au départ [4]. Si l'une d'elles tombe sur un canal utilisé
 le perturbe. Plus les émetteurs sont nombreux et rapprochés, plus le phénomène
 s'intensifie [4][5].
 
-<!-- SCHÉMA INTERACTIF : docs/blog/schemas/intermodulation-spectre.html
-     Spectre de 8 micros et de leurs produits d'intermodulation IM3 (2 et 3 émetteurs),
-     avec bascule « plan naïf / plan coordonné » qui montre les collisions.
-     → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Spectre d'intermodulation, 8 micros »]**
+<figure class="schema">
+  <iframe class="schema-embed" src="/blog/schemas/intermodulation-spectre.html" title="Spectre d'intermodulation, 8 micros" loading="lazy" scrolling="no"></iframe>
+  <figcaption>Schéma interactif : Spectre d'intermodulation, 8 micros</figcaption>
+</figure>
 
 C'est pourquoi un plan qui fonctionne à huit fréquences peut se dégrader nettement à
 vingt-cinq. Au-delà de quelques canaux, le calcul manuel atteint vite ses limites :
@@ -131,11 +130,10 @@ individuelle, réservé à un usage professionnel et encadré par l'ARCEP [2] :
 - **823–832 MHz** et **1785–1805 MHz** : bandes dédiées, à puissance limitée [3].
 - **694–790 MHz** : interdite (réattribuée à la téléphonie mobile).
 
-<!-- SCHÉMA INTERACTIF : docs/blog/schemas/bandes-frequences-france.html
-     Répartition du spectre 470–900 MHz en France : bandes autorisées / partagées TNT /
-     interdites, cliquables avec explication.
-     → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Bandes de fréquences micros HF, France 470–900 MHz »]**
+<figure class="schema">
+  <iframe class="schema-embed" src="/blog/schemas/bandes-frequences-france.html" title="Bandes de fréquences micros HF, France 470–900 MHz" loading="lazy" scrolling="no"></iframe>
+  <figcaption>Schéma interactif : Bandes de fréquences micros HF, France 470–900 MHz</figcaption>
+</figure>
 
 Le cadre est fixé par la décision ARCEP n° 2015-0830 [3]. Ces bandes et ces
 puissances évoluant régulièrement, il est prudent de vérifier leur état à jour auprès

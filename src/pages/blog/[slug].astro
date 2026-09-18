@@ -1,0 +1,202 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/site';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).filter((p) => p.data.statut === 'publie');
+  return posts.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, description, date, keywords } = entry.data;
+
+const fmt = (d: Date) =>
+  new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+const readMin = Math.max(1, Math.round((entry.body ?? '').split(/\s+/).length / 200));
+
+const SITE = 'https://arnisoundtools.com';
+const canonical = `${SITE}/blog/${entry.data.slug}/`;
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: date.toISOString().slice(0, 10),
+  dateModified: date.toISOString().slice(0, 10),
+  inLanguage: 'fr-FR',
+  keywords: keywords.join(', '),
+  mainEntityOfPage: canonical,
+  url: canonical,
+  author: { '@type': 'Organization', name: 'Arnisound Tools', url: SITE },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Arnisound Tools',
+    url: SITE,
+    logo: { '@type': 'ImageObject', url: `${SITE}/logo.svg` },
+  },
+};
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE}/blog/` },
+    { '@type': 'ListItem', position: 3, name: title, item: canonical },
+  ],
+};
+---
+
+<Base title={`${title} | Arnisound Tools`} description={description}>
+  <article class="section blog-article">
+    <div class="container">
+      <nav class="crumbs" aria-label="Fil d'Ariane">
+        <a href={url('/')}>Accueil</a>
+        <span aria-hidden="true">/</span>
+        <a href={url('/blog')}>Blog</a>
+      </nav>
+
+      <header class="blog-article__head">
+        <span class="eyebrow">Guide du terrain</span>
+        <h1>{title}</h1>
+        <p class="blog-article__lead">{description}</p>
+        <div class="blog-article__meta">
+          <time datetime={date.toISOString().slice(0, 10)}>{fmt(date)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{readMin} min de lecture</span>
+        </div>
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <aside class="blog-article__cta card">
+        <div>
+          <h2>Passez à la pratique</h2>
+          <p class="text-muted">
+            Speed RF et RF Shot calculent des plans de fréquences propres en quelques secondes,
+            là où la compréhension du sujet demande des années.
+          </p>
+        </div>
+        <div class="blog-article__cta-actions">
+          <a href={url('/speed-rf')} class="btn btn--primary">Découvrir Speed RF</a>
+          <a href={url('/blog')} class="btn btn--ghost">← Tous les articles</a>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+
+  <script is:inline>
+    // Ajuste la hauteur des schémas interactifs (même origine) au contenu.
+    (function () {
+      function fit(frame) {
+        try {
+          const doc = frame.contentWindow.document;
+          const h = Math.ceil(doc.documentElement.getBoundingClientRect().height);
+          if (h > 0) frame.style.height = h + 'px';
+        } catch (e) {}
+      }
+      document.querySelectorAll('iframe.schema-embed').forEach((frame) => {
+        const run = () => {
+          fit(frame);
+          try {
+            const ro = new ResizeObserver(() => fit(frame));
+            ro.observe(frame.contentWindow.document.body);
+          } catch (e) {}
+        };
+        if (frame.contentDocument && frame.contentDocument.readyState === 'complete') run();
+        frame.addEventListener('load', run);
+      });
+    })();
+  </script>
+</Base>
+
+<style>
+  .blog-article { padding-top: 2rem; }
+  .container { max-width: 820px; }
+
+  .crumbs {
+    display: flex; gap: 0.5rem; align-items: center;
+    font-size: 0.85rem; color: var(--text-faint); margin-bottom: 1.5rem;
+  }
+  .crumbs a { color: var(--text-muted); }
+  .crumbs a:hover { color: var(--accent); }
+
+  .blog-article__head { margin-bottom: 2.5rem; }
+  .blog-article__head h1 {
+    margin-top: 0.75rem; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.15;
+  }
+  .blog-article__lead {
+    margin-top: 1rem; font-size: 1.12rem; line-height: 1.6; color: var(--text-muted);
+  }
+  .blog-article__meta {
+    margin-top: 1.1rem; display: flex; gap: 0.5rem; align-items: center;
+    font-size: 0.85rem; color: var(--text-faint);
+  }
+
+  /* ---------- Corps de l'article ---------- */
+  .prose { font-size: 1.05rem; line-height: 1.75; color: var(--text); }
+  .prose :global(h2) {
+    margin: 2.6rem 0 0.9rem; font-size: 1.45rem; line-height: 1.25;
+    padding-top: 1.6rem; border-top: 1px solid var(--border);
+  }
+  .prose :global(h3) { margin: 1.8rem 0 0.6rem; font-size: 1.15rem; color: var(--text); }
+  .prose :global(p) { margin: 0 0 1.1rem; color: var(--text-muted); }
+  .prose :global(strong) { color: var(--text); font-weight: 600; }
+  .prose :global(em) { color: var(--text); }
+  .prose :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  .prose :global(a:hover) { color: var(--accent-hover); }
+  .prose :global(ul), .prose :global(ol) { margin: 0 0 1.2rem; padding-left: 1.3rem; color: var(--text-muted); }
+  .prose :global(li) { margin: 0.35rem 0; }
+  .prose :global(li::marker) { color: var(--accent); }
+
+  .prose :global(blockquote) {
+    margin: 1.4rem 0; padding: 0.9rem 1.2rem;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-muted);
+  }
+  .prose :global(blockquote p) { margin: 0; }
+
+  .prose :global(hr) { border: none; border-top: 1px solid var(--border); margin: 2.4rem 0; }
+
+  .prose :global(table) {
+    width: 100%; border-collapse: collapse; margin: 1.4rem 0; font-size: 0.95rem;
+    display: block; overflow-x: auto;
+  }
+  .prose :global(th), .prose :global(td) {
+    border: 1px solid var(--border); padding: 0.6rem 0.8rem; text-align: left;
+  }
+  .prose :global(th) { background: var(--bg-soft); color: var(--text); }
+  .prose :global(td) { color: var(--text-muted); }
+
+  .prose :global(code) {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.88em;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.1em 0.4em;
+  }
+
+  /* Schémas interactifs intégrés */
+  .prose :global(figure.schema) { margin: 2rem 0; }
+  .prose :global(.schema-embed) {
+    width: 100%; border: 1px solid var(--border); border-radius: var(--radius);
+    background: #0c0c0e; min-height: 460px; display: block;
+  }
+  .prose :global(figure.schema figcaption) {
+    margin-top: 0.6rem; font-size: 0.82rem; color: var(--text-faint); text-align: center;
+  }
+
+  /* ---------- CTA de fin ---------- */
+  .blog-article__cta {
+    margin-top: 3rem; padding: 2rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+  }
+  .blog-article__cta h2 { font-size: 1.2rem; }
+  .blog-article__cta p { margin-top: 0.4rem; max-width: 46ch; }
+  .blog-article__cta-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+</style>

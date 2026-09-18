@@ -3,7 +3,7 @@ title: "Créer une fiche technique de spectacle qui passe partout"
 description: "Qu'est-ce qu'une fiche technique (et un rider) ? Que doit-elle contenir ? Le guide clair pour rédiger une fiche technique complète et pro, section par section."
 slug: creer-fiche-technique-spectacle
 keywords: [fiche technique, rider technique, spectacle vivant, son lumière plateau, régie, accueil technique]
-statut: brouillon
+statut: publie
 date: 2026-08-20
 ---
 
@@ -56,11 +56,10 @@ claire, c'est un accueil qui roule.
 
 ## Ce que doit contenir une fiche technique (section par section)
 
-<!-- SCHÉMA INTERACTIF : docs/blog/schemas/fiche-technique-anatomie.html
-     Les 8 sections d'une fiche technique, cliquables, avec le détail de leur contenu et
-     les blocs prioritaires que le régisseur du lieu regarde en premier.
-     → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Anatomie d'une fiche technique »]**
+<figure class="schema">
+  <iframe class="schema-embed" src="/blog/schemas/fiche-technique-anatomie.html" title="Anatomie d'une fiche technique" loading="lazy" scrolling="no"></iframe>
+  <figcaption>Schéma interactif : Anatomie d'une fiche technique</figcaption>
+</figure>
 
 ### 1. En-tête / informations générales
 - Nom du spectacle / de la compagnie

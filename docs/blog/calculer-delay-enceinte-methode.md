@@ -3,7 +3,7 @@ title: "Calculer le delay d'une enceinte : la méthode simple (et pourquoi ça m
 description: "Comment régler le delay de vos enceintes de rappel pour un son net et localisé ? La formule, la vitesse du son, l'effet Haas, expliqués simplement, avec les sources."
 slug: calculer-delay-enceinte-methode
 keywords: [calcul delay enceinte, delay speaker, vitesse du son, effet Haas, effet de précédence, sonorisation, time alignment]
-statut: brouillon
+statut: publie
 date: 2026-08-20
 ---
 
@@ -75,11 +75,10 @@ plus fort** que le premier ; la localisation reste sur le son arrivé en premier
 **En pratique :** je calcule le delay de la distance, puis j'ajoute **~10–15 ms**. Dans
 l'exemple : 87 ms + 12 ms ≈ **99 ms**.
 
-<!-- SCHÉMA INTERACTIF : docs/blog/schemas/delay-haas.html
-     Réglage du delay d'une enceinte de rappel : distance, température, offset Haas,
-     avec la vitesse du son, le delay de base et la perception au fond de la salle.
-     → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Delay d'une enceinte de rappel & effet Haas »]**
+<figure class="schema">
+  <iframe class="schema-embed" src="/blog/schemas/delay-haas.html" title="Delay d'une enceinte de rappel & effet Haas" loading="lazy" scrolling="no"></iframe>
+  <figcaption>Schéma interactif : Delay d'une enceinte de rappel & effet Haas</figcaption>
+</figure>
 
 ---
 

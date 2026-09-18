@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Delay d'enceinte de rappel & effet Haas</title>
+<style>
+  :root{
+    --bg:#0c0c0e; --panel:#141318; --border:#2a2620;
+    --text:#f4f0e8; --muted:#a9a29a; --faint:#8f887e;
+    --gold:#cb8a27; --scene:#cb8a27; --rappel:#4f9bd9; --ok:#3fae6b; --no:#d9503c;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:'Helvetica Neue',Arial,sans-serif;padding:18px}
+  .wrap{max-width:920px;margin:0 auto;background:var(--panel);
+    border:1px solid var(--border);border-radius:16px;padding:20px}
+  h2{font-size:1.15rem;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:.9rem;margin:0 0 18px;line-height:1.5}
+
+  .stage{position:relative;height:150px;border:1px solid var(--border);border-radius:12px;
+    background:#100f13;margin-bottom:16px;overflow:hidden}
+  .icon{position:absolute;top:50%;transform:translate(-50%,-50%);text-align:center;width:74px}
+  .icon .box{width:44px;height:44px;margin:0 auto 5px;border-radius:9px;display:flex;
+    align-items:center;justify-content:center;font-size:1.3rem;border:2px solid}
+  .icon .lab{font-size:.68rem;color:var(--muted);line-height:1.25}
+  .icon.src .box{background:rgba(203,138,39,.15);border-color:var(--scene);color:var(--scene)}
+  .icon.rap .box{background:rgba(79,155,217,.15);border-color:var(--rappel);color:var(--rappel)}
+  .icon.list .box{background:rgba(159,152,142,.12);border-color:var(--faint);color:var(--text)}
+  .dline{position:absolute;top:24px;height:1px;background:#3a352c}
+  .dline .cap{position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+    font-size:.66rem;color:var(--faint);background:#100f13;padding:0 6px;white-space:nowrap}
+
+  .controls{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:16px}
+  .ctl{flex:1;min-width:200px}
+  .ctl label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-bottom:6px}
+  .ctl label b{color:var(--text)}
+  input[type=range]{width:100%;accent-color:var(--gold)}
+  .haas{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted);cursor:pointer;user-select:none}
+  .haas input{width:16px;height:16px;accent-color:var(--gold)}
+
+  .readout{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+  .kpi{flex:1;min-width:120px;border:1px solid var(--border);border-radius:10px;
+    padding:10px 12px;background:#100f13}
+  .kpi .k{font-size:.7rem;color:var(--faint);text-transform:uppercase;letter-spacing:.04em}
+  .kpi .v{font-size:1.35rem;font-weight:700;margin-top:2px}
+  .kpi .u{font-size:.8rem;color:var(--muted);font-weight:400}
+  .kpi.hi .v{color:var(--gold)}
+
+  .tl{margin-top:4px}
+  .tl h3{font-size:.82rem;color:var(--muted);margin:0 0 10px;font-weight:600}
+  .row{display:grid;grid-template-columns:130px 1fr;align-items:center;gap:10px;margin-bottom:12px}
+  .row .name{font-size:.74rem;color:var(--muted);line-height:1.3}
+  .row .name b{display:block;color:var(--text);font-size:.8rem}
+  .bar{position:relative;height:30px;border-radius:6px;background:#0c0c0e;border:1px solid var(--border)}
+  .pulse{position:absolute;top:50%;transform:translate(-50%,-50%);width:15px;height:15px;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:700;color:#0c0c0e}
+  .pulse.s{background:var(--scene)} .pulse.r{background:var(--rappel);color:#fff}
+  .verdict{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.66rem;
+    font-weight:700;padding:2px 7px;border-radius:999px}
+  .verdict.bad{background:rgba(217,80,60,.18);color:#f0705c}
+  .verdict.ok{background:rgba(63,174,107,.18);color:#5fce8a}
+  .verdict.best{background:rgba(203,138,39,.2);color:#e0a94b}
+  .axis{display:grid;grid-template-columns:130px 1fr;gap:10px;margin-top:-4px}
+  .axis .sc{position:relative;height:14px;font-size:9px;color:var(--faint)}
+  .axis .sc span{position:absolute;transform:translateX(-50%)}
+  .legend{display:flex;gap:16px;font-size:.75rem;color:var(--muted);margin:14px 0 0}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .note{font-size:.78rem;color:var(--faint);margin-top:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2>Régler le delay d'une enceinte de rappel</h2>
+  <p class="sub">Le son voyage à environ 343 m/s : l'enceinte de rappel doit être retardée pour que son
+    son arrive <em>en même temps</em> que celui de la scène, puis on ajoute quelques millisecondes
+    (effet Haas) pour que l'oreille localise toujours la scène. Réglez la distance et la température.</p>
+
+  <div class="stage" id="stage"></div>
+
+  <div class="controls">
+    <div class="ctl">
+      <label>Distance scène → rappel <b><span id="dv">30</span> m</b></label>
+      <input type="range" id="dist" min="5" max="100" value="30" step="1" />
+    </div>
+    <div class="ctl">
+      <label>Température de l'air <b><span id="tv">20</span> °C</b></label>
+      <input type="range" id="temp" min="0" max="35" value="20" step="1" />
+    </div>
+  </div>
+
+  <label class="haas"><input type="checkbox" id="haas" checked /> Ajouter l'offset Haas (+12 ms) pour ancrer l'image sur la scène</label>
+
+  <div class="readout" style="margin-top:14px">
+    <div class="kpi"><div class="k">Vitesse du son</div><div class="v"><span id="c">343</span> <span class="u">m/s</span></div></div>
+    <div class="kpi"><div class="k">Delay de base</div><div class="v"><span id="base">87</span> <span class="u">ms</span></div></div>
+    <div class="kpi hi"><div class="k">Delay à régler</div><div class="v"><span id="tot">99</span> <span class="u">ms</span></div></div>
+  </div>
+
+  <div class="tl">
+    <h3>Ce que perçoit le spectateur au fond de la salle</h3>
+
+    <div class="row">
+      <div class="name"><b>Sans delay</b>enceinte à 0 ms</div>
+      <div class="bar" id="b1"></div>
+    </div>
+    <div class="row">
+      <div class="name"><b>Delay pile</b>base seule</div>
+      <div class="bar" id="b2"></div>
+    </div>
+    <div class="row">
+      <div class="name"><b>Delay + Haas</b>base + offset</div>
+      <div class="bar" id="b3"></div>
+    </div>
+    <div class="axis">
+      <div></div>
+      <div class="sc" id="axis"></div>
+    </div>
+
+    <div class="legend">
+      <span><span class="dot" style="background:var(--scene)"></span>Son de la scène</span>
+      <span><span class="dot" style="background:var(--rappel)"></span>Son du rappel</span>
+    </div>
+  </div>
+
+  <p class="note">Le delay de base = distance ÷ vitesse du son. L'offset Haas (≈ 10–15 ms) fait arriver le
+    rappel <em>juste après</em> la scène : l'oreille localise la source sur le premier son entendu (effet de
+    précédence), donc sur les artistes. En extérieur, une hausse de température accélère le son et réduit
+    légèrement le delay à régler.</p>
+</div>
+
+<script>
+(function(){
+  const dist=document.getElementById('dist'), temp=document.getElementById('temp'),
+        haas=document.getElementById('haas'), stage=document.getElementById('stage');
+  const $=id=>document.getElementById(id);
+  const HAAS_MS=12;
+
+  // Scène statique
+  function drawStage(d){
+    stage.innerHTML='';
+    const L=12, R=88;                       // positions % scène / listener
+    const M=L+(R-L)*0.62;                    // rappel ~ vers le fond
+    const mk=(cls,x,emoji,lab)=>{
+      const el=document.createElement('div');
+      el.className='icon '+cls; el.style.left=x+'%';
+      el.innerHTML=`<div class="box">${emoji}</div><div class="lab">${lab}</div>`;
+      stage.appendChild(el);
+    };
+    const line=(x1,x2,cap)=>{
+      const el=document.createElement('div');
+      el.className='dline'; el.style.left=x1+'%'; el.style.width=(x2-x1)+'%';
+      el.innerHTML=`<span class="cap">${cap}</span>`; stage.appendChild(el);
+    };
+    line(L,M,d+' m');
+    mk('src',L,'🎤','Scène / façade');
+    mk('rap',M,'🔊','Enceinte de rappel');
+    mk('list',R,'🧍','Public du fond');
+  }
+
+  function render(){
+    const d=+dist.value, T=+temp.value;
+    const c=331.3+0.606*T;                   // vitesse du son
+    const base=d/c*1000;                     // ms
+    const tot=base+(haas.checked?HAAS_MS:0);
+    $('dv').textContent=d; $('tv').textContent=T;
+    $('c').textContent=Math.round(c);
+    $('base').textContent=Math.round(base);
+    $('tot').textContent=Math.round(tot);
+    drawStage(d);
+
+    // Timeline : le son de la scène arrive à t=base (référence perceptive).
+    // Échelle : 0 .. maxScale ms
+    const maxScale=Math.max(base+HAAS_MS+20, 40);
+    const px=ms=>Math.min(98, ms/maxScale*100);
+
+    // Bar 1 : sans delay -> rappel à 0, scène à base  => écho
+    // Bar 2 : delay = base -> rappel arrive à base (pile sur scène)
+    // Bar 3 : delay = base + haas -> rappel à base+haas
+    function fill(bar, rappelMs, verdict, vclass){
+      bar.innerHTML='';
+      const s=document.createElement('div');
+      s.className='pulse s'; s.style.left=px(base)+'%'; s.title='Son scène';
+      const r=document.createElement('div');
+      r.className='pulse r'; r.style.left=px(rappelMs)+'%'; r.title='Son rappel';
+      bar.appendChild(s); bar.appendChild(r);
+      const v=document.createElement('div');
+      v.className='verdict '+vclass; v.textContent=verdict; bar.appendChild(v);
+    }
+    const gap1=Math.round(base);            // écart scène-rappel sans delay
+    fill($('b1'), 0, 'écho ~'+gap1+' ms', 'bad');
+    fill($('b2'), base, 'aligné', 'ok');
+    fill($('b3'), base+(haas.checked?HAAS_MS:0),
+        haas.checked?'image sur la scène':'aligné',
+        haas.checked?'best':'ok');
+
+    // Axe temps
+    const axis=$('axis'); axis.innerHTML='';
+    const steps=4;
+    for(let i=0;i<=steps;i++){
+      const ms=Math.round(maxScale*i/steps);
+      const sp=document.createElement('span');
+      sp.style.left=(i/steps*100)+'%'; sp.textContent=ms+(i===steps?' ms':'');
+      axis.appendChild(sp);
+    }
+  }
+
+  [dist,temp,haas].forEach(el=>el.addEventListener('input',render));
+  render();
+})();
+</script>
+</body>
+</html>

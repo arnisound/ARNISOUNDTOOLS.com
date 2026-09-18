@@ -3,7 +3,7 @@ title: "Fréquences micro HF autorisées en France : le guide clair (2026)"
 description: "Quelles bandes de fréquences a-t-on le droit d'utiliser pour ses micros sans fil en France ? UHF/TNT, 823-832 MHz, 1785-1805 MHz : le point complet et sourcé (ANFR/ARCEP)."
 slug: frequences-micro-hf-france-guide
 keywords: [fréquences micro HF, PMSE, France, ANFR, ARCEP, TNT, UHF, bande 700, micro sans fil légal]
-statut: brouillon
+statut: publie
 date: 2026-08-20
 ---
 
@@ -73,11 +73,10 @@ Deux bandes dédiées PMSE complètent l'UHF, utiles quand celle-ci est saturée
 Le cadre technique est fixé par la **décision ARCEP n° 2015-0830 du 2 juillet 2015** [3]
 et la décision européenne 2014/641/UE.
 
-<!-- SCHÉMA INTERACTIF : docs/blog/schemas/bandes-frequences-france.html
-     Répartition du spectre 470–900 MHz en France : bandes autorisées / partagées TNT /
-     interdites, cliquables avec explication.
-     → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Bandes de fréquences micros HF, France 470–900 MHz »]**
+<figure class="schema">
+  <iframe class="schema-embed" src="/blog/schemas/bandes-frequences-france.html" title="Bandes de fréquences micros HF, France 470–900 MHz" loading="lazy" scrolling="no"></iframe>
+  <figcaption>Schéma interactif : Bandes de fréquences micros HF, France 470–900 MHz</figcaption>
+</figure>
 
 ---
 
