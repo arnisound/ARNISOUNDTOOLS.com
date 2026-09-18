@@ -26,7 +26,7 @@ Quand plusieurs signaux radio **puissants** se retrouvent dans un même circuit
 circuit n'est jamais parfaitement « linéaire ». Résultat : il **mélange** les signaux
 et en **crée de nouveaux**, à des fréquences qui n'existaient pas au départ.
 
-Ces nouvelles fréquences s'appellent des **produits d'intermodulation** (IM) — des
+Ces nouvelles fréquences s'appellent des **produits d'intermodulation** (IM), des
 « fréquences fantômes » [1][2].
 
 Le problème surgit quand l'un de ces produits tombe **pile sur la fréquence d'un
@@ -48,12 +48,12 @@ les plus gênants sont ceux du **3ᵉ ordre**, calculés ainsi :
 - f2 = 502 MHz
 - Produits : 2×500 − 502 = **498 MHz**, et 2×502 − 500 = **504 MHz**
 
-Un troisième micro prévu à **498 MHz** ou **504 MHz** va souffrir — alors que « sur le
+Un troisième micro prévu à **498 MHz** ou **504 MHz** va souffrir, alors que « sur le
 papier », cette fréquence était libre.
 
 Ce « 2 » et ce « −1 » ne sortent pas de nulle part : ce sont les **coefficients** de la
 combinaison. Leur somme définit l'**ordre** du produit. Ici, 2 + 1 = 3 : on est au
-3ᵉ ordre, l'IM3. C'est le plus fort et, de loin, le plus gênant — mais il n'est pas seul
+3ᵉ ordre, l'IM3. C'est le plus fort et, de loin, le plus gênant, mais il n'est pas seul
 en jeu. Voyons les autres ordres, puis les produits qui mettent **trois émetteurs** en
 cause.
 
@@ -61,7 +61,7 @@ cause.
      Spectre de 8 micros et de leurs produits d'intermodulation IM3 (2 et 3 émetteurs),
      avec bascule « plan naïf / plan coordonné » qui montre les collisions.
      → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Spectre d'intermodulation — 8 micros »]**
+> 📊 **[Schéma interactif à insérer ici : « Spectre d'intermodulation, 8 micros »]**
 
 ---
 
@@ -81,7 +81,7 @@ génère. Deux règles simples, qui expliquent presque tout [1] :
 Reprenons deux émetteurs, **f1 = 500 MHz** et **f2 = 502 MHz** (écart de 2 MHz), pour
 voir concrètement où atterrit chaque ordre.
 
-### IM2 — le 2ᵉ ordre (pair)
+### IM2, le 2ᵉ ordre (pair)
 
 Les produits du 2ᵉ ordre sont la **somme** et la **différence** des deux fréquences,
 plus leurs harmoniques :
@@ -104,7 +104,7 @@ voisin. Faut-il l'ignorer pour autant ? Non, dans deux cas :
 À retenir : l'IM2 est rarement une menace directe en bande étroite, mais il compte pour
 la **santé des étages d'entrée** et sur les configurations large bande.
 
-### IM3 — le 3ᵉ ordre (impair) : l'ennemi n°1
+### IM3, le 3ᵉ ordre (impair) : l'ennemi n°1
 
 C'est celui de l'exemple plus haut :
 
@@ -116,7 +116,7 @@ Deux produits qui tombent **juste à côté** des porteuses (498 et 504, pour de
 pire des deux mondes. Neuf ennuis d'intermodulation sur dix viennent de là. Un plan de
 fréquences digne de ce nom commence toujours par écarter les IM3.
 
-### IM5 — le 5ᵉ ordre (impair)
+### IM5, le 5ᵉ ordre (impair)
 
 Le cran au-dessus. Les produits à deux émetteurs s'écrivent :
 
@@ -126,9 +126,9 @@ Le cran au-dessus. Les produits à deux émetteurs s'écrivent :
 Encore **dans la bande**, un peu plus écartés des porteuses que les IM3, et surtout
 **plus faibles**. Sur un plan léger, ils passent souvent inaperçus. Mais dès que la
 densité et la puissance montent (beaucoup d'émetteurs, packs collés), ils redeviennent
-audibles — et une coordination sérieuse les prend en compte.
+audibles, et une coordination sérieuse les prend en compte.
 
-### IM7 — le 7ᵉ ordre (impair)
+### IM7, le 7ᵉ ordre (impair)
 
 Un cran plus loin encore :
 
@@ -137,7 +137,7 @@ Un cran plus loin encore :
 
 Toujours dans la bande, encore plus faibles. En temps normal, on peut les négliger.
 Ils ne deviennent gênants que sur les **très grosses configurations**, à forte
-puissance et à faible espacement — exactement les plateaux où l'on ne peut se permettre
+puissance et à faible espacement, exactement les plateaux où l'on ne peut se permettre
 aucune surprise. C'est pourquoi un outil de coordination pousse le calcul jusqu'à
 l'ordre 7 : au-delà, l'énergie des produits devient négligeable.
 
@@ -150,7 +150,7 @@ l'ordre 7 : au-delà, l'énergie des produits devient négligeable.
 ## Les produits à trois émetteurs (3TX)
 
 Jusqu'ici, deux émetteurs. Mais dès qu'il y en a **trois**, une nouvelle famille de
-produits du 3ᵉ ordre apparaît — les **triple-beats** — souvent aussi forts que les IM3 à
+produits du 3ᵉ ordre apparaît, les **triple-beats**, souvent aussi forts que les IM3 à
 deux émetteurs, et bien plus nombreux :
 
 - f1 + f2 − f3
@@ -181,7 +181,7 @@ canaux utilisés.
 Deux facteurs aggravants [1][2] :
 
 1. **Le nombre d'émetteurs.** Plus il y a de fréquences en jeu, plus il y a de
-   combinaisons possibles — et donc de produits d'intermodulation. Le nombre de
+   combinaisons possibles, et donc de produits d'intermodulation. Le nombre de
    combinaisons croît très vite : quelques micros, cela passe ; quarante micros et
    ears, c'est une autre affaire.
 2. **La proximité des émetteurs.** Plus les émetteurs sont **proches physiquement** les
@@ -224,7 +224,7 @@ des besoins plus simples, [Speed RF](https://arnisoundtools.com/speed-rf) suffit
   traite en priorité. L'**IM3** (2·f1 − f2) est le plus fort ; l'IM5 et l'IM7 comptent
   sur les plans denses. Les produits **pairs** (IM2) tombent loin, mais surveillent la
   **saturation des étages d'entrée**.
-- Dès **trois émetteurs**, les produits **3TX** (f1 + f2 − f3) s'ajoutent — nombreux et
+- Dès **trois émetteurs**, les produits **3TX** (f1 + f2 − f3) s'ajoutent, nombreux et
   souvent aussi forts que les IM3.
 - Le phénomène empire avec le **nombre** et la **proximité** des émetteurs.
 - La parade : un **plan de fréquences coordonné**, calculé pour qu'aucun produit ne
@@ -237,7 +237,7 @@ bien coordonné, tout rentre dans l'ordre.
 
 ## Sources
 
-1. Shure — « All About Wireless: Intermodulation Distortion » : https://www.shure.com/en-EU/insights/all-about-wireless-intermodulation-distortion
-2. Sennheiser — Frequency Management / coordination des fréquences (documentation constructeur).
-3. RF Venue — « Why You Should Use Frequency Coordination Software Every Time » : https://www.rfvenue.com/blog/2017/03/31/why-you-should-use-frequency-coordination-software-every-time
-4. Sweetwater — « RF 101: The Basics of Wireless Mics and In-ear Systems » : https://www.sweetwater.com/insync/rf101-basics-wireless-mics-in-ear-systems/
+1. Shure, « All About Wireless: Intermodulation Distortion » : https://www.shure.com/en-EU/insights/all-about-wireless-intermodulation-distortion
+2. Sennheiser, Frequency Management / coordination des fréquences (documentation constructeur).
+3. RF Venue, « Why You Should Use Frequency Coordination Software Every Time » : https://www.rfvenue.com/blog/2017/03/31/why-you-should-use-frequency-coordination-software-every-time
+4. Sweetwater, « RF 101: The Basics of Wireless Mics and In-ear Systems » : https://www.sweetwater.com/insync/rf101-basics-wireless-mics-in-ear-systems/

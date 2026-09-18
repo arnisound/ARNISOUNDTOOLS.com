@@ -31,7 +31,7 @@ Tout l'enjeu consiste à se placer sur les créneaux réellement disponibles.
 
 C'est la cause la plus fréquente. Les micros travaillent principalement dans la bande
 **470–694 MHz**, partagée avec la TNT [2][3]. Il faut donc se placer dans les canaux
-télévisés **non utilisés localement** — et ces canaux libres varient d'une ville à
+télévisés **non utilisés localement**, et ces canaux libres varient d'une ville à
 l'autre.
 
 L'erreur classique consiste à rejouer le plan de fréquences de la veille dans une
@@ -51,7 +51,7 @@ plage de fréquences avant toute utilisation.
 ## 2. L'intermodulation : quand vos émetteurs se gênent entre eux
 
 Voici un cas déroutant : testés séparément, tous les micros fonctionnent ; allumés
-ensemble, certains grésillent — alors même que leurs fréquences sont « libres ». Le
+ensemble, certains grésillent, alors même que leurs fréquences sont « libres ». Le
 phénomène en cause est l'**intermodulation**.
 
 Lorsque plusieurs émetteurs puissants et proches fonctionnent simultanément, leurs
@@ -64,7 +64,7 @@ s'intensifie [4][5].
      Spectre de 8 micros et de leurs produits d'intermodulation IM3 (2 et 3 émetteurs),
      avec bascule « plan naïf / plan coordonné » qui montre les collisions.
      → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Spectre d'intermodulation — 8 micros »]**
+> 📊 **[Schéma interactif à insérer ici : « Spectre d'intermodulation, 8 micros »]**
 
 C'est pourquoi un plan qui fonctionne à huit fréquences peut se dégrader nettement à
 vingt-cinq. Au-delà de quelques canaux, le calcul manuel atteint vite ses limites :
@@ -99,7 +99,7 @@ récepteurs tout au long de la prestation.
 
 Les micros partagent l'espace radio avec de nombreux appareils : téléphones, Wi-Fi,
 murs de LED, gradateurs, autres prestataires [6]. À cela s'ajoutent les obstacles
-physiques — murs porteurs, public dense, grandes distances — qui atténuent le signal
+physiques (murs porteurs, public dense, grandes distances) qui atténuent le signal
 et créent des zones mortes.
 
 Les solutions sont simples : éloigner les antennes des routeurs Wi-Fi et des murs de
@@ -135,7 +135,7 @@ individuelle, réservé à un usage professionnel et encadré par l'ARCEP [2] :
      Répartition du spectre 470–900 MHz en France : bandes autorisées / partagées TNT /
      interdites, cliquables avec explication.
      → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Bandes de fréquences micros HF — France 470–900 MHz »]**
+> 📊 **[Schéma interactif à insérer ici : « Bandes de fréquences micros HF, France 470–900 MHz »]**
 
 Le cadre est fixé par la décision ARCEP n° 2015-0830 [3]. Ces bandes et ces
 puissances évoluant régulièrement, il est prudent de vérifier leur état à jour auprès
@@ -146,7 +146,7 @@ de l'ANFR et de l'ARCEP avant tout événement d'ampleur.
 Un micro HF qui grésille ou décroche s'explique presque toujours par l'une de ces cinq
 causes : une fréquence en conflit avec la TNT, une intermodulation, une antenne mal
 placée, une alimentation faible ou une interférence extérieure. Aucune n'est
-insurmontable, à condition de savoir où regarder — et surtout de partir d'un plan de
+insurmontable, à condition de savoir où regarder, et surtout de partir d'un plan de
 fréquences propre plutôt que d'un réglage approximatif.
 
 C'est toute la logique de [Speed RF](https://arnisoundtools.com/speed-rf) et de
@@ -157,9 +157,9 @@ fiable, là où la compréhension du sujet demande des années d'expérience.
 
 ## Sources
 
-1. ANFR — Agence nationale des fréquences : https://www.anfr.fr
-2. ANFR — Tableau national de répartition des bandes de fréquences (TNRBF) : https://www.anfr.fr/gestion-des-frequences-sites/le-tableau-national-de-repartition-des-bandes-de-frequences
-3. Légifrance — Décision ARCEP n° 2015-0830 du 2 juillet 2015 : https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000030959580
-4. Shure — « All About Wireless: Intermodulation Distortion » : https://www.shure.com/en-EU/insights/all-about-wireless-intermodulation-distortion
-5. RF Venue — « Why You Should Use Frequency Coordination Software Every Time » : https://www.rfvenue.com/blog/2017/03/31/why-you-should-use-frequency-coordination-software-every-time
-6. Shure — « Troubleshooting Wireless Dropouts in 10 Simple Steps » : https://www.shure.com/en-EU/insights/troubleshooting-wireless-dropouts-10-simple-steps
+1. ANFR, Agence nationale des fréquences : https://www.anfr.fr
+2. ANFR, Tableau national de répartition des bandes de fréquences (TNRBF) : https://www.anfr.fr/gestion-des-frequences-sites/le-tableau-national-de-repartition-des-bandes-de-frequences
+3. Légifrance, Décision ARCEP n° 2015-0830 du 2 juillet 2015 : https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000030959580
+4. Shure, « All About Wireless: Intermodulation Distortion » : https://www.shure.com/en-EU/insights/all-about-wireless-intermodulation-distortion
+5. RF Venue, « Why You Should Use Frequency Coordination Software Every Time » : https://www.rfvenue.com/blog/2017/03/31/why-you-should-use-frequency-coordination-software-every-time
+6. Shure, « Troubleshooting Wireless Dropouts in 10 Simple Steps » : https://www.shure.com/en-EU/insights/troubleshooting-wireless-dropouts-10-simple-steps

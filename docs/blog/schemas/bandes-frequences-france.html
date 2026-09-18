@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Bandes de fréquences micros HF — France (470–900 MHz)</title>
+<title>Bandes de fréquences micros HF, France (470–900 MHz)</title>
 <style>
   :root{
     --bg:#0c0c0e; --panel:#141318; --border:#2a2620;
@@ -53,15 +53,15 @@
   <div class="ruler" id="ruler"></div>
 
   <div class="legend">
-    <span><span class="dot" style="background:var(--shared)"></span>Micros OK — partagé avec la TNT</span>
-    <span><span class="dot" style="background:var(--ok)"></span>Micros OK — bande dédiée</span>
+    <span><span class="dot" style="background:var(--shared)"></span>Micros OK, partagé avec la TNT</span>
+    <span><span class="dot" style="background:var(--ok)"></span>Micros OK, bande dédiée</span>
     <span><span class="dot" style="background:var(--no)"></span>Interdit (téléphonie mobile)</span>
     <span><span class="dot" style="background:var(--other)"></span>Autres services</span>
   </div>
 
   <div class="info" id="info"></div>
 
-  <p class="note">Repères indicatifs — la réglementation évolue (réattribution de bandes, autorisations
+  <p class="note">Repères indicatifs, la réglementation évolue (réattribution de bandes, autorisations
     temporaires…). Vérifiez toujours l'état à jour auprès de l'ANFR et de l'ARCEP. À noter : une autre
     bande dédiée aux micros existe hors de ce graphique, autour de <b>1785–1805 MHz</b>.</p>
 </div>
@@ -71,23 +71,23 @@
   const LO=470, HI=900, span=HI-LO;
   const pct=f=>(f-LO)/span*100;
   const segs=[
-    {from:470,to:694,cls:"shared",label:"470–694 · UHF (TNT)",badge:"Micros OK — partagé",
-     title:"UHF 470–694 MHz — partagée avec la TNT",
-     text:"La bande principale des micros sans fil en France. Elle est partagée avec la télévision numérique terrestre (TNT) : vos micros doivent se placer dans les canaux TV non utilisés localement — et ces canaux libres changent d'une ville à l'autre. Usage professionnel sans licence individuelle."},
+    {from:470,to:694,cls:"shared",label:"470–694 · UHF (TNT)",badge:"Micros OK, partagé",
+     title:"UHF 470–694 MHz, partagée avec la TNT",
+     text:"La bande principale des micros sans fil en France. Elle est partagée avec la télévision numérique terrestre (TNT) : vos micros doivent se placer dans les canaux TV non utilisés localement, et ces canaux libres changent d'une ville à l'autre. Usage professionnel sans licence individuelle."},
     {from:694,to:790,cls:"no",label:"694–790 · Bande 700",badge:"Interdit",
-     title:"Bande 700 (694–790 MHz) — téléphonie mobile",
+     title:"Bande 700 (694–790 MHz), téléphonie mobile",
      text:"Réattribuée à la téléphonie mobile (4G/5G) lors du « dividende numérique ». Interdite aux micros : y émettre brouille les réseaux et vous expose à des interférences. Vérifiez que votre matériel ancien ne l'utilise pas."},
     {from:790,to:823,cls:"no",label:"790–823",badge:"Interdit",
-     title:"790–823 MHz — téléphonie mobile (800)",
+     title:"790–823 MHz, téléphonie mobile (800)",
      text:"Bande de téléphonie mobile. Non disponible pour les micros sans fil."},
-    {from:823,to:832,cls:"ok",label:"823–832",badge:"Micros OK — dédiée",
-     title:"823–832 MHz — bande PMSE dédiée",
+    {from:823,to:832,cls:"ok",label:"823–832",badge:"Micros OK, dédiée",
+     title:"823–832 MHz, bande PMSE dédiée",
      text:"Petite bande réservée aux micros et liaisons audio de spectacle (PMSE), sans licence, à puissance limitée. Utile en complément quand l'UHF est saturée. Cadre : décision ARCEP n° 2015-0830."},
     {from:832,to:862,cls:"no",label:"832–862",badge:"Interdit",
-     title:"832–862 MHz — téléphonie mobile (800)",
+     title:"832–862 MHz, téléphonie mobile (800)",
      text:"Bande de téléphonie mobile (voie montante). Non disponible pour les micros."},
     {from:862,to:900,cls:"other",label:"862–900",badge:"Autres services",
-     title:"862–900 MHz — autres services",
+     title:"862–900 MHz, autres services",
      text:"Zone occupée par divers usages (dispositifs à courte portée, services non dédiés au spectacle). Pas destinée aux micros HF professionnels."}
   ];
 

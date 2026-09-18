@@ -10,7 +10,7 @@ date: 2026-08-20
 # Fréquences micro HF autorisées en France : le guide clair (2026)
 
 « J'ai le droit d'utiliser quelle fréquence pour mes micros ? » C'est une question que
-tout technicien finit par se poser — souvent au mauvais moment, la veille d'un
+tout technicien finit par se poser, souvent au mauvais moment, la veille d'un
 événement. Entre la TNT, la « bande 700 » disparue et les histoires de licence, le
 sujet a de quoi dérouter. Voici le point **clair, à jour et sourcé**, tel que je le
 donnerais à un collègue qui débute sur la HF.
@@ -43,14 +43,14 @@ condition** de rester dans les bonnes bandes et les bonnes puissances.
 
 C'est la bande principale des micros HF. **Mais elle est partagée avec la télévision
 numérique terrestre (TNT)** [2][4]. Les micros doivent donc se placer dans les **canaux
-TV libres** — ceux qui ne sont **pas** utilisés par un émetteur de télévision **dans la
+TV libres**, ceux qui ne sont **pas** utilisés par un émetteur de télévision **dans la
 zone** où l'on travaille.
 
 Point crucial : **ces canaux libres changent d'une région à l'autre**. Un plan qui
 fonctionne à Lyon peut tomber en plein sur un émetteur TNT à Marseille. C'est la source
 n°1 de grésillements évitables.
 
-### 2. Le piège : la « bande 700 » (694–790 MHz) — INTERDITE aux micros
+### 2. Le piège : la « bande 700 » (694–790 MHz), INTERDITE aux micros
 
 Historiquement, les micros montaient jusqu'à ~790 MHz. Mais la bande **694–790 MHz a été
 réattribuée à la téléphonie mobile (4G/5G)** [2]. Conséquence :
@@ -65,9 +65,9 @@ avant de l'utiliser.
 
 Deux bandes dédiées PMSE complètent l'UHF, utiles quand celle-ci est saturée [3] :
 
-- **823–832 MHz** — puissances limitées (de l'ordre de 20 à 100 mW selon le type de
+- **823–832 MHz**, puissances limitées (de l'ordre de 20 à 100 mW selon le type de
   matériel).
-- **1785–1805 MHz** — puissances plus faibles (de l'ordre de 20 à 50 mW), donc portée
+- **1785–1805 MHz**, puissances plus faibles (de l'ordre de 20 à 50 mW), donc portée
   plus courte.
 
 Le cadre technique est fixé par la **décision ARCEP n° 2015-0830 du 2 juillet 2015** [3]
@@ -77,7 +77,7 @@ et la décision européenne 2014/641/UE.
      Répartition du spectre 470–900 MHz en France : bandes autorisées / partagées TNT /
      interdites, cliquables avec explication.
      → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
-> 📊 **[Schéma interactif à insérer ici : « Bandes de fréquences micros HF — France 470–900 MHz »]**
+> 📊 **[Schéma interactif à insérer ici : « Bandes de fréquences micros HF, France 470–900 MHz »]**
 
 ---
 
@@ -97,7 +97,7 @@ temporairement ouvertes pour la PMSE [4]. Ce sont des cas encadrés, hors usage 
    l'événement.
 3. **Coordonner** ses fréquences entre elles pour éviter l'intermodulation (voir notre
    article dédié).
-4. **Vérifier la plage du matériel** — surtout l'ancien (bande 700 !).
+4. **Vérifier la plage du matériel**, surtout l'ancien (bande 700 !).
 
 C'est exactement le travail de [Speed RF](https://arnisoundtools.com/speed-rf) : on
 indique son matériel et sa ville, il calcule des fréquences propres, compatibles et qui
@@ -111,7 +111,7 @@ intermodulations.
 
 | Bande | Statut | Remarque |
 |---|---|---|
-| **470–694 MHz** | ✅ Autorisée (sans licence, pro) | Partagée avec la TNT — éviter les canaux occupés localement |
+| **470–694 MHz** | ✅ Autorisée (sans licence, pro) | Partagée avec la TNT, éviter les canaux occupés localement |
 | **694–790 MHz** | ❌ Interdite | Réaffectée au mobile (4G/5G) |
 | **823–832 MHz** | ✅ Autorisée | Puissance limitée |
 | **1785–1805 MHz** | ✅ Autorisée | Puissance plus faible, portée courte |
@@ -120,8 +120,8 @@ intermodulations.
 
 ## Sources
 
-1. ANFR — Agence nationale des fréquences : https://www.anfr.fr
-2. ANFR — Tableau national de répartition des bandes de fréquences (TNRBF) : https://www.anfr.fr/gestion-des-frequences-sites/le-tableau-national-de-repartition-des-bandes-de-frequences
-3. Légifrance — Décision ARCEP n° 2015-0830 du 2 juillet 2015 (bandes 470-789, 823-832 et 1785-1805 MHz) : https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000030959580
-4. SoundLightUp — « HF et WMAS, l'enjeu des fréquences pour les PMSE » : https://www.soundlightup.com/archives/comprendre/shure-hf-et-wmas-lenjeu-des-frequences-pour-les-pmse.html
-5. APWPT — Association of Professional Wireless Production Technologies (documentation PMSE) : https://apwpt.org
+1. ANFR, Agence nationale des fréquences : https://www.anfr.fr
+2. ANFR, Tableau national de répartition des bandes de fréquences (TNRBF) : https://www.anfr.fr/gestion-des-frequences-sites/le-tableau-national-de-repartition-des-bandes-de-frequences
+3. Légifrance, Décision ARCEP n° 2015-0830 du 2 juillet 2015 (bandes 470-789, 823-832 et 1785-1805 MHz) : https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000030959580
+4. SoundLightUp, « HF et WMAS, l'enjeu des fréquences pour les PMSE » : https://www.soundlightup.com/archives/comprendre/shure-hf-et-wmas-lenjeu-des-frequences-pour-les-pmse.html
+5. APWPT, Association of Professional Wireless Production Technologies (documentation PMSE) : https://apwpt.org

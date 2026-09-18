@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Spectre d'intermodulation — 8 micros HF</title>
+<title>Spectre d'intermodulation, 8 micros HF</title>
 <style>
   :root{
     --bg:#0c0c0e; --panel:#141318; --border:#2a2620;
@@ -76,7 +76,7 @@
     <span><span class="dot" style="background:var(--im3)"></span>Produit 3 émetteurs</span>
   </div>
   <p class="note">« Nouveau tirage » relance un plan aléatoire : certains micros passent, d'autres non.
-    Basculez sur « Plan coordonné » pour voir un plan calculé où <b>tous</b> les micros restent propres —
+    Basculez sur « Plan coordonné » pour voir un plan calculé où <b>tous</b> les micros restent propres,
     c'est le principe de la coordination de fréquences.</p>
 </div>
 
@@ -177,7 +177,7 @@
     const LBLCOL={ok:"#3fae6b",near:"#e3a13a",hit:"#e0533e"};
     car.forEach((f,i)=>{
       const s=st[i];
-      const gx=bar(f,top,COL[s],4,{title:`Micro M${i+1} — ${s==="ok"?"propre":s==="near"?"dégradé":"parasité"}`,formula:`${f.toFixed(3)} MHz`});
+      const gx=bar(f,top,COL[s],4,{title:`Micro M${i+1}, ${s==="ok"?"propre":s==="near"?"dégradé":"parasité"}`,formula:`${f.toFixed(3)} MHz`});
       if(s!=="ok"){
         const m=document.createElementNS(svgNS,"path");
         m.setAttribute("d",`M${gx-6},${top-16} L${gx+6},${top-16} L${gx},${top-6} Z`);

@@ -12,7 +12,7 @@ date: 2026-08-20
 Une bonne fiche technique, c'est ce qui fait la différence entre un accueil fluide et
 une journée de galère. J'ai vu les deux, et l'écart tient souvent à ce document. C'est
 lui qui permet à une salle de **préparer** votre venue : matériel, plateau, planning,
-équipe. Trop souvent, il est bricolé sur Word à la dernière minute — et il manque
+équipe. Trop souvent, il est bricolé sur Word à la dernière minute, et il manque
 toujours l'information qui coince le jour J.
 
 Voici **ce qu'est** une fiche technique, **ce qu'elle doit contenir**, et comment la
@@ -64,7 +64,7 @@ claire, c'est un accueil qui roule.
 
 ### 1. En-tête / informations générales
 - Nom du spectacle / de la compagnie
-- Contact du **régisseur** (nom, téléphone, e-mail) — l'information la plus importante
+- Contact du **régisseur** (nom, téléphone, e-mail), l'information la plus importante
 - Nombre de personnes en tournée, durée du spectacle, jauge
 - Type de spectacle, public visé
 
@@ -99,7 +99,7 @@ claire, c'est un accueil qui roule.
 
 ### 7. L'équipe et le planning
 - Nombre de personnes **au plateau** et **en régie** [3]
-- **Planning type** : déchargement, montage, réglages, balances, spectacle, démontage —
+- **Planning type** : déchargement, montage, réglages, balances, spectacle, démontage,
   avec des **horaires réalistes** [3]
 - Personnel demandé au lieu d'accueil (techniciens, nombre, compétences)
 
@@ -114,7 +114,7 @@ claire, c'est un accueil qui roule.
 
 - **Rester précis mais réaliste.** Distinguer le **nécessaire** de l'**idéal** : une
   fiche « exigeante » qu'aucune petite salle ne peut suivre finit ignorée.
-- **Dater et versionner** la fiche (par exemple « v3 — sept. 2026 »). Le matériel
+- **Dater et versionner** la fiche (par exemple « v3, sept. 2026 »). Le matériel
   évolue.
 - **Un contact régisseur clair** en première page : c'est ce que le lieu cherche en
   premier.
@@ -145,8 +145,8 @@ exporter proprement, sans se battre avec la mise en page.
 
 ## Sources
 
-1. Jiver — « Lire et comprendre une fiche technique et un rider » : https://jiver.fr/lire-comprendre-une-fiche-technique-et-un-rider/
-2. Jiver — « Rider technique vs Fiche technique » : https://jiver.fr/rider-technique-vs-fiche-technique/
-3. Le-Regisseur.com — « La fiche technique ou rider d'un spectacle : tout ce qu'il faut savoir » : https://le-regisseur.com/la-fiche-technique-ou-rider-dun-spectacle-tout-ce-quil-faut-savoir/
-4. CNFPT / Wikiterritorial — « L'accueil technique » : https://www.wikiterritorial.cnfpt.fr/xwiki/bin/view/vitrine/M%C3%A9tiers%20du%20spectacle%20-%20L'accueil%20technique
-5. Tandem (Scène nationale) — « Construire sa fiche technique et son rider » (fiche conseil) : https://tandem83.com/wp-content/uploads/2022/06/construire-sa-fiche-technique.pdf
+1. Jiver, « Lire et comprendre une fiche technique et un rider » : https://jiver.fr/lire-comprendre-une-fiche-technique-et-un-rider/
+2. Jiver, « Rider technique vs Fiche technique » : https://jiver.fr/rider-technique-vs-fiche-technique/
+3. Le-Regisseur.com, « La fiche technique ou rider d'un spectacle : tout ce qu'il faut savoir » : https://le-regisseur.com/la-fiche-technique-ou-rider-dun-spectacle-tout-ce-quil-faut-savoir/
+4. CNFPT / Wikiterritorial, « L'accueil technique » : https://www.wikiterritorial.cnfpt.fr/xwiki/bin/view/vitrine/M%C3%A9tiers%20du%20spectacle%20-%20L'accueil%20technique
+5. Tandem (Scène nationale), « Construire sa fiche technique et son rider » (fiche conseil) : https://tandem83.com/wp-content/uploads/2022/06/construire-sa-fiche-technique.pdf

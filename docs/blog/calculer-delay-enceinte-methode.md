@@ -1,6 +1,6 @@
 ---
 title: "Calculer le delay d'une enceinte : la méthode simple (et pourquoi ça marche)"
-description: "Comment régler le delay de vos enceintes de rappel pour un son net et localisé ? La formule, la vitesse du son, l'effet Haas — expliqués simplement, avec les sources."
+description: "Comment régler le delay de vos enceintes de rappel pour un son net et localisé ? La formule, la vitesse du son, l'effet Haas, expliqués simplement, avec les sources."
 slug: calculer-delay-enceinte-methode
 keywords: [calcul delay enceinte, delay speaker, vitesse du son, effet Haas, effet de précédence, sonorisation, time alignment]
 statut: brouillon
@@ -15,7 +15,7 @@ piège, que j'ai vu se refermer plus d'une fois : on les allume telles quelles, 
 résultat est brouillon. On entend un **écho**, et le son semble venir des enceintes de
 rappel, plus de la scène.
 
-La solution tient en un mot : le **delay**. Voici comment je le calcule — et surtout
+La solution tient en un mot : le **delay**. Voici comment je le calcule, et surtout
 **pourquoi** cela fonctionne.
 
 ---
@@ -66,7 +66,7 @@ entendu**, et fusionne le second avec [2][3].
 
 Concrètement : en faisant arriver le rappel **juste après** la scène (quelques
 millisecondes de retard en plus), le spectateur **entend** l'enceinte de rappel, mais
-**perçoit** que le son vient de la **scène**. C'est exactement l'effet recherché —
+**perçoit** que le son vient de la **scène**. C'est exactement l'effet recherché,
 l'image sonore reste sur les artistes.
 
 Un point remarquable : cet effet fonctionne même si le son retardé est **jusqu'à ~10 dB
@@ -94,7 +94,7 @@ selon la formule **c ≈ 331,3 + 0,606 × T** (T en °C) [1].
 
 En clair : sur un plein air en pleine chaleur, le son va **un peu plus vite**, et la
 même distance demande **un peu moins de delay**. Sur de grandes distances, cela se
-remarque — d'où l'intérêt de recaler ses delays quand la température varie fortement
+remarque, d'où l'intérêt de recaler ses delays quand la température varie fortement
 entre les balances (après-midi) et le show (nuit). C'est une correction que je fais
 systématiquement en extérieur.
 
@@ -110,7 +110,7 @@ systématiquement en extérieur.
 5. **Vérifier à l'oreille** en marchant dans la zone de rappel.
 
 Tous ces calculs (delay, vitesse du son selon la température, et bien d'autres) sont
-intégrés dans [AV Calc](https://arnisoundtools.com/av-calc) — gratuit, pour ne plus
+intégrés dans [AV Calc](https://arnisoundtools.com/av-calc), gratuit, pour ne plus
 sortir la calculette du téléphone sur le terrain.
 
 ---
@@ -126,7 +126,7 @@ sortir la calculette du téléphone sur le terrain.
 
 ## Sources
 
-1. Vitesse du son dans l'air (acoustique) — formule c = 331,3 + 0,606·T ; calculateur de delay live : https://big-rig.co/audio-delay-time-calculator/
-2. Effet de précédence (Haas) — J. Blauert, *The Precedence Effect* (Springer) : https://link.springer.com/chapter/10.1007/978-1-4615-2027-6_151
-3. ProSoundTraining — « It's About Time… The Effective Haas Effect » : https://www.prosoundtraining.com/2010/03/15/its-about-time-the-effective-haas-effect/
-4. Tecnare Sound Systems — « The Haas Effect and its application in sound localization » : https://www.tecnare.com/article/the-haas-effect/
+1. Vitesse du son dans l'air (acoustique), formule c = 331,3 + 0,606·T ; calculateur de delay live : https://big-rig.co/audio-delay-time-calculator/
+2. Effet de précédence (Haas), J. Blauert, *The Precedence Effect* (Springer) : https://link.springer.com/chapter/10.1007/978-1-4615-2027-6_151
+3. ProSoundTraining, « It's About Time… The Effective Haas Effect » : https://www.prosoundtraining.com/2010/03/15/its-about-time-the-effective-haas-effect/
+4. Tecnare Sound Systems, « The Haas Effect and its application in sound localization » : https://www.tecnare.com/article/the-haas-effect/
