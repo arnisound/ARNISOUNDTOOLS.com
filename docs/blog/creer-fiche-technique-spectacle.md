@@ -9,13 +9,14 @@ date: 2026-08-20
 
 # Créer une fiche technique de spectacle qui passe partout
 
-Une bonne fiche technique, c'est ce qui fait la différence entre un accueil fluide
-et une journée de galère. C'est le document qui permet à une salle de **préparer**
-votre venue : matériel, plateau, planning, équipe. Trop souvent, elle est bricolée
-sur Word à la dernière minute — et il manque toujours l'info qui coince le jour J.
+Une bonne fiche technique, c'est ce qui fait la différence entre un accueil fluide et
+une journée de galère. J'ai vu les deux, et l'écart tient souvent à ce document. C'est
+lui qui permet à une salle de **préparer** votre venue : matériel, plateau, planning,
+équipe. Trop souvent, il est bricolé sur Word à la dernière minute — et il manque
+toujours l'information qui coince le jour J.
 
 Voici **ce qu'est** une fiche technique, **ce qu'elle doit contenir**, et comment la
-rendre claire et pro.
+rendre claire et professionnelle.
 
 ---
 
@@ -23,16 +24,15 @@ rendre claire et pro.
 
 On confond souvent les deux [1][2] :
 
-- **La fiche technique** décrit **le spectacle** sur le plan technique : son,
-  lumière, plateau, équipe, planning. C'est le document qui liste **le matériel
-  apporté** par la compagnie **et les demandes faites à la salle** (ce qu'elle doit
-  fournir) [3].
+- **La fiche technique** décrit **le spectacle** sur le plan technique : son, lumière,
+  plateau, équipe, planning. C'est le document qui liste **le matériel apporté** par la
+  compagnie **et les demandes faites à la salle** (ce qu'elle doit fournir) [3].
 - **Le rider** (ou « rider technique/hospitality ») détaille ce qui **entoure** le
   spectacle : accueil, loges, catering, hébergement, conditions particulières [2].
 
 En résumé : la **fiche technique** = ce qu'il faut pour que **le spectacle ait lieu**
-techniquement. Le **rider** = ce qu'il faut pour **accueillir l'équipe** dans de
-bonnes conditions.
+techniquement. Le **rider** = ce qu'il faut pour **accueillir l'équipe** dans de bonnes
+conditions.
 
 Cet article se concentre sur la **fiche technique**.
 
@@ -40,24 +40,31 @@ Cet article se concentre sur la **fiche technique**.
 
 ## À quoi sert-elle vraiment ?
 
-Une fiche technique répond à une question simple pour le lieu d'accueil : **« De
-quoi cette équipe a-t-elle besoin, et qu'apporte-t-elle ? »**. Elle permet [1][4] :
+Une fiche technique répond à une question simple, du point de vue du lieu d'accueil :
+**« De quoi cette équipe a-t-elle besoin, et qu'apporte-t-elle ? »**. Elle permet
+[1][4] :
 
 - au **régisseur du lieu** de préparer le matériel et d'anticiper les manques ;
 - d'établir un **devis** et de commander les compléments (location) ;
 - de **sécuriser** le déroulé (accroche, électricité, plateau) ;
 - de **gagner du temps** le jour du montage.
 
-Une fiche floue = des allers-retours, des surprises, du stress. Une fiche claire =
-un accueil qui roule.
+Une fiche floue, ce sont des allers-retours, des surprises et du stress. Une fiche
+claire, c'est un accueil qui roule.
 
 ---
 
 ## Ce que doit contenir une fiche technique (section par section)
 
+<!-- SCHÉMA INTERACTIF : docs/blog/schemas/fiche-technique-anatomie.html
+     Les 8 sections d'une fiche technique, cliquables, avec le détail de leur contenu et
+     les blocs prioritaires que le régisseur du lieu regarde en premier.
+     → à intégrer ici (iframe ou inline) lors de la mise en ligne du blog. -->
+> 📊 **[Schéma interactif à insérer ici : « Anatomie d'une fiche technique »]**
+
 ### 1. En-tête / informations générales
 - Nom du spectacle / de la compagnie
-- Contact du **régisseur** (nom, téléphone, e-mail) — l'info la plus importante
+- Contact du **régisseur** (nom, téléphone, e-mail) — l'information la plus importante
 - Nombre de personnes en tournée, durée du spectacle, jauge
 - Type de spectacle, public visé
 
@@ -92,8 +99,8 @@ un accueil qui roule.
 
 ### 7. L'équipe et le planning
 - Nombre de personnes **au plateau** et **en régie** [3]
-- **Planning type** : déchargement, montage, réglages, balances, spectacle,
-  démontage — avec des **horaires réalistes** [3]
+- **Planning type** : déchargement, montage, réglages, balances, spectacle, démontage —
+  avec des **horaires réalistes** [3]
 - Personnel demandé au lieu d'accueil (techniciens, nombre, compétences)
 
 ### 8. Annexes
@@ -105,9 +112,10 @@ un accueil qui roule.
 
 ## Les bonnes pratiques
 
-- **Soyez précis mais réaliste.** Distinguez le **nécessaire** de l'**idéal** : une
+- **Rester précis mais réaliste.** Distinguer le **nécessaire** de l'**idéal** : une
   fiche « exigeante » qu'aucune petite salle ne peut suivre finit ignorée.
-- **Datez et versionnez** votre fiche (ex. « v3 — sept. 2026 »). Le matériel évolue.
+- **Dater et versionner** la fiche (par exemple « v3 — sept. 2026 »). Le matériel
+  évolue.
 - **Un contact régisseur clair** en première page : c'est ce que le lieu cherche en
   premier.
 - **Des plans lisibles** valent mille mots (implantation, patch, plan de feu).
@@ -118,17 +126,16 @@ un accueil qui roule.
 ## Gagner du temps
 
 Créer une fiche technique claire et exportable en PDF ne devrait pas prendre des
-heures. C'est l'objectif de
-[Fiche Tech Creator](https://arnisoundtools.com/fiche-tech) : un outil gratuit pour
-générer des fiches structurées (son / lumière / plateau) et les exporter proprement,
-sans se battre avec la mise en page.
+heures. C'est l'objectif de [Fiche Tech Creator](https://arnisoundtools.com/fiche-tech)
+: un outil gratuit pour générer des fiches structurées (son / lumière / plateau) et les
+exporter proprement, sans se battre avec la mise en page.
 
 ---
 
 ## À retenir
 
-- La **fiche technique** décrit le spectacle (son, lumière, plateau, équipe,
-  planning) ; le **rider** décrit l'accueil.
+- La **fiche technique** décrit le spectacle (son, lumière, plateau, équipe, planning) ;
+  le **rider** décrit l'accueil.
 - Son rôle : permettre au lieu de **préparer** votre venue.
 - Les sections clés : **plateau, son, lumière, (vidéo), électricité, équipe &
   planning**, plus les **plans**.
