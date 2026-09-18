@@ -6,9 +6,6 @@ keywords: [micro HF, micro sans fil, grésillement, décrochage, fréquences, in
 statut: publie
 date: 2026-09-18
 ---
-
-# Micros HF qui grésillent ou décrochent : les vraies causes et comment les régler
-
 Un micro qui se met à grésiller pendant un discours, un retour in-ear qui décroche en
 plein morceau : c'est le genre d'incident qui gâche une prestation autrement réussie.
 Après plusieurs années en régie, j'en ai tiré une conviction : quand une liaison HF

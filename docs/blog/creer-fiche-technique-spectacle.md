@@ -6,9 +6,6 @@ keywords: [fiche technique, rider technique, spectacle vivant, son lumière plat
 statut: publie
 date: 2026-09-01
 ---
-
-# Créer une fiche technique de spectacle qui passe partout
-
 Une bonne fiche technique, c'est ce qui fait la différence entre un accueil fluide et
 une journée de galère. J'ai vu les deux, et l'écart tient souvent à ce document. C'est
 lui qui permet à une salle de **préparer** votre venue : matériel, plateau, planning,

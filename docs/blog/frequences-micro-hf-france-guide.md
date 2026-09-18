@@ -6,9 +6,6 @@ keywords: [fréquences micro HF, PMSE, France, ANFR, ARCEP, TNT, UHF, bande 700,
 statut: publie
 date: 2026-09-08
 ---
-
-# Fréquences micro HF autorisées en France : le guide clair (2026)
-
 « J'ai le droit d'utiliser quelle fréquence pour mes micros ? » C'est une question que
 tout technicien finit par se poser, souvent au mauvais moment, la veille d'un
 événement. Entre la TNT, la « bande 700 » disparue et les histoires de licence, le

@@ -15,6 +15,8 @@ const { title, description, date, keywords } = entry.data;
 const fmt = (d: Date) =>
   new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
 const readMin = Math.max(1, Math.round((entry.body ?? '').split(/\s+/).length / 200));
+const niceTitle = (t: string) => t.replace(/ ([:;!?])/g, ' $1');
+const cover = `/blog/covers/${entry.data.slug}.webp`;
 
 const SITE = 'https://arnisoundtools.com';
 const canonical = `${SITE}/blog/${entry.data.slug}/`;
@@ -48,7 +50,7 @@ const breadcrumb = {
 };
 ---
 
-<Base title={`${title} | Arnisound Tools`} description={description}>
+<Base title={`${title} | Arnisound Tools`} description={description} image={cover}>
   <article class="section blog-article">
     <div class="container">
       <nav class="crumbs" aria-label="Fil d'Ariane">
@@ -59,7 +61,7 @@ const breadcrumb = {
 
       <header class="blog-article__head">
         <span class="eyebrow">Guide du terrain</span>
-        <h1>{title}</h1>
+        <h1>{niceTitle(title)}</h1>
         <p class="blog-article__lead">{description}</p>
         <div class="blog-article__meta">
           <time datetime={date.toISOString().slice(0, 10)}>{fmt(date)}</time>
@@ -67,6 +69,10 @@ const breadcrumb = {
           <span>{readMin} min de lecture</span>
         </div>
       </header>
+
+      <figure class="blog-article__cover">
+        <img src={url(cover)} alt={'Illustration : ' + title} width="1200" height="675" />
+      </figure>
 
       <div class="prose">
         <Content />
@@ -127,10 +133,21 @@ const breadcrumb = {
   .crumbs a { color: var(--text-muted); }
   .crumbs a:hover { color: var(--accent); }
 
-  .blog-article__head { margin-bottom: 2.5rem; }
+  .blog-article__head { margin-bottom: 2rem; }
   .blog-article__head h1 {
     margin-top: 0.75rem; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.15;
+    text-wrap: balance;
   }
+
+  .blog-article__cover {
+    margin: 0 0 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #0d0d10;
+    aspect-ratio: 16 / 9;
+  }
+  .blog-article__cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .blog-article__lead {
     margin-top: 1rem; font-size: 1.12rem; line-height: 1.6; color: var(--text-muted);
   }

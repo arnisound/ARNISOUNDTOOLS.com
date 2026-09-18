@@ -6,9 +6,6 @@ keywords: [calcul delay enceinte, delay speaker, vitesse du son, effet Haas, eff
 statut: publie
 date: 2026-09-04
 ---
-
-# Calculer le delay d'une enceinte : la méthode simple (et pourquoi ça marche)
-
 Dès qu'une salle ou un plein air dépasse quelques dizaines de mètres, il faut des
 **enceintes de rappel** (delays) pour que le fond de public entende correctement. Le
 piège, que j'ai vu se refermer plus d'une fois : on les allume telles quelles, et le

@@ -6,9 +6,6 @@ keywords: [intermodulation, IM3, micro HF, coordination de fréquences, produits
 statut: publie
 date: 2026-09-12
 ---
-
-# L'intermodulation expliquée simplement (et pourquoi vos micros se gênent)
-
 Voici une situation que tout sondier a vécue, et moi le premier : on teste ses micros
 HF un par un, tout est propre. On les allume tous ensemble… et certains grésillent.
 Pourtant les fréquences sont « libres ». Que se passe-t-il ?

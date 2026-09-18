@@ -11,6 +11,8 @@ interface Props {
   bare?: boolean;
   /** Empêche l'indexation par les moteurs (pages privées : login, compte) */
   noindex?: boolean;
+  /** Image de partage (OG) spécifique à la page (chemin interne, ex. /blog/covers/x.webp) */
+  image?: string;
 }
 
 const {
@@ -18,10 +20,11 @@ const {
   description = "Suite d'outils web professionnels pour le spectacle vivant et l'événementiel. Simples, en français, pensés pour le terrain.",
   bare = false,
   noindex = false,
+  image,
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://arnisoundtools.com');
-const ogImage = new URL(url('/og.png'), site).href;
+const ogImage = new URL(url(image ?? '/og.png'), site).href;
 const canonical = new URL(Astro.url.pathname, site).href;
 ---
 

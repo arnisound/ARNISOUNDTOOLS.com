@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<style>
+  html,body{margin:0;padding:0;background:#0A0A0B}
+  #stage{width:1200px;height:675px;overflow:hidden}
+  svg{display:block}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+const W=1200,H=675;
+// --- Blocs réutilisables -------------------------------------------------
+const defs=`
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0d0d10"/>
+    <stop offset="1" stop-color="#151417"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+    <stop offset="0" stop-color="#C2832C" stop-opacity="0.28"/>
+    <stop offset="1" stop-color="#C2832C" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#B4761F"/>
+    <stop offset="1" stop-color="#E7B45A"/>
+  </linearGradient>
+  <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="7"/>
+  </filter>
+</defs>`;
+
+function frame(glowX,glowY,inner){
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+    ${defs}
+    <rect width="${W}" height="${H}" fill="url(#bg)"/>
+    <circle cx="${glowX}" cy="${glowY}" r="520" fill="url(#glow)"/>
+    <!-- trame de points -->
+    <g fill="#ffffff" opacity="0.05">
+      ${dots()}
+    </g>
+    ${inner}
+    <!-- filet or bas -->
+    <rect x="0" y="${H-6}" width="${W}" height="6" fill="url(#gold)" opacity="0.9"/>
+  </svg>`;
+}
+function dots(){
+  let d='';
+  for(let y=40;y<H-20;y+=46) for(let x=40;x<W-20;x+=46) d+=`<circle cx="${x}" cy="${y}" r="1.4"/>`;
+  return d;
+}
+
+// --- 1. MICROS HF : anneaux RF + glitch rouge ---------------------------
+function micros(){
+  const cx=250,cy=H/2;
+  let rings='';
+  for(let i=1;i<=6;i++){
+    const r=90+i*78;
+    rings+=`<path d="M ${cx} ${cy-r} A ${r} ${r} 0 0 1 ${cx+r} ${cy}" fill="none" stroke="url(#gold)" stroke-width="${7-i*0.6}" opacity="${0.85-i*0.11}"/>`;
+  }
+  // anneau parasité (rouge, brisé, zigzag)
+  const rr=90+3.4*78;
+  const zig=`M ${cx+ (rr)*Math.cos(-0.55)} ${cy+ (rr)*Math.sin(-0.55)}
+    l 26 -6 l -14 26 l 30 -4 l -16 28 l 28 0`;
+  const glitch=`<path d="${zig}" fill="none" stroke="#d9503c" stroke-width="6" stroke-linejoin="round" filter="url(#soft)"/>
+                <path d="${zig}" fill="none" stroke="#f0705c" stroke-width="4" stroke-linejoin="round"/>`;
+  // micro (corps + grille)
+  const mic=`
+    <g transform="translate(${cx-8},${cy}) rotate(-32)">
+      <rect x="-34" y="-36" width="68" height="150" rx="34" fill="#17130c" stroke="url(#gold)" stroke-width="5"/>
+      <ellipse cx="0" cy="-4" rx="30" ry="42" fill="#1e1810" stroke="url(#gold)" stroke-width="3"/>
+      <g stroke="#C2832C" stroke-width="2.4" opacity="0.85">
+        <line x1="-24" y1="-24" x2="24" y2="-24"/><line x1="-28" y1="-10" x2="28" y2="-10"/>
+        <line x1="-28" y1="4" x2="28" y2="4"/><line x1="-24" y1="18" x2="24" y2="18"/>
+      </g>
+      <rect x="-10" y="112" width="20" height="34" rx="6" fill="#17130c" stroke="url(#gold)" stroke-width="4"/>
+    </g>`;
+  return frame(300,cy, rings+glitch+mic);
+}
+
+// --- 2. FREQUENCES FRANCE : bandes de spectre --------------------------
+function bandes(){
+  const x0=140,x1=W-140,y=H/2, top=y-150, h=170;
+  const segs=[ // [w%, color]
+    [0.30,'gold'],[0.16,'no'],[0.05,'no'],[0.04,'ok'],[0.05,'no'],[0.08,'grey'],
+  ];
+  // largeurs relatives normalisées sur la piste
+  const tot=segs.reduce((a,s)=>a+s[0],0);
+  let cx=x0, bars='';
+  const col={gold:'url(#gold)',no:'#7d2f26',ok:'#2f7d4f',grey:'#3a3630'};
+  segs.forEach(s=>{
+    const w=(x1-x0)*s[0]/tot;
+    bars+=`<rect x="${cx}" y="${top}" width="${w-6}" height="${h}" rx="7" fill="${col[s[1]]}" opacity="${s[1]==='no'?0.55:0.95}"/>`;
+    cx+=w;
+  });
+  // barres d'égaliseur au-dessus (accent)
+  let eq='';
+  for(let i=0;i<46;i++){
+    const bx=x0+i*((x1-x0)/46);
+    const bh=20+Math.abs(Math.sin(i*0.7)*Math.cos(i*0.3))*120;
+    eq+=`<rect x="${bx}" y="${top-24-bh}" width="8" height="${bh}" rx="3" fill="url(#gold)" opacity="${0.25+ (bh/160)*0.6}"/>`;
+  }
+  // règle
+  let ruler=`<line x1="${x0}" y1="${top+h+26}" x2="${x1}" y2="${top+h+26}" stroke="#3a352c" stroke-width="2"/>`;
+  for(let i=0;i<=5;i++){const rx=x0+(x1-x0)*i/5;ruler+=`<line x1="${rx}" y1="${top+h+20}" x2="${rx}" y2="${top+h+32}" stroke="#6b6b70" stroke-width="2"/>`;}
+  return frame(W/2,y, eq+bars+ruler);
+}
+
+// --- 3. INTERMODULATION : deux sinus + pic produit ---------------------
+function intermod(){
+  const y=H/2+40, x0=120, x1=W-120, amp=70;
+  function wave(freq,phase,color,op,sw){
+    let d='M '+x0+' '+y;
+    for(let x=x0;x<=x1;x+=6){const t=(x-x0)/(x1-x0);d+=` L ${x} ${y - Math.sin(t*Math.PI*freq+phase)*amp}`;}
+    return `<path d="${d}" fill="none" stroke="${color}" stroke-width="${sw}" opacity="${op}"/>`;
+  }
+  const w1=wave(16,0,'url(#gold)',0.9,4);
+  const w2=wave(18,1.1,'#8a6cd9',0.7,3.5);
+  // baseline
+  const base=`<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="#2a2620" stroke-width="2"/>`;
+  // pic produit d'intermodulation (rouge) qui dépasse
+  const px=x0+(x1-x0)*0.62;
+  const spike=`
+    <line x1="${px}" y1="${y}" x2="${px}" y2="${y-230}" stroke="#d9503c" stroke-width="7" filter="url(#soft)"/>
+    <line x1="${px}" y1="${y}" x2="${px}" y2="${y-230}" stroke="#f0705c" stroke-width="4"/>
+    <circle cx="${px}" cy="${y-230}" r="9" fill="#f0705c"/>
+    <polygon points="${px-13},${y-250} ${px+13},${y-250} ${px},${y-274}" fill="#f0705c"/>`;
+  // porteuses (traits fins verticaux)
+  let carriers='';
+  [0.2,0.38,0.78].forEach(t=>{const xx=x0+(x1-x0)*t;carriers+=`<line x1="${xx}" y1="${y}" x2="${xx}" y2="${y-150}" stroke="url(#gold)" stroke-width="5"/><circle cx="${xx}" cy="${y-150}" r="7" fill="#E7B45A"/>`;});
+  return frame(px,y-90, base+w2+w1+carriers+spike);
+}
+
+// --- 4. DELAY : deux enceintes + fronts d'onde + Δt --------------------
+function delay(){
+  const y=H/2+20;
+  function speaker(x,scale){
+    return `<g transform="translate(${x},${y}) scale(${scale})">
+      <rect x="-46" y="-70" width="92" height="150" rx="12" fill="#17130c" stroke="url(#gold)" stroke-width="5"/>
+      <circle cx="0" cy="-30" r="22" fill="#1e1810" stroke="url(#gold)" stroke-width="4"/>
+      <circle cx="0" cy="38" r="34" fill="#1e1810" stroke="url(#gold)" stroke-width="5"/>
+      <circle cx="0" cy="38" r="14" fill="#0d0d10" stroke="#C2832C" stroke-width="3"/>
+    </g>`;
+  }
+  const sc=`${speaker(230,1)}${speaker(760,0.8)}`;
+  // fronts d'onde concentriques depuis chaque enceinte
+  let arcs='';
+  [ [230,1,0.9], [760,-1,0.8] ].forEach(([sx,dir,base])=>{
+    for(let i=1;i<=5;i++){const r=70+i*70;
+      const x=sx+dir*r*0; // arcs centrés
+      arcs+=`<path d="M ${sx+dir*46} ${y-r} A ${r} ${r} 0 0 ${dir>0?1:0} ${sx+dir*(46+r)} ${y}" fill="none" stroke="url(#gold)" stroke-width="${5-i*0.6}" opacity="${base-i*0.14}"/>`;
+    }
+  });
+  // marqueur Δt entre les deux
+  const bx0=330,bx1=700,by=y-150;
+  const dt=`
+    <line x1="${bx0}" y1="${by}" x2="${bx1}" y2="${by}" stroke="#E7B45A" stroke-width="3" stroke-dasharray="8 7"/>
+    <line x1="${bx0}" y1="${by-14}" x2="${bx0}" y2="${by+14}" stroke="#E7B45A" stroke-width="3"/>
+    <line x1="${bx1}" y1="${by-14}" x2="${bx1}" y2="${by+14}" stroke="#E7B45A" stroke-width="3"/>
+    <circle cx="${(bx0+bx1)/2}" cy="${by}" r="26" fill="#0d0d10" stroke="#E7B45A" stroke-width="3"/>
+    <text x="${(bx0+bx1)/2}" y="${by+7}" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="26" fill="#E7B45A">&#916;t</text>`;
+  return frame(495,y, arcs+sc+dt);
+}
+
+// --- 5. FICHE TECHNIQUE : document + checklist -------------------------
+function fiche(){
+  const dw=470,dh=560,dx=(W-dw)/2+60,dy=(H-dh)/2;
+  // feuille
+  let doc=`<rect x="${dx}" y="${dy}" width="${dw}" height="${dh}" rx="18" fill="#141317" stroke="url(#gold)" stroke-width="4"/>`;
+  // en-tête
+  doc+=`<rect x="${dx+34}" y="${dy+36}" width="${dw-160}" height="26" rx="7" fill="url(#gold)"/>`;
+  doc+=`<rect x="${dx+34}" y="${dy+74}" width="${dw-230}" height="14" rx="6" fill="#3a3630"/>`;
+  // lignes + cases à cocher
+  let lines='';
+  const tags=['SON','LUM','PLATEAU'];
+  for(let i=0;i<7;i++){
+    const ly=dy+130+i*54;
+    const done=i<4;
+    lines+=`<rect x="${dx+34}" y="${ly}" width="30" height="30" rx="7" fill="${done?'url(#gold)':'#0d0d10'}" stroke="url(#gold)" stroke-width="3"/>`;
+    if(done) lines+=`<path d="M ${dx+41} ${ly+16} l 7 8 l 12 -15" fill="none" stroke="#0d0d10" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    lines+=`<rect x="${dx+82} " y="${ly+4}" width="${dw-150-(i%3)*40}" height="12" rx="6" fill="#4a453c"/>`;
+    lines+=`<rect x="${dx+82}" y="${ly+22}" width="${dw-230-(i%2)*60}" height="9" rx="4" fill="#2f2b25"/>`;
+  }
+  // étiquettes de sections (à droite, débordant)
+  let chips='';
+  tags.forEach((t,i)=>{
+    const cyp=dy+70+i*70;
+    chips+=`<g transform="translate(${dx+dw-24},${cyp})">
+      <rect x="0" y="0" width="120" height="40" rx="20" fill="#1b1810" stroke="url(#gold)" stroke-width="2.5"/>
+      <text x="60" y="26" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#E7B45A" letter-spacing="1">${t}</text>
+    </g>`;
+  });
+  return frame(W/2,H/2, doc+lines+chips);
+}
+
+const MAP={ 'micros-hf-gresillent-decrochent':micros, 'frequences-micro-hf-france-guide':bandes,
+  'intermodulation-expliquee-simplement':intermod, 'calculer-delay-enceinte-methode':delay,
+  'creer-fiche-technique-spectacle':fiche };
+const id=new URLSearchParams(location.search).get('id')||'micros-hf-gresillent-decrochent';
+document.getElementById('stage').innerHTML=(MAP[id]||micros)();
+</script>
+</body>
+</html>
