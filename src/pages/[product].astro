@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { products, getProduct } from '../data/products';
 import { url } from '../lib/site';
 import { checkoutLive, checkoutUrl } from '../lib/checkout';
+import { getCollection } from 'astro:content';
 
 export function getStaticPaths() {
   return products.map((p) => ({ params: { product: p.slug } }));
@@ -11,6 +12,20 @@ export function getStaticPaths() {
 const { product } = Astro.params;
 const p = getProduct(product!);
 if (!p) return Astro.redirect('/404');
+
+// Maillage interne : articles de blog pertinents par outil.
+const RELATED: Record<string, string[]> = {
+  'speed-rf': ['micros-hf-gresillent-decrochent', 'frequences-micro-hf-france-guide'],
+  'rf-shot': ['intermodulation-expliquee-simplement', 'micros-hf-gresillent-decrochent'],
+  'av-calc': ['calculer-delay-enceinte-methode'],
+  'fiche-tech': ['creer-fiche-technique-spectacle'],
+  'reperages': [],
+};
+const niceTitle = (t: string) => t.replace(/ ([:;!?])/g, ' $1');
+const allPosts = (await getCollection('blog')).filter((b) => b.data.statut === 'publie');
+const relatedPosts = (RELATED[p.slug] ?? [])
+  .map((slug) => allPosts.find((b) => b.data.slug === slug))
+  .filter((b): b is (typeof allPosts)[number] => Boolean(b));
 
 const comingSoon = Boolean(p.comingSoon);
 // - App gratuite : le bouton mène à l'inscription puis renvoie vers l'app (« next »).
@@ -182,6 +197,34 @@ const productSchema = {
     </div>
   </section>
 
+  {relatedPosts.length > 0 && (
+    <section class="section section--soft">
+      <div class="container">
+        <header class="section-head related-head">
+          <div>
+            <span class="eyebrow">Pour aller plus loin</span>
+            <h2>Guides du terrain</h2>
+          </div>
+          <a href={url('/blog')} class="btn btn--ghost">Tous les articles →</a>
+        </header>
+        <div class="grid grid--2" style="margin-top: 2.5rem;">
+          {relatedPosts.map((post) => (
+            <a href={url('/blog/' + post.data.slug)} class="card related-card">
+              <div class="related-card__cover">
+                <img src={url('/blog/covers/' + post.data.slug + '.webp')} alt={'Illustration : ' + post.data.title} width="1200" height="675" loading="lazy" />
+              </div>
+              <div class="related-card__body">
+                <h3>{niceTitle(post.data.title)}</h3>
+                <p class="text-muted">{post.data.description}</p>
+                <span class="product-card__link">Lire l’article →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
   <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
 </Base>
 
@@ -300,6 +343,18 @@ const productSchema = {
   }
 
   .diff { padding: 2rem; }
+
+  /* Articles liés (maillage blog) */
+  .related-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1.5rem; max-width: none; flex-wrap: wrap;
+  }
+  .related-card { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+  .related-card__cover { aspect-ratio: 16 / 9; overflow: hidden; border-bottom: 1px solid var(--border); background: #0d0d10; }
+  .related-card__cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+  .related-card:hover .related-card__cover img { transform: scale(1.04); }
+  .related-card__body { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.3rem 1.5rem 1.5rem; }
+  .related-card__body h3 { font-size: 1.12rem; line-height: 1.3; text-wrap: balance; }
 
   .btn.is-disabled {
     opacity: 0.55;

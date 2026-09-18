@@ -3,6 +3,14 @@ import Base from '../layouts/Base.astro';
 import { products, bundle } from '../data/products';
 import { url } from '../lib/site';
 import { checkoutLive, checkoutUrl } from '../lib/checkout';
+import { getCollection } from 'astro:content';
+
+// 3 derniers articles publiés (maillage interne vers le blog).
+const niceTitle = (t: string) => t.replace(/ ([:;!?])/g, ' $1');
+const latestPosts = (await getCollection('blog'))
+  .filter((p) => p.data.statut === 'publie')
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
 
 // Bouton du bundle : checkout Lemon Squeezy si la boutique est active,
 // sinon repli sur /login (le script client ajoute email + user_id si connecté).
@@ -139,6 +147,35 @@ const outils = order
     </div>
   </section>
 
+  <!-- ===================== BLOG ===================== -->
+  {latestPosts.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <header class="section-head blog-teaser__head">
+          <div>
+            <span class="eyebrow">Le blog</span>
+            <h2>Guides du terrain</h2>
+            <p class="lead">Fréquences, intermodulation, calage des délais, fiche technique : nos guides pratiques et sourcés.</p>
+          </div>
+          <a href={url('/blog')} class="btn btn--ghost">Tous les articles →</a>
+        </header>
+
+        <div class="grid grid--3" style="margin-top: 2.5rem;">
+          {latestPosts.map((post) => (
+            <a href={url('/blog/' + post.data.slug)} class="card blog-teaser__card">
+              <div class="blog-teaser__cover">
+                <img src={url('/blog/covers/' + post.data.slug + '.webp')} alt={'Illustration : ' + post.data.title} width="1200" height="675" loading="lazy" />
+              </div>
+              <h3 class="blog-teaser__title">{niceTitle(post.data.title)}</h3>
+              <p class="text-muted blog-teaser__excerpt">{post.data.description}</p>
+              <span class="product-card__link">Lire l’article →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- ===================== CTA FINAL ===================== -->
   <section class="section section--soft">
     <div class="container text-center cta-final">
@@ -216,4 +253,17 @@ const outils = order
   .bundle__now { font-size: 2rem; font-weight: 800; color: var(--accent); }
 
   .cta-final { max-width: 640px; }
+
+  /* Teaser blog (home) */
+  .blog-teaser__head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1.5rem; max-width: none; flex-wrap: wrap;
+  }
+  .blog-teaser__card { display: flex; flex-direction: column; gap: 0.6rem; padding: 0; overflow: hidden; }
+  .blog-teaser__cover { aspect-ratio: 16 / 9; overflow: hidden; border-bottom: 1px solid var(--border); background: #0d0d10; }
+  .blog-teaser__cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+  .blog-teaser__card:hover .blog-teaser__cover img { transform: scale(1.04); }
+  .blog-teaser__title { font-size: 1.1rem; line-height: 1.3; padding: 0 1.4rem; margin-top: 0.4rem; text-wrap: balance; }
+  .blog-teaser__excerpt { padding: 0 1.4rem; font-size: 0.92rem; line-height: 1.55; }
+  .blog-teaser__card .product-card__link { padding: 0 1.4rem 1.4rem; }
 </style>
