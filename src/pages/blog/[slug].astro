@@ -18,6 +18,45 @@ const readMin = Math.max(1, Math.round((entry.body ?? '').split(/\s+/).length / 
 const niceTitle = (t: string) => t.replace(/ ([:;!?])/g, ' $1');
 const cover = `/blog/covers/${entry.data.slug}.webp`;
 
+// Appel à l'action spécifique à chaque article (destination + texte).
+type CtaTool = { slug: string; label: string };
+type Cta = { title: string; text: string; tools: CtaTool[] };
+const CTA: Record<string, Cta> = {
+  'micros-hf-gresillent-decrochent': {
+    title: 'Partez d’un plan de fréquences propre',
+    text: 'Neuf soucis HF sur dix viennent du plan de fréquences. Speed RF en calcule un fiable pour votre matériel et votre ville ; RF Shot va plus loin sur les grosses configurations.',
+    tools: [
+      { slug: 'speed-rf', label: 'Découvrir Speed RF' },
+      { slug: 'rf-shot', label: 'Voir RF Shot' },
+    ],
+  },
+  'frequences-micro-hf-france-guide': {
+    title: 'Des fréquences propres, sans prise de tête',
+    text: 'Speed RF choisit pour vous des fréquences autorisées et compatibles, en tenant compte de la TNT locale et des bandes PMSE françaises.',
+    tools: [{ slug: 'speed-rf', label: 'Découvrir Speed RF' }],
+  },
+  'intermodulation-expliquee-simplement': {
+    title: 'Laissez RF Shot coordonner vos fréquences',
+    text: 'Calculer les intermodulations à la main devient vite impossible. RF Shot coordonne 100+ fréquences et vérifie les produits jusqu’à l’ordre 7, plus les combinaisons à trois émetteurs.',
+    tools: [{ slug: 'rf-shot', label: 'Découvrir RF Shot' }],
+  },
+  'calculer-delay-enceinte-methode': {
+    title: 'Calculez vos delays en un geste',
+    text: 'AV Calc réunit le calcul du delay, la vitesse du son selon la température et plus de 70 autres calculateurs de terrain. Gratuit, directement dans le navigateur.',
+    tools: [{ slug: 'av-calc', label: 'Ouvrir AV Calc' }],
+  },
+  'creer-fiche-technique-spectacle': {
+    title: 'Créez une fiche technique claire et exportable',
+    text: 'Fiche Tech Creator génère des fiches structurées (son, lumière, plateau) et les exporte en PDF propre, sans se battre avec la mise en page. Gratuit.',
+    tools: [{ slug: 'fiche-tech', label: 'Ouvrir Fiche Tech Creator' }],
+  },
+};
+const cta: Cta = CTA[entry.data.slug] ?? {
+  title: 'Passez à la pratique',
+  text: 'Découvrez les outils Arnisound pour gagner du temps sur le terrain.',
+  tools: [{ slug: 'speed-rf', label: 'Découvrir les outils' }],
+};
+
 const SITE = 'https://arnisoundtools.com';
 const canonical = `${SITE}/blog/${entry.data.slug}/`;
 const articleSchema = {
@@ -80,14 +119,13 @@ const breadcrumb = {
 
       <aside class="blog-article__cta card">
         <div>
-          <h2>Passez à la pratique</h2>
-          <p class="text-muted">
-            Speed RF et RF Shot calculent des plans de fréquences propres en quelques secondes,
-            là où la compréhension du sujet demande des années.
-          </p>
+          <h2>{cta.title}</h2>
+          <p class="text-muted">{cta.text}</p>
         </div>
         <div class="blog-article__cta-actions">
-          <a href={url('/speed-rf')} class="btn btn--primary">Découvrir Speed RF</a>
+          {cta.tools.map((t, i) => (
+            <a href={url('/' + t.slug)} class:list={['btn', i === 0 ? 'btn--primary' : 'btn--ghost']}>{t.label}</a>
+          ))}
           <a href={url('/blog')} class="btn btn--ghost">← Tous les articles</a>
         </div>
       </aside>
