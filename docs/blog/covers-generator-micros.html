@@ -26,7 +26,7 @@ const defs=`
     <stop offset="0" stop-color="#4a4437"/><stop offset="0.6" stop-color="#2a2620"/><stop offset="1" stop-color="#141210"/>
   </radialGradient>
   <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
-  <clipPath id="ballclip"><circle cx="0" cy="-150" r="60"/></clipPath>
+  <clipPath id="ballclip"><circle cx="0" cy="-150" r="78"/></clipPath>
 </defs>`;
 
 function dots(){let d='';for(let y=40;y<H-20;y+=46)for(let x=40;x<W-20;x+=46)d+=`<circle cx="${x}" cy="${y}" r="1.4"/>`;return d;}
@@ -90,38 +90,43 @@ function micros(){
     noise+=`<circle cx="${(ox+Math.cos(a)*r).toFixed(1)}" cy="${(oy+Math.sin(a)*r).toFixed(1)}" r="${(1+Math.random()*2).toFixed(1)}" fill="#e79b6a" opacity="${(0.15+Math.random()*0.4).toFixed(2)}"/>`;
   }
 
-  // ---- Micro-main HF réaliste (vertical, léger tilt) ----
+  // ---- Micro-main HF réaliste (silhouette type SM58) ----
+  const R=78, cyb=-150;
+  // maille losange : deux familles de lignes ±42° coupées au cercle de la grille
   let mesh='';
-  for(let y=-198;y<=-104;y+=11) mesh+=`<line x1="-58" y1="${y}" x2="58" y2="${y}" stroke="#C2832C" stroke-width="1.5" opacity="0.5"/>`;
-  for(let x=-52;x<=52;x+=12) mesh+=`<line x1="${x}" y1="-206" x2="${x}" y2="-96" stroke="#C2832C" stroke-width="1.5" opacity="0.35"/>`;
+  for(const ang of [42,-42]){
+    const rad=ang*Math.PI/180, dx=Math.cos(rad), dy=Math.sin(rad), px=-Math.sin(rad), py=Math.cos(rad), ext=R*1.7;
+    for(let o=-R+2;o<=R-2;o+=12){
+      const bx=px*o, by=py*o+cyb;
+      mesh+=`<line x1="${(bx-dx*ext).toFixed(1)}" y1="${(by-dy*ext).toFixed(1)}" x2="${(bx+dx*ext).toFixed(1)}" y2="${(by+dy*ext).toFixed(1)}" stroke="#C2832C" stroke-width="1.7" opacity="0.55"/>`;
+    }
+  }
   const mic=`
-  <g transform="translate(${cx},${cy}) rotate(-9)" filter="url(#soft0)">
-    <!-- ombre -->
-    <ellipse cx="6" cy="150" rx="60" ry="20" fill="#000" opacity="0.35" filter="url(#soft)"/>
-    <!-- tête grille (bombée) -->
-    <circle cx="0" cy="-150" r="60" fill="url(#ball)" stroke="url(#gold)" stroke-width="5"/>
-    <g clip-path="url(#ballclip)">${mesh}</g>
-    <ellipse cx="-18" cy="-172" rx="18" ry="12" fill="#efe6d0" opacity="0.12"/>
-    <!-- bague de col -->
-    <rect x="-46" y="-96" width="92" height="20" rx="7" fill="url(#gold)"/>
-    <rect x="-46" y="-94" width="92" height="5" rx="3" fill="#fff" opacity="0.18"/>
-    <!-- corps -->
-    <rect x="-44" y="-78" width="88" height="240" rx="34" fill="url(#steel)" stroke="url(#gold)" stroke-width="5"/>
-    <!-- reflet vertical -->
-    <rect x="-30" y="-70" width="12" height="224" rx="6" fill="#fff" opacity="0.06"/>
-    <!-- LED d'état -->
-    <circle cx="0" cy="-52" r="7" fill="#7ee0a0"/>
-    <circle cx="0" cy="-52" r="12" fill="#7ee0a0" opacity="0.25"/>
-    <!-- petit écran / bandeau -->
-    <rect x="-30" y="-24" width="60" height="34" rx="7" fill="#0d0d10" stroke="url(#gold)" stroke-width="2.5"/>
-    <rect x="-22" y="-15" width="30" height="6" rx="3" fill="#E7B45A" opacity="0.85"/>
-    <rect x="-22" y="-4" width="44" height="5" rx="2.5" fill="#4a453c"/>
-    <!-- grip / anneaux -->
-    <g stroke="#0d0d10" stroke-width="3" opacity="0.5">
-      <line x1="-40" y1="55" x2="40" y2="55"/><line x1="-40" y1="70" x2="40" y2="70"/><line x1="-40" y1="85" x2="40" y2="85"/>
+  <g transform="translate(${cx},${cy}) rotate(-6)" filter="url(#soft0)">
+    <ellipse cx="6" cy="188" rx="56" ry="18" fill="#000" opacity="0.35" filter="url(#soft)"/>
+    <!-- corps tronconique (se resserre vers le bas) -->
+    <path d="M -60 -64 L -44 150 L 44 150 L 60 -64 Z" fill="url(#steel)" stroke="url(#gold)" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="-30" y="-58" width="11" height="205" rx="6" fill="#fff" opacity="0.06"/>
+    <!-- embout / culot -->
+    <path d="M -50 146 L 50 146 L 46 184 Q 44 194 30 194 L -30 194 Q -44 194 -46 184 Z" fill="#1a1815" stroke="url(#gold)" stroke-width="4.5" stroke-linejoin="round"/>
+    <!-- grip -->
+    <g stroke="#0d0d10" stroke-width="3" opacity="0.45">
+      <line x1="-44" y1="62" x2="44" y2="62"/><line x1="-42" y1="78" x2="42" y2="78"/><line x1="-40" y1="94" x2="40" y2="94"/>
     </g>
-    <!-- culot / bouchon batterie -->
-    <rect x="-34" y="150" width="68" height="26" rx="10" fill="#1a1815" stroke="url(#gold)" stroke-width="4"/>
+    <!-- LED d'état + écran -->
+    <circle cx="0" cy="-30" r="7" fill="#7ee0a0"/><circle cx="0" cy="-30" r="12" fill="#7ee0a0" opacity="0.25"/>
+    <rect x="-30" y="-6" width="60" height="34" rx="7" fill="#0d0d10" stroke="url(#gold)" stroke-width="2.5"/>
+    <rect x="-22" y="3" width="30" height="6" rx="3" fill="#E7B45A" opacity="0.85"/>
+    <rect x="-22" y="14" width="44" height="5" rx="2.5" fill="#4a453c"/>
+    <!-- bague de col (2 anneaux) -->
+    <rect x="-60" y="-84" width="120" height="24" rx="8" fill="url(#steel)" stroke="url(#gold)" stroke-width="4"/>
+    <line x1="-54" y1="-77" x2="54" y2="-77" stroke="url(#gold)" stroke-width="2.5" opacity="0.9"/>
+    <line x1="-54" y1="-67" x2="54" y2="-67" stroke="url(#gold)" stroke-width="2.5" opacity="0.9"/>
+    <!-- tête grille bombée (large) -->
+    <circle cx="0" cy="${cyb}" r="${R}" fill="url(#ball)"/>
+    <g clip-path="url(#ballclip)">${mesh}</g>
+    <circle cx="0" cy="${cyb}" r="${R}" fill="none" stroke="url(#gold)" stroke-width="5"/>
+    <ellipse cx="-26" cy="-178" rx="24" ry="15" fill="#efe6d0" opacity="0.14"/>
   </g>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
