@@ -28,7 +28,7 @@ const toolsActive = tools.some((t) => isActive('/' + t.slug));
         <div class="nav__menu">
           {tools.map((t) => (
             <a href={url('/' + t.slug)} class="nav__menu-item">
-              {t.image && <img src={url(t.image)} alt="" width="30" height="30" />}
+              {t.image && <img src={url(t.image)} alt={`Logo ${t.name}`} width="30" height="30" />}
               <span>{t.name}</span>
               {t.comingSoon && <span class="nav__tag">Bientôt</span>}
             </a>

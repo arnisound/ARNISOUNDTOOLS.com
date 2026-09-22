@@ -1,5 +1,6 @@
 ---
 title: "L'intermodulation expliquée simplement (et pourquoi vos micros se gênent)"
+seoTitle: "L'intermodulation des micros HF, simplement"
 description: "Vos micros HF grésillent quand ils sont tous allumés, alors qu'ils vont bien séparément ? C'est l'intermodulation. Explication simple, exemples et solutions, sources à l'appui."
 slug: intermodulation-expliquee-simplement
 keywords: [intermodulation, IM3, micro HF, coordination de fréquences, produits d'intermodulation, PMSE, RF]

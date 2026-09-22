@@ -1,5 +1,6 @@
 ---
 title: "Calculer le delay d'une enceinte : la méthode simple (et pourquoi ça marche)"
+seoTitle: "Calculer le delay d'une enceinte (effet Haas)"
 description: "Comment régler le delay de vos enceintes de rappel pour un son net et localisé ? La formule, la vitesse du son, l'effet Haas, expliqués simplement, avec les sources."
 slug: calculer-delay-enceinte-methode
 keywords: [calcul delay enceinte, delay speaker, vitesse du son, effet Haas, effet de précédence, sonorisation, time alignment]

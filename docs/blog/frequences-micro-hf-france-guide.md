@@ -1,5 +1,6 @@
 ---
 title: "Fréquences micro HF autorisées en France : le guide clair (2026)"
+seoTitle: "Fréquences micro HF autorisées en France (2026)"
 description: "Quelles bandes de fréquences a-t-on le droit d'utiliser pour ses micros sans fil en France ? UHF/TNT, 823-832 MHz, 1785-1805 MHz : le point complet et sourcé (ANFR/ARCEP)."
 slug: frequences-micro-hf-france-guide
 keywords: [fréquences micro HF, PMSE, France, ANFR, ARCEP, TNT, UHF, bande 700, micro sans fil légal]

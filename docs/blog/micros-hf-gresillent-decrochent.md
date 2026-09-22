@@ -1,5 +1,6 @@
 ---
 title: "Micros HF qui grésillent ou décrochent : les vraies causes et comment les régler"
+seoTitle: "Micros HF qui grésillent : causes et solutions"
 description: "Pourquoi un micro sans fil grésille ou décroche ? Les cinq causes principales, expliquées par un technicien, avec les solutions concrètes et le cadre légal des fréquences en France."
 slug: micros-hf-gresillent-decrochent
 keywords: [micro HF, micro sans fil, grésillement, décrochage, fréquences, intermodulation, PMSE, ANFR, TNT]

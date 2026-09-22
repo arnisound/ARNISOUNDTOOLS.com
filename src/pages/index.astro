@@ -86,7 +86,7 @@ const outils = order
           <a href={url(`/${p.slug}`)} class="card product-card">
             <div class="product-card__head">
               {p.image && (
-                <img src={url(p.image)} alt="" class="product-card__logo" width="54" height="54" loading="lazy" />
+                <img src={url(p.image)} alt={`Logo ${p.name}`} class="product-card__logo" width="54" height="54" loading="lazy" />
               )}
               {p.free ? (
                 <span class="badge badge--free">Gratuit</span>

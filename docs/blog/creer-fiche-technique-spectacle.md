@@ -1,5 +1,6 @@
 ---
 title: "Créer une fiche technique de spectacle qui passe partout"
+seoTitle: "Créer une fiche technique de spectacle"
 description: "Qu'est-ce qu'une fiche technique (et un rider) ? Que doit-elle contenir ? Le guide clair pour rédiger une fiche technique complète et pro, section par section."
 slug: creer-fiche-technique-spectacle
 keywords: [fiche technique, rider technique, spectacle vivant, son lumière plateau, régie, accueil technique]
