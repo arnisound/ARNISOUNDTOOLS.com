@@ -40,13 +40,13 @@ if (freeApp) {
   ctaLabel = 'Essayer gratuitement';
   ctaHref = `${url('/login')}?mode=signup&next=${encodeURIComponent(p.appUrl!)}`;
 } else if (canCheckout) {
-  ctaLabel = `Acheter — ${p.price}`;
+  ctaLabel = `Acheter à ${p.price}`;
   ctaHref = checkoutUrl(p.checkoutId!); // le script y ajoute email + user_id si connecté
 } else if (p.free) {
   ctaLabel = 'Créer un compte gratuit';
   ctaHref = url('/login');
 } else {
-  ctaLabel = `Acheter — ${p.price}`;
+  ctaLabel = `Acheter à ${p.price}`;
   ctaHref = url('/login'); // boutique Lemon Squeezy pas encore active
 }
 const checkoutAttrs = canCheckout ? { 'data-checkout': true } : {};
@@ -68,6 +68,15 @@ const productSchema = {
     priceCurrency: 'EUR',
     availability: comingSoon ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock',
   },
+};
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: 'Outils', item: `${SITE}/#outils` },
+    { '@type': 'ListItem', position: 3, name: p.name, item: `${SITE}/${p.slug}/` },
+  ],
 };
 ---
 
@@ -226,6 +235,7 @@ const productSchema = {
   )}
 
   <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
 </Base>
 
 <script>
