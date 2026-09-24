@@ -36,11 +36,7 @@ const canCheckout = !p.free && !comingSoon && checkoutLive && Boolean(p.checkout
 
 let ctaLabel: string;
 let ctaHref: string;
-if (p.directApp && p.appUrl && !comingSoon) {
-  // App sans compte : on ouvre directement l'application.
-  ctaLabel = 'Créer une session';
-  ctaHref = p.appUrl;
-} else if (freeApp) {
+if (freeApp) {
   ctaLabel = 'Essayer gratuitement';
   ctaHref = `${url('/login')}?mode=signup&next=${encodeURIComponent(p.appUrl!)}`;
 } else if (canCheckout) {

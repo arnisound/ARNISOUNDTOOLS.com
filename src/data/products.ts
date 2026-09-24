@@ -21,8 +21,6 @@ export interface Product {
   steps?: string[];
   /** Lien direct vers l'app (si elle est déjà en ligne, hébergée ailleurs). */
   appUrl?: string;
-  /** L'app s'ouvre directement (sans passer par la création de compte). */
-  directApp?: boolean;
   /** Description meta dédiée (SEO), sinon la tagline est utilisée. */
   metaDescription?: string;
   /** Identifiant du lien d'achat Lemon Squeezy (UUID) pour l'URL de checkout. */
@@ -312,9 +310,8 @@ export const products: Product[] = [
     metaDescription:
       'Chronomètre de scène professionnel : régie et affichage séparés, partage par QR code, messages, questions et sondages du public. Sans compte.',
     price: 'Gratuit',
-    priceNote: 'Sans compte · sans installation',
+    priceNote: 'Gratuit avec un compte · rien à installer',
     free: true,
-    directApp: true,
     audience: 'Chronométrage de scène',
     image: '/products/timestage.svg',
     appUrl: 'https://timestage.arnisoundtools.com/',
@@ -322,7 +319,7 @@ export const products: Product[] = [
       "TimeStage est un chronomètre de scène. Il répond à une question que tout organisateur connaît : comment dire à la personne qui parle combien de temps il lui reste, sans l’interrompre, sans agiter les bras au fond de la salle, et sans que le public s’en aperçoive. La technique pilote depuis un ordinateur ou une tablette ; l’orateur voit un écran, un retour de scène ou un vidéoprojecteur. Les deux sont synchronisés à la milliseconde, et il n’y a rien à installer : un navigateur suffit, des deux côtés.",
     heroPoints: [
       'Régie et affichage séparés, synchronisés à la milliseconde',
-      'Partagé par QR code, sans compte ni installation',
+      'Écrans et public rejoignent par QR code, sans rien installer',
       'Messages à l’orateur, questions et sondages du public',
       'Mode hors ligne : le chrono tourne même sans réseau',
     ],
@@ -335,7 +332,7 @@ export const products: Product[] = [
       },
       {
         title: 'Prêt en dix secondes',
-        text: 'Vous créez une session, vous obtenez un code à cinq caractères et vos QR codes : un pour l’écran de scène, un pour le public, un pour la régie sur tablette, un pour votre mélangeur vidéo. Aucun compte, aucune installation.',
+        text: 'Vous créez une session, vous obtenez un code à cinq caractères et vos QR codes : un pour l’écran de scène, un pour le public, un pour la régie sur tablette, un pour votre mélangeur vidéo. Vos écrans et votre public rejoignent la session sans rien installer ni créer de compte.',
       },
       {
         title: 'Parler à l’orateur, sans un mot',
