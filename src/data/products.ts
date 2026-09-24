@@ -21,6 +21,10 @@ export interface Product {
   steps?: string[];
   /** Lien direct vers l'app (si elle est déjà en ligne, hébergée ailleurs). */
   appUrl?: string;
+  /** L'app s'ouvre directement (sans passer par la création de compte). */
+  directApp?: boolean;
+  /** Description meta dédiée (SEO), sinon la tagline est utilisée. */
+  metaDescription?: string;
   /** Identifiant du lien d'achat Lemon Squeezy (UUID) pour l'URL de checkout. */
   checkoutId?: string;
   /** Produit annoncé mais pas encore disponible (affiche « Bientôt », bouton inactif). */
@@ -303,58 +307,69 @@ export const products: Product[] = [
   },
   {
     slug: 'timestage',
-    name: 'Time Stage',
-    tagline:
-      'Gardez vos événements à l’heure : minutez les prises de parole et votre conduite, sans stress.',
+    name: 'TimeStage',
+    tagline: 'Le chronomètre de scène, de la régie à l’écran.',
+    metaDescription:
+      'Chronomètre de scène professionnel : régie et affichage séparés, partage par QR code, messages, questions et sondages du public. Sans compte.',
     price: 'Gratuit',
-    priceNote: 'Gratuit avec un compte · rien à installer',
+    priceNote: 'Sans compte · sans installation',
     free: true,
-    audience: 'Régie & conduite de spectacle',
+    directApp: true,
+    audience: 'Chronométrage de scène',
     image: '/products/timestage.svg',
     appUrl: 'https://timestage.arnisoundtools.com/',
     pitch:
-      "Time Stage est le minuteur des prises de parole et des conduites de spectacle. Vous préparez votre déroulé, lancez le compte à rebours, et un affichage clair et lisible depuis la scène garde l’intervenant (et toute l’équipe) sur le tempo. Vous pilotez depuis la régie, tout le monde voit le temps qu’il reste.",
+      "TimeStage est un chronomètre de scène. Il répond à une question que tout organisateur connaît : comment dire à la personne qui parle combien de temps il lui reste, sans l’interrompre, sans agiter les bras au fond de la salle, et sans que le public s’en aperçoive. La technique pilote depuis un ordinateur ou une tablette ; l’orateur voit un écran, un retour de scène ou un vidéoprojecteur. Les deux sont synchronisés à la milliseconde, et il n’y a rien à installer : un navigateur suffit, des deux côtés.",
     heroPoints: [
-      'Compte à rebours et chronomètre, lisibles depuis la scène',
-      'Conduite minutée : vos séquences s’enchaînent toutes seules',
-      'Messages à l’intervenant (« 2 min », « on conclut »)',
-      'Dans le navigateur, sur mobile, tablette ou écran de scène',
+      'Régie et affichage séparés, synchronisés à la milliseconde',
+      'Partagé par QR code, sans compte ni installation',
+      'Messages à l’orateur, questions et sondages du public',
+      'Mode hors ligne : le chrono tourne même sans réseau',
     ],
     summary:
-      "Une conférence qui déborde, un intervenant qui ne voit pas le temps passer, une soirée qui prend du retard dès la première prise de parole… Time Stage évite tout ça. Vous préparez votre déroulé minuté, lancez les minuteurs, et un affichage grand format garde chacun à l’heure : l’orateur voit le temps restant, la régie suit l’avance ou le retard en direct. Gratuit, en français, rien à installer.",
+      "Comment prévenir un intervenant qu’il lui reste deux minutes, sans l’interrompre ni faire de grands gestes au fond de la salle ? TimeStage est fait pour ça. La régie pilote depuis un ordinateur ou une tablette, la scène regarde un affichage plein écran, et tout est synchronisé à la milliseconde. Autour du chrono : des messages à l’orateur, un déroulé de session, des questions du public modérées, des sondages en direct et un mode hors ligne qui fonctionne sans réseau. Sans compte, sans installation, dans le navigateur.",
     benefits: [
       {
-        title: 'Tout le monde voit le temps',
-        text: 'Un compte à rebours plein écran, lisible depuis la scène comme depuis le fond de salle. Les couleurs passent à l’orange puis au rouge quand le temps s’épuise : l’intervenant sait où il en est sans que vous ayez à lui faire signe.',
+        title: 'Régie et scène, synchronisées',
+        text: 'Une fenêtre de régie que la technique pilote, un affichage plein écran que la scène regarde. Tous les écrans affichent la même valeur à la milliseconde, dérivée d’une horloge commune, même sur des appareils différents.',
       },
       {
-        title: 'Votre conduite, minutée',
-        text: 'Préparez le déroulé de l’événement séquence par séquence, chacune avec sa durée. Les blocs s’enchaînent, et Time Stage vous montre en direct si vous êtes en avance ou en retard sur le programme.',
+        title: 'Prêt en dix secondes',
+        text: 'Vous créez une session, vous obtenez un code à cinq caractères et vos QR codes : un pour l’écran de scène, un pour le public, un pour la régie sur tablette, un pour votre mélangeur vidéo. Aucun compte, aucune installation.',
       },
       {
-        title: 'Des messages clairs à l’intervenant',
-        text: 'Envoyez un message qui s’affiche à l’écran (« il vous reste 2 minutes », « on conclut »). Fini les grands gestes depuis la régie : le message passe, discrètement et sans ambiguïté.',
+        title: 'Parler à l’orateur, sans un mot',
+        text: 'Des messages prêts à l’emploi (« Merci de conclure », « Ralentissez », « Temps écoulé ») ou les vôtres, avec plusieurs niveaux d’urgence. Le message s’affiche sous le chrono, qui se réduit pour lui laisser la place, sans jamais le recouvrir.',
       },
       {
-        title: 'Zéro installation',
-        text: 'Tout tourne dans le navigateur : la régie pilote depuis un téléphone ou une tablette, l’affichage tourne sur un autre écran ou un vidéoprojecteur. En français, gratuit, prêt en une minute.',
+        title: 'Le public participe',
+        text: 'Le public scanne un QR code pour poser ses questions ou voter à un sondage, depuis son téléphone, sans application. La régie modère : rien n’atteint l’écran sans validation, et les résultats de sondage restent cachés jusqu’à ce que vous les ouvriez.',
+      },
+      {
+        title: 'Intégré à votre régie vidéo',
+        text: 'Une fenêtre dédiée affiche le chronomètre seul sur fond transparent (canal alpha réel), à ouvrir comme source navigateur dans un mélangeur. Pour les mélangeurs sans alpha, un fond d’incrustation uni est disponible.',
+      },
+      {
+        title: 'Il continue sans réseau',
+        text: 'Le mode hors ligne fait tourner un chronomètre complet dans le navigateur, une fois la page visitée. Salle sans connexion ou réseau qui tombe : vous gardez votre chrono, avec un second écran synchronisé sur le même appareil.',
       },
     ],
     steps: [
-      'Préparez votre déroulé : ajoutez vos séquences et leur durée.',
-      'Affichez le minuteur sur l’écran visible depuis la scène.',
-      'Pilotez depuis la régie : lancez, mettez en pause, envoyez un message.',
+      'Créez une session : un code à cinq caractères et vos QR codes sont générés.',
+      'Partagez les QR codes : écran de scène, public, régie sur tablette, mélangeur vidéo.',
+      'Pilotez en direct : durée, messages, déroulé, questions et sondages, sur tous les écrans.',
     ],
     features: [
-      'Compte à rebours et chronomètre plein écran',
-      'Conduite minutée, séquences qui s’enchaînent',
-      'Suivi de l’avance / du retard en temps réel',
-      'Messages à l’intervenant affichés à l’écran',
-      'Pilotage régie + affichage sur écran séparé',
-      'Web, en français, rien à installer',
+      'Trois modes : compte à rebours, chronomètre, horloge du jour',
+      'Seuils ambre et rouge, dépassement affiché en négatif',
+      'Affichage plein écran, quatre thèmes, logo client personnalisable',
+      'Messages à l’orateur et déroulé de session (export / import)',
+      'Questions du public modérées et sondages en direct par QR code',
+      'Fenêtre vidéo à fond transparent (alpha) pour mélangeur',
+      'Mode hors ligne, sans réseau',
     ],
     differentiator:
-      "Les minuteurs de scène pros existent, mais ils sont souvent en anglais, payants et plus complexes qu’il ne faut. Time Stage garde l’essentiel : un minuteur clair, une conduite minutée et des messages à l’intervenant, gratuitement et en français. De quoi tenir l’horaire sans y penser.",
+      "Les chronomètres de scène professionnels sont souvent en anglais, payants et pensés pour de gros dispositifs. TimeStage garde la puissance (régie séparée, synchro à la milliseconde, incrustation vidéo, questions et sondages du public) tout en restant immédiat : une session en dix secondes, un QR code, sans compte ni installation, en français.",
   },
 ];
 

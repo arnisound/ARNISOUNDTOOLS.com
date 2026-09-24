@@ -36,7 +36,11 @@ const canCheckout = !p.free && !comingSoon && checkoutLive && Boolean(p.checkout
 
 let ctaLabel: string;
 let ctaHref: string;
-if (freeApp) {
+if (p.directApp && p.appUrl && !comingSoon) {
+  // App sans compte : on ouvre directement l'application.
+  ctaLabel = 'Créer une session';
+  ctaHref = p.appUrl;
+} else if (freeApp) {
   ctaLabel = 'Essayer gratuitement';
   ctaHref = `${url('/login')}?mode=signup&next=${encodeURIComponent(p.appUrl!)}`;
 } else if (canCheckout) {
@@ -80,7 +84,7 @@ const breadcrumb = {
 };
 ---
 
-<Base title={`${p.name} — Arnisound Tools`} description={p.tagline}>
+<Base title={`${p.name} — Arnisound Tools`} description={p.metaDescription ?? p.tagline}>
   <section class="product-hero">
     <div class="container product-hero__inner">
       <div>
