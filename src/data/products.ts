@@ -301,6 +301,61 @@ export const products: Product[] = [
     differentiator:
       "D'habitude, un repérage finit en carnet de notes, photos éparpillées et longues heures de CAO. Repérages relie tout : le relevé terrain devient directement le plan à l'échelle, le câblage et le décompte, jusqu'au dossier prêt à envoyer. Un seul outil, du site au PDF.",
   },
+  {
+    slug: 'timestage',
+    name: 'Time Stage',
+    tagline:
+      'Gardez vos événements à l’heure : minutez les prises de parole et votre conduite, sans stress.',
+    price: 'Gratuit',
+    priceNote: 'Gratuit avec un compte · rien à installer',
+    free: true,
+    audience: 'Régie & conduite de spectacle',
+    image: '/products/timestage.svg',
+    appUrl: 'https://timestage.arnisoundtools.com/',
+    pitch:
+      "Time Stage est le minuteur des prises de parole et des conduites de spectacle. Vous préparez votre déroulé, lancez le compte à rebours, et un affichage clair et lisible depuis la scène garde l’intervenant (et toute l’équipe) sur le tempo. Vous pilotez depuis la régie, tout le monde voit le temps qu’il reste.",
+    heroPoints: [
+      'Compte à rebours et chronomètre, lisibles depuis la scène',
+      'Conduite minutée : vos séquences s’enchaînent toutes seules',
+      'Messages à l’intervenant (« 2 min », « on conclut »)',
+      'Dans le navigateur, sur mobile, tablette ou écran de scène',
+    ],
+    summary:
+      "Une conférence qui déborde, un intervenant qui ne voit pas le temps passer, une soirée qui prend du retard dès la première prise de parole… Time Stage évite tout ça. Vous préparez votre déroulé minuté, lancez les minuteurs, et un affichage grand format garde chacun à l’heure : l’orateur voit le temps restant, la régie suit l’avance ou le retard en direct. Gratuit, en français, rien à installer.",
+    benefits: [
+      {
+        title: 'Tout le monde voit le temps',
+        text: 'Un compte à rebours plein écran, lisible depuis la scène comme depuis le fond de salle. Les couleurs passent à l’orange puis au rouge quand le temps s’épuise : l’intervenant sait où il en est sans que vous ayez à lui faire signe.',
+      },
+      {
+        title: 'Votre conduite, minutée',
+        text: 'Préparez le déroulé de l’événement séquence par séquence, chacune avec sa durée. Les blocs s’enchaînent, et Time Stage vous montre en direct si vous êtes en avance ou en retard sur le programme.',
+      },
+      {
+        title: 'Des messages clairs à l’intervenant',
+        text: 'Envoyez un message qui s’affiche à l’écran (« il vous reste 2 minutes », « on conclut »). Fini les grands gestes depuis la régie : le message passe, discrètement et sans ambiguïté.',
+      },
+      {
+        title: 'Zéro installation',
+        text: 'Tout tourne dans le navigateur : la régie pilote depuis un téléphone ou une tablette, l’affichage tourne sur un autre écran ou un vidéoprojecteur. En français, gratuit, prêt en une minute.',
+      },
+    ],
+    steps: [
+      'Préparez votre déroulé : ajoutez vos séquences et leur durée.',
+      'Affichez le minuteur sur l’écran visible depuis la scène.',
+      'Pilotez depuis la régie : lancez, mettez en pause, envoyez un message.',
+    ],
+    features: [
+      'Compte à rebours et chronomètre plein écran',
+      'Conduite minutée, séquences qui s’enchaînent',
+      'Suivi de l’avance / du retard en temps réel',
+      'Messages à l’intervenant affichés à l’écran',
+      'Pilotage régie + affichage sur écran séparé',
+      'Web, en français, rien à installer',
+    ],
+    differentiator:
+      "Les minuteurs de scène pros existent, mais ils sont souvent en anglais, payants et plus complexes qu’il ne faut. Time Stage garde l’essentiel : un minuteur clair, une conduite minutée et des messages à l’intervenant, gratuitement et en français. De quoi tenir l’horaire sans y penser.",
+  },
 ];
 
 export const bundle = {

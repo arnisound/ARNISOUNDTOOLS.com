@@ -45,7 +45,7 @@ const orgSchema = {
 
 // Ordre d'affichage : les 2 outils RF (phares) d'abord, puis les gratuits,
 // et Repérages (bientôt) en dernier.
-const order = ['speed-rf', 'rf-shot', 'av-calc', 'fiche-tech', 'reperages'];
+const order = ['speed-rf', 'rf-shot', 'av-calc', 'fiche-tech', 'timestage', 'reperages'];
 const outils = order
   .map((slug) => products.find((p) => p.slug === slug))
   .filter((p): p is (typeof products)[number] => Boolean(p));
