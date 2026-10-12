@@ -4,7 +4,7 @@ seoTitle: "Bien placer ses antennes micro HF"
 description: "La moitié des décrochages HF viennent d'une antenne mal placée. Ligne de vue, hauteur, antennes déportées, câblage : nos tips pour une liaison stable."
 slug: placer-antennes-micro-hf
 keywords: [antenne micro HF, portée micro sans fil, décrochage, ligne de vue, antenne déportée, diversité]
-statut: publie
+statut: brouillon
 date: 2026-09-29
 ---
 Avant de changer de fréquence ou d'accuser le matériel, je regarde presque toujours

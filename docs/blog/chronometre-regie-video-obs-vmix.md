@@ -4,7 +4,7 @@ seoTitle: "Chronomètre dans OBS ou vMix"
 description: "Ajouter un compte à rebours propre dans votre régie vidéo OBS, vMix ou autre : source navigateur, canal alpha, fond d'incrustation. Le tuto pas à pas."
 slug: chronometre-regie-video-obs-vmix
 keywords: [chronomètre OBS, timer vMix, source navigateur, canal alpha, incrustation, régie vidéo, chronomètre streaming]
-statut: publie
+statut: brouillon
 date: 2026-10-12
 ---
 Afficher un compte à rebours propre dans un flux vidéo ou sur un écran de scène piloté

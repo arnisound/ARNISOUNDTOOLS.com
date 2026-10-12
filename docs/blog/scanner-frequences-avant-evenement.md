@@ -4,7 +4,7 @@ seoTitle: "Scanner les fréquences avant un événement"
 description: "Un scan RF sur place évite la plupart des mauvaises surprises HF. Quand le faire, quoi regarder, quoi éviter : la check-list avant d'arrêter votre plan de fréquences."
 slug: scanner-frequences-avant-evenement
 keywords: [scan RF, repérage fréquences, plan de fréquences, micro HF, TNT, PMSE]
-statut: publie
+statut: brouillon
 date: 2026-10-02
 ---
 Le plan de fréquences qui marchait hier dans une autre ville n'a aucune raison de marcher

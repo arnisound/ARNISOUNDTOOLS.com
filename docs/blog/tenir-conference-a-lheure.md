@@ -4,7 +4,7 @@ seoTitle: "Tenir une conférence à l'heure"
 description: "Un intervenant qui déborde et toute la journée prend du retard. Nos tips concrets pour tenir le planning d'une conférence ou d'un événement, sans braquer personne."
 slug: tenir-conference-a-lheure
 keywords: [gérer le temps de parole, conférence à l'heure, timing événement, chronomètre de scène, déroulé]
-statut: publie
+statut: brouillon
 date: 2026-10-09
 ---
 Le retard, dans un événement, c'est une boule de neige : le premier intervenant déborde

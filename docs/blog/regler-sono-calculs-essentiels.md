@@ -4,7 +4,7 @@ seoTitle: "Régler sa sono : les calculs utiles"
 description: "Niveau sonore, distance, headroom, delay, puissance : les quelques calculs de sonorisation qui évitent les erreurs sur le terrain, expliqués simplement."
 slug: regler-sono-calculs-essentiels
 keywords: [calcul sonorisation, SPL, loi inverse carré, headroom, bilan de puissance, delay enceinte]
-statut: publie
+statut: brouillon
 date: 2026-10-06
 ---
 On peut faire de la bonne sono à l'oreille. Mais quelques calculs simples évitent les
