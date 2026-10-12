@@ -50,6 +50,39 @@ const CTA: Record<string, Cta> = {
     text: 'Fiche Tech Creator génère des fiches structurées (son, lumière, plateau) et les exporte en PDF propre, sans se battre avec la mise en page. Gratuit.',
     tools: [{ slug: 'fiche-tech', label: 'Ouvrir Fiche Tech Creator' }],
   },
+  'combien-micros-hf-simultanes': {
+    title: 'Un plan propre, quel que soit le nombre de micros',
+    text: 'Pour quelques canaux, Speed RF calcule un plan fiable en secondes. Pour les grosses configs, RF Shot coordonne 100+ fréquences et les intermodulations.',
+    tools: [
+      { slug: 'speed-rf', label: 'Découvrir Speed RF' },
+      { slug: 'rf-shot', label: 'Voir RF Shot' },
+    ],
+  },
+  'placer-antennes-micro-hf': {
+    title: 'Partez d’un plan de fréquences propre',
+    text: 'Une fois vos antennes bien placées, Speed RF vous donne des fréquences compatibles et sans interférence pour votre matériel et votre ville.',
+    tools: [{ slug: 'speed-rf', label: 'Découvrir Speed RF' }],
+  },
+  'scanner-frequences-avant-evenement': {
+    title: 'Du scan au plan de fréquences, en secondes',
+    text: 'Le scan trouve les zones libres ; Speed RF choisit à l’intérieur des fréquences propres, compatibles et qui évitent la TNT française.',
+    tools: [{ slug: 'speed-rf', label: 'Découvrir Speed RF' }],
+  },
+  'regler-sono-calculs-essentiels': {
+    title: 'Tous vos calculs sono au même endroit',
+    text: 'AV Calc réunit SPL, delay, puissance, section de câble et plus de 70 calculateurs du métier. Gratuit, directement dans le navigateur.',
+    tools: [{ slug: 'av-calc', label: 'Ouvrir AV Calc' }],
+  },
+  'tenir-conference-a-lheure': {
+    title: 'Gardez la main sur votre planning',
+    text: 'TimeStage affiche un chronomètre face à l’orateur, piloté depuis la régie : seuils de couleur, messages discrets et déroulé de session. Gratuit, sans installation.',
+    tools: [{ slug: 'timestage', label: 'Découvrir TimeStage' }],
+  },
+  'chronometre-regie-video-obs-vmix': {
+    title: 'Un chrono propre dans votre régie vidéo',
+    text: 'TimeStage propose une fenêtre vidéo dédiée : le chronomètre seul sur fond transparent (alpha réel), à ouvrir comme source navigateur dans OBS, vMix ou autre.',
+    tools: [{ slug: 'timestage', label: 'Découvrir TimeStage' }],
+  },
 };
 const cta: Cta = CTA[entry.data.slug] ?? {
   title: 'Passez à la pratique',

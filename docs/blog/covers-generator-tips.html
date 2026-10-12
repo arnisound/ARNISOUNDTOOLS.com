@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<style>html,body{margin:0;background:#0A0A0B}#stage{width:1200px;height:675px;overflow:hidden}svg{display:block}</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+const W=1200,H=675;
+const defs=`
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d0d10"/><stop offset="1" stop-color="#151417"/></linearGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="#C2832C" stop-opacity="0.26"/><stop offset="1" stop-color="#C2832C" stop-opacity="0"/></radialGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B4761F"/><stop offset="1" stop-color="#E7B45A"/></linearGradient>
+  <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>`;
+function dots(){let d='';for(let y=40;y<H-20;y+=46)for(let x=40;x<W-20;x+=46)d+=`<circle cx="${x}" cy="${y}" r="1.4"/>`;return d;}
+function frame(gx,gy,inner){return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${defs}
+  <rect width="${W}" height="${H}" fill="url(#bg)"/><circle cx="${gx}" cy="${gy}" r="520" fill="url(#glow)"/>
+  <g fill="#fff" opacity="0.05">${dots()}</g>${inner}
+  <rect x="0" y="${H-6}" width="${W}" height="6" fill="url(#gold)" opacity="0.9"/></svg>`;}
+function arcs(cx,cy,n,r0,step,dir,col,base){let s='';for(let i=0;i<n;i++){const r=r0+i*step;s+=`<path d="M ${cx+dir*0} ${cy-r} A ${r} ${r} 0 0 ${dir>0?1:0} ${cx+dir*r} ${cy}" fill="none" stroke="${col}" stroke-width="${5-i*0.5}" opacity="${base-i*0.13}"/>`;}return s;}
+
+// 1. BEAUCOUP DE MICROS : bande saturée de porteuses
+function carriers(){
+  const x0=130,x1=W-130,y=H/2+150,top=120;
+  let bars='';const N=26;
+  for(let i=0;i<N;i++){
+    const x=x0+(x1-x0)*i/(N-1);
+    const h=70+Math.abs(Math.sin(i*1.3)*Math.cos(i*0.6))*190;
+    const hit=(i===7||i===16);
+    const col=hit?'#d9503c':'#cb8a27';
+    bars+=`<line x1="${x.toFixed(1)}" y1="${y}" x2="${x.toFixed(1)}" y2="${(y-h).toFixed(1)}" stroke="${col}" stroke-width="6" opacity="${hit?1:0.9}"/>`;
+    bars+=`<circle cx="${x.toFixed(1)}" cy="${(y-h).toFixed(1)}" r="${hit?8:5}" fill="${hit?'#f0705c':'#E7B45A'}"/>`;
+    if(hit) bars+=`<polygon points="${x-11},${y-h-18} ${x+11},${y-h-18} ${x},${y-h-38}" fill="#f0705c"/>`;
+  }
+  bars+=`<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="#2a2620" stroke-width="2"/>`;
+  return frame(W/2,y-110,bars);
+}
+
+// 2. ANTENNE : dipôle + ondes vers un récepteur
+function antenna(){
+  const ax=280,baseY=H/2+170,topY=H/2-160;
+  let s='';
+  s+=arcs(ax+8,H/2,6,120,80,1,'url(#gold)',0.9);
+  // mât
+  s+=`<rect x="${ax-6}" y="${topY}" width="12" height="${baseY-topY}" rx="6" fill="url(#gold)"/>`;
+  // élément dipôle (T en haut)
+  s+=`<rect x="${ax-70}" y="${topY-8}" width="140" height="12" rx="6" fill="url(#gold)"/>`;
+  s+=`<circle cx="${ax}" cy="${topY}" r="12" fill="#E7B45A"/>`;
+  // pied
+  s+=`<path d="M ${ax-40} ${baseY} L ${ax+40} ${baseY} L ${ax+22} ${baseY+34} L ${ax-22} ${baseY+34} Z" fill="#17130c" stroke="url(#gold)" stroke-width="4"/>`;
+  // récepteur à droite
+  const rx=930,ry=H/2;
+  s+=`<rect x="${rx-70}" y="${ry-54}" width="150" height="108" rx="14" fill="#141317" stroke="url(#gold)" stroke-width="5"/>`;
+  s+=`<circle cx="${rx-30}" cy="${ry}" r="12" fill="#3fae6b"/>`;
+  s+=`<rect x="${rx}" y="${ry-18}" width="54" height="10" rx="5" fill="#4a453c"/><rect x="${rx}" y="${ry+2}" width="40" height="8" rx="4" fill="#2f2b25"/>`;
+  s+=`<line x1="${rx+6}" y1="${ry-54}" x2="${rx+6}" y2="${ry-96}" stroke="#cb8a27" stroke-width="5"/><circle cx="${rx+6}" cy="${ry-96}" r="7" fill="#E7B45A"/>`;
+  return frame(ax+120,H/2,s);
+}
+
+// 3. SCANNER : spectre + barre de balayage
+function scanner(){
+  const x0=120,x1=W-120,base=H/2+150,amp=150;
+  let pts=[];for(let x=x0;x<=x1;x+=10){const t=(x-x0)/(x1-x0);const v=Math.abs(Math.sin(t*20)*0.3+Math.sin(t*7)*0.5+ (Math.random()*0.15));pts.push([x,base-v*amp]);}
+  let d='M '+pts[0][0]+' '+pts[0][1];for(let i=1;i<pts.length;i++)d+=' L '+pts[i][0].toFixed(1)+' '+pts[i][1].toFixed(1);
+  let s=`<path d="${d}" fill="none" stroke="url(#gold)" stroke-width="4" opacity="0.9"/>`;
+  s+=`<line x1="${x0}" y1="${base}" x2="${x1}" y2="${base}" stroke="#2a2620" stroke-width="2"/>`;
+  for(let i=0;i<=6;i++){const rx=x0+(x1-x0)*i/6;s+=`<line x1="${rx}" y1="${base}" x2="${rx}" y2="${base+12}" stroke="#6b6b70" stroke-width="2"/>`;}
+  // barre de scan
+  const sx=x0+(x1-x0)*0.62;
+  s+=`<rect x="${sx-14}" y="90" width="28" height="${base-70}" fill="#E7B45A" opacity="0.12" filter="url(#soft)"/>`;
+  s+=`<line x1="${sx}" y1="80" x2="${sx}" y2="${base}" stroke="#ffdf9a" stroke-width="4"/>`;
+  s+=`<circle cx="${sx}" cy="80" r="8" fill="#ffdf9a"/>`;
+  return frame(W/2,base-120,s);
+}
+
+// 4. SONO : enceinte + arcs SPL + jauge dB
+function sono(){
+  const sx=300,sy=H/2+20;let s='';
+  s+=arcs(sx+70,sy,6,120,78,1,'url(#gold)',0.85);
+  s+=`<rect x="${sx-70}" y="${sy-150}" width="150" height="320" rx="16" fill="#141317" stroke="url(#gold)" stroke-width="5"/>`;
+  s+=`<circle cx="${sx+5}" cy="${sy-70}" r="34" fill="#1e1810" stroke="url(#gold)" stroke-width="4"/>`;
+  s+=`<circle cx="${sx+5}" cy="${sy+60}" r="56" fill="#1e1810" stroke="url(#gold)" stroke-width="5"/><circle cx="${sx+5}" cy="${sy+60}" r="20" fill="#0d0d10" stroke="#C2832C" stroke-width="3"/>`;
+  // jauge dB (demi-cercle) en haut à droite
+  const gx=900,gy=250,r=120;
+  s+=`<path d="M ${gx-r} ${gy} A ${r} ${r} 0 0 1 ${gx+r} ${gy}" fill="none" stroke="#2a2620" stroke-width="12"/>`;
+  s+=`<path d="M ${gx-r} ${gy} A ${r} ${r} 0 0 1 ${gx+r*0.5} ${gy-r*0.866}" fill="none" stroke="url(#gold)" stroke-width="12"/>`;
+  const a=-35*Math.PI/180;s+=`<line x1="${gx}" y1="${gy}" x2="${gx+Math.cos(a)*r*0.9}" y2="${gy+Math.sin(a)*r*0.9}" stroke="#E7B45A" stroke-width="5"/><circle cx="${gx}" cy="${gy}" r="10" fill="#E7B45A"/>`;
+  s+=`<text x="${gx}" y="${gy+44}" text-anchor="middle" font-family="monospace" font-size="34" font-weight="700" fill="#E7B45A">dB</text>`;
+  return frame(sx+140,sy,s);
+}
+
+// 5. CONFERENCE A L'HEURE : horloge + pupitre
+function clock(){
+  const cx=W/2-40,cy=H/2-20,r=185;let s='';
+  s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#141317" stroke="url(#gold)" stroke-width="7"/>`;
+  for(let i=0;i<12;i++){const a=i*Math.PI/6;const r1=r-10,r2=r-(i%3===0?34:22);s+=`<line x1="${cx+Math.cos(a)*r1}" y1="${cy+Math.sin(a)*r1}" x2="${cx+Math.cos(a)*r2}" y2="${cy+Math.sin(a)*r2}" stroke="${i%3===0?'#E7B45A':'#6b6b70'}" stroke-width="${i%3===0?6:3}"/>`;}
+  // aiguilles (10:08 approx)
+  const mh=-60*Math.PI/180, hh=-150*Math.PI/180;
+  s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(hh)*r*0.52}" y2="${cy+Math.sin(hh)*r*0.52}" stroke="#fff" stroke-width="9" stroke-linecap="round"/>`;
+  s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(mh)*r*0.78}" y2="${cy+Math.sin(mh)*r*0.78}" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>`;
+  s+=`<circle cx="${cx}" cy="${cy}" r="12" fill="#E7B45A"/>`;
+  return frame(cx,cy,s);
+}
+
+// 6. CHRONO REGIE VIDEO : moniteur + 00:00
+function videoTimer(){
+  const mx=W/2,my=H/2-20,w=520,h=300;let s='';
+  s+=`<rect x="${mx-w/2}" y="${my-h/2}" width="${w}" height="${h}" rx="18" fill="#100f13" stroke="url(#gold)" stroke-width="6"/>`;
+  s+=`<rect x="${mx-14}" y="${my+h/2}" width="28" height="40" fill="#1a1815"/><rect x="${mx-80}" y="${my+h/2+40}" width="160" height="14" rx="7" fill="#17130c" stroke="url(#gold)" stroke-width="3"/>`;
+  s+=`<text x="${mx}" y="${my+26}" text-anchor="middle" font-family="monospace" font-size="128" font-weight="700" fill="#E7B45A" letter-spacing="4">02:00</text>`;
+  // pastille REC
+  s+=`<circle cx="${mx-w/2+40}" cy="${my-h/2+40}" r="12" fill="#d9503c"/><text x="${mx-w/2+60}" y="${my-h/2+48}" font-family="monospace" font-size="22" font-weight="700" fill="#f0705c">REC</text>`;
+  // barre de progression
+  s+=`<rect x="${mx-w/2+40}" y="${my+h/2-44}" width="${w-80}" height="12" rx="6" fill="#2a2620"/><rect x="${mx-w/2+40}" y="${my+h/2-44}" width="${(w-80)*0.62}" height="12" rx="6" fill="url(#gold)"/>`;
+  return frame(mx,my,s);
+}
+
+const MAP={
+  'combien-micros-hf-simultanes':carriers,
+  'placer-antennes-micro-hf':antenna,
+  'scanner-frequences-avant-evenement':scanner,
+  'regler-sono-calculs-essentiels':sono,
+  'tenir-conference-a-lheure':clock,
+  'chronometre-regie-video-obs-vmix':videoTimer,
+};
+const id=new URLSearchParams(location.search).get('id')||'combien-micros-hf-simultanes';
+document.getElementById('stage').innerHTML=(MAP[id]||carriers)();
+</script>
+</body>
+</html>
