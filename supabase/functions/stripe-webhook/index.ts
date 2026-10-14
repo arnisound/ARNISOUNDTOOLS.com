@@ -24,10 +24,10 @@ const SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 // produits (bundle). `days` (facultatif) = licence d'essai temporaire.
 // ⚠️ À COMPLÉTER avec tes vrais Price IDs (price_...).
 const PRICE_MAP: Record<string, { products: string[]; days?: number }> = {
-  // 'price_SPEEDRF': { products: ['speed-rf'] },
-  // 'price_RFSHOT':  { products: ['rf-shot'] },
-  // 'price_BUNDLE':  { products: ['speed-rf', 'rf-shot'] },
-  // 'price_TRIAL':   { products: ['speed-rf', 'rf-shot'], days: 15 },
+  'price_1UPqk0DuGUDNg2uKRMD5Eejn': { products: ['speed-rf'] },             // Speed RF
+  'price_1UPqlPDuGUDNg2uKMU9qXYT8': { products: ['rf-shot'] },              // RF Shot
+  'price_1UPqnXDuGUDNg2uKmLdJ5JzM': { products: ['speed-rf', 'rf-shot'] },  // Bundle RF
+  // 'price_TRIAL':     { products: ['speed-rf', 'rf-shot'], days: 15 },
   // 'price_REPERAGES': { products: ['reperages'] },
 };
 

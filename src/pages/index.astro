@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { products, bundle } from '../data/products';
 import { url } from '../lib/site';
 import { checkoutLive, checkoutUrl } from '../lib/checkout';
+import { PAYMENT_PROVIDER, STRIPE_LINKS } from '../lib/stripe';
 import { getCollection } from 'astro:content';
 
 // 3 derniers articles publiés (maillage interne vers le blog).
@@ -12,10 +13,17 @@ const latestPosts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
 
-// Bouton du bundle : checkout Lemon Squeezy si la boutique est active,
-// sinon repli sur /login (le script client ajoute email + user_id si connecté).
-const bundleCheckout = checkoutLive && Boolean(bundle.checkoutId);
-const bundleHref = bundleCheckout ? checkoutUrl(bundle.checkoutId!) : url('/login');
+// Bouton du bundle : Stripe (Payment Link) ou Lemon Squeezy selon le fournisseur.
+// Le script client ajoute email + compte connecté. Repli sur /login sinon.
+const bundleUseStripe = PAYMENT_PROVIDER === 'stripe' && Boolean(STRIPE_LINKS['bundle']);
+const bundleUseLS = PAYMENT_PROVIDER === 'lemonsqueezy' && checkoutLive && Boolean(bundle.checkoutId);
+const bundleCheckout = bundleUseStripe || bundleUseLS;
+const bundleProvider = bundleUseStripe ? 'stripe' : 'lemonsqueezy';
+const bundleHref = bundleUseStripe
+  ? STRIPE_LINKS['bundle']
+  : bundleUseLS
+    ? checkoutUrl(bundle.checkoutId!)
+    : url('/login');
 
 // Données structurées : identité de la marque + site (SEO).
 const orgSchema = {
@@ -117,7 +125,7 @@ const outils = order
         <div class="bundle__price">
           <span class="bundle__was">{bundle.was}</span>
           <span class="bundle__now">{bundle.price}</span>
-          <a href={bundleHref} class="btn btn--primary" {...(bundleCheckout ? { 'data-checkout': true } : {})}>Profiter du bundle</a>
+          <a href={bundleHref} class="btn btn--primary" {...(bundleCheckout ? { 'data-checkout': true, 'data-provider': bundleProvider } : {})}>Profiter du bundle</a>
         </div>
       </div>
     </div>
@@ -200,8 +208,13 @@ const outils = order
       const target = el.getAttribute('href') || '';
       if (session?.user) {
         const params = new URLSearchParams();
-        params.set('checkout[email]', session.user.email ?? '');
-        params.set('checkout[custom][user_id]', session.user.id);
+        if (el.dataset.provider === 'stripe') {
+          params.set('prefilled_email', session.user.email ?? '');
+          params.set('client_reference_id', session.user.id);
+        } else {
+          params.set('checkout[email]', session.user.email ?? '');
+          params.set('checkout[custom][user_id]', session.user.id);
+        }
         el.setAttribute('href', target + (target.includes('?') ? '&' : '?') + params.toString());
       } else {
         el.setAttribute('href', `${base}/login?next=${encodeURIComponent(target)}`);

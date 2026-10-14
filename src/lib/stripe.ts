@@ -4,10 +4,10 @@
 // Tant que la map est vide, Stripe est inactif et le site reste sur
 // Lemon Squeezy (voir src/lib/checkout.ts).
 export const STRIPE_LINKS: Record<string, string> = {
-  // 'speed-rf': 'https://buy.stripe.com/XXXX',
-  // 'rf-shot':  'https://buy.stripe.com/YYYY',
-  // 'bundle':   'https://buy.stripe.com/ZZZZ',
-  // 'reperages':'https://buy.stripe.com/WWWW',
+  'speed-rf': 'https://buy.stripe.com/9B67sLg3p1Y8epde2g2Nq00',
+  'rf-shot': 'https://buy.stripe.com/4gMdR94kHeKU4ODe2g2Nq01',
+  'bundle': 'https://buy.stripe.com/dRmdR97wT0U41Cr2jy2Nq02',
+  // 'reperages':'https://buy.stripe.com/...',
 };
 
 // Fournisseur de paiement actif : 'lemonsqueezy' (actuel) ou 'stripe'.
