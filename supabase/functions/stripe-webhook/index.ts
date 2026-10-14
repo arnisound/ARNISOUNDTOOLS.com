@@ -108,7 +108,12 @@ Deno.serve(async (req) => {
   const supabase = createClient(SUPABASE_URL, SERVICE_ROLE);
 
   // Rattachement au compte : client_reference_id (user_id) sinon email.
-  let userId: string | undefined = session.client_reference_id || undefined;
+  // On n'accepte le client_reference_id que si c'est un vrai UUID ; sinon on
+  // retombe sur l'email (filet de sécurité).
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const ref = session.client_reference_id;
+  let userId: string | undefined =
+    typeof ref === 'string' && UUID_RE.test(ref) ? ref : undefined;
   const email: string | undefined =
     session?.customer_details?.email || session?.customer_email || undefined;
 
@@ -117,7 +122,7 @@ Deno.serve(async (req) => {
     userId = data.users.find((u) => u.email?.toLowerCase() === email.toLowerCase())?.id;
   }
   if (!userId) {
-    console.log('compte introuvable pour', email);
+    console.log('compte introuvable (ref:', ref, '/ email:', email, ')');
     return new Response('user not found', { status: 200 });
   }
 
