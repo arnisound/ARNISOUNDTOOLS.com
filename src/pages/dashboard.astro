@@ -20,37 +20,9 @@ import { url } from '../lib/site';
 
       <h2 class="dash-section-title">Mes outils</h2>
 
-      <div class="trial-banner" data-trial-banner hidden>
-        <span class="eyebrow">Offre découverte</span>
-        <h3>Teste Speed RF et RF Shot pendant 15 jours, gratuitement</h3>
-        <p class="text-muted">
-          Partage Arnisound Tools autour de toi, et on t'ouvre l'accès à tous les
-          outils payants pendant 15 jours. Pas de carte bancaire, pas d'engagement.
-        </p>
-
-        <div class="trial-step">
-          <span class="trial-step__num">1</span>
-          <div class="trial-step__body">
-            <strong>Partage (ça nous aide énormément)</strong>
-            <div class="trial-share">
-              <a class="btn btn--ghost" data-share="x" target="_blank" rel="noopener noreferrer">Partager sur X</a>
-              <a class="btn btn--ghost" data-share="linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a class="btn btn--ghost" data-share="facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="trial-step">
-          <span class="trial-step__num">2</span>
-          <div class="trial-step__body">
-            <strong>Active ton essai</strong>
-            <button class="btn btn--primary" data-trial-activate disabled>Activer mes 15 jours</button>
-            <p class="trial-hint text-muted" data-trial-hint>Clique d'abord sur un bouton de partage ci-dessus.</p>
-          </div>
-        </div>
-
-        <p class="trial-msg" data-trial-msg hidden></p>
-      </div>
+      <button class="trial-trigger" data-trial-open hidden>
+        🎁 Débloque ton essai gratuit de 15 jours
+      </button>
 
       <div class="grid grid--3" style="margin-top: 1.25rem;">
         {products.map((p) => {
@@ -138,6 +110,47 @@ import { url } from '../lib/site';
       </div>
     </div>
   </section>
+
+  <!-- Pop-up essai 15 jours (affiché aux comptes éligibles) -->
+  <div class="trial-modal" data-trial-modal hidden role="dialog" aria-modal="true" aria-labelledby="trial-title">
+    <div class="trial-modal__backdrop" data-trial-close></div>
+    <div class="trial-modal__card">
+      <button class="trial-modal__x" data-trial-close aria-label="Fermer">&times;</button>
+      <span class="eyebrow">Offre découverte</span>
+      <h2 id="trial-title">15 jours pour tout tester, gratuitement</h2>
+      <p class="text-muted trial-modal__sub">
+        Débloque Speed RF et RF Shot pendant 15 jours. Pas de carte bancaire, pas d'engagement.
+      </p>
+
+      <div class="trial-step">
+        <span class="trial-step__num">1</span>
+        <div class="trial-step__body">
+          <strong>Active ton essai</strong>
+          <button class="btn btn--primary" data-trial-activate>Activer mes 15 jours</button>
+          <p class="trial-msg" data-trial-msg hidden></p>
+        </div>
+      </div>
+
+      <div class="trial-step">
+        <span class="trial-step__num">2</span>
+        <div class="trial-step__body">
+          <strong>Aide-nous à grandir <span class="text-faint">(si le cœur t'en dit)</span></strong>
+          <p class="text-muted trial-share__hint">
+            Un partage et d'autres techniciens découvrent les outils. Merci 🙏
+          </p>
+          <div class="trial-share">
+            <a class="btn btn--ghost" data-share="x" target="_blank" rel="noopener noreferrer">X</a>
+            <a class="btn btn--ghost" data-share="linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="btn btn--ghost" data-share="facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <button class="btn btn--ghost" data-share="instagram" type="button">Instagram story</button>
+          </div>
+          <p class="trial-msg" data-ig-msg hidden></p>
+        </div>
+      </div>
+
+      <button class="btn btn--ghost btn--block trial-modal__done" data-trial-close>Terminer</button>
+    </div>
+  </div>
 </Base>
 
 <style>
@@ -150,35 +163,71 @@ import { url } from '../lib/site';
   .dash-note { margin-top: 2rem; font-size: 0.85rem; }
   .btn.is-disabled { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
 
-  .trial-banner {
+  /* Déclencheur compact (rouvre le pop-up) */
+  .trial-trigger {
     margin-top: 1.25rem;
-    padding: 1.5rem 1.6rem;
-    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+    width: 100%;
+    text-align: left;
+    padding: 0.9rem 1.2rem;
+    font: inherit; font-weight: 700; font-size: 0.95rem;
+    color: var(--text); cursor: pointer;
+    border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--border));
     border-radius: var(--radius, 14px);
     background:
-      radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+      radial-gradient(120% 160% at 0% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 55%),
       var(--surface);
+    transition: border-color .15s ease, transform .15s ease;
   }
-  .trial-banner h3 { margin: 0.35rem 0 0.4rem; font-size: 1.25rem; }
-  .trial-banner > p { margin: 0 0 1.2rem; max-width: 56ch; }
-  .trial-step { display: flex; gap: 0.9rem; align-items: flex-start; margin-top: 1rem; }
+  .trial-trigger:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  /* Pop-up */
+  .trial-modal { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 1rem; }
+  .trial-modal[hidden] { display: none; }
+  .trial-modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(2px); }
+  .trial-modal__card {
+    position: relative;
+    width: 100%; max-width: 440px;
+    max-height: calc(100dvh - 2rem); overflow-y: auto;
+    padding: 1.9rem 1.7rem 1.5rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+    border-radius: var(--radius, 16px);
+    background:
+      radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 55%),
+      var(--surface);
+    box-shadow: 0 24px 60px rgba(0,0,0,.45);
+    animation: trial-pop .18s ease-out;
+  }
+  @keyframes trial-pop { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+  .trial-modal__x {
+    position: absolute; top: 0.7rem; right: 0.85rem;
+    width: 34px; height: 34px; line-height: 1;
+    font-size: 1.5rem; color: var(--text-muted, #a9a293);
+    background: none; border: none; cursor: pointer; border-radius: 8px;
+  }
+  .trial-modal__x:hover { color: var(--text); background: color-mix(in srgb, var(--text) 8%, transparent); }
+  .trial-modal__card h2 { margin: 0.4rem 0 0.5rem; font-size: 1.4rem; }
+  .trial-modal__sub { margin: 0 0 0.4rem; }
+  .trial-modal__done { margin-top: 1.4rem; }
+
+  .trial-step { display: flex; gap: 0.9rem; align-items: flex-start; margin-top: 1.3rem; }
   .trial-step__num {
     flex: none; width: 26px; height: 26px; border-radius: 50%;
     display: grid; place-items: center;
     background: var(--accent); color: #0c0c0e; font-weight: 800; font-size: 0.85rem;
   }
-  .trial-step__body { display: flex; flex-direction: column; gap: 0.55rem; }
-  .trial-step__body > strong { font-size: 0.95rem; }
+  .trial-step__body { display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; }
+  .trial-step__body > strong { font-size: 0.98rem; }
+  .text-faint { color: var(--text-faint, #8a8378); font-weight: 400; font-size: 0.85rem; }
+  .trial-share__hint { font-size: 0.85rem; margin: 0; }
   .trial-share { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .trial-share .btn { padding: 0.5rem 0.9rem; font-size: 0.85rem; }
   .trial-share .btn[data-shared] {
     border-color: color-mix(in srgb, var(--accent) 60%, transparent);
     color: var(--accent);
   }
-  .trial-hint { font-size: 0.8rem; margin: 0; }
   .trial-msg {
-    margin: 1rem 0 0; font-size: 0.88rem;
-    padding: 0.7rem 0.9rem; border-radius: var(--radius-sm); border: 1px solid var(--border);
+    margin: 0.4rem 0 0; font-size: 0.85rem;
+    padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border);
   }
   .trial-msg[data-kind='ok'] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
   .trial-msg[data-kind='error'] { color: var(--warn, #e0a33e); border-color: color-mix(in srgb, var(--warn, #e0a33e) 40%, transparent); }
@@ -286,16 +335,33 @@ import { url } from '../lib/site';
       }
     } catch { /* table absente ou hors-ligne : on garde l'état par défaut */ }
 
-    // Essai 15 jours en libre-service (partage pour débloquer, à l'honneur).
-    const banner = document.querySelector<HTMLElement>('[data-trial-banner]');
+    // Essai 15 jours : pop-up pour les comptes qui n'ont pas tous les outils payants.
+    // Étape 1 → activer la licence (immédiat). Étape 2 → partages (coup de pouce).
+    const modal = document.querySelector<HTMLElement>('[data-trial-modal]');
+    const trigger = document.querySelector<HTMLElement>('[data-trial-open]');
     const paidSlugs = [...document.querySelectorAll<HTMLElement>('.dash-card[data-paid]')]
       .map((c) => c.getAttribute('data-product') || '');
-    const eligible = Boolean(banner) && !trialUsed
+    const eligible = Boolean(modal) && !trialUsed
       && paidSlugs.some((s) => s && !ownedPermanent.has(s));
 
-    if (banner && eligible) {
-      banner.hidden = false;
+    if (modal && eligible) {
+      if (trigger) trigger.hidden = false;
 
+      let activated = false;
+      const openModal = () => { modal.hidden = false; document.body.style.overflow = 'hidden'; };
+      const closeModal = () => {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        if (activated) window.location.reload(); // recharge pour afficher les badges d'essai
+      };
+      trigger?.addEventListener('click', openModal);
+      modal.querySelectorAll('[data-trial-close]').forEach((el) =>
+        el.addEventListener('click', closeModal));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.hidden) closeModal();
+      });
+
+      // Textes de partage.
       const SHARE_URL = 'https://arnisoundtools.com';
       const SHARE_TXT =
         "Je viens de découvrir Arnisound Tools : des outils en ligne pour le spectacle "
@@ -309,31 +375,41 @@ import { url } from '../lib/site';
         facebook: `https://www.facebook.com/sharer/sharer.php?u=${u}&quote=${t}`,
       };
 
-      const activateBtn = banner.querySelector<HTMLButtonElement>('[data-trial-activate]');
-      const hint = banner.querySelector<HTMLElement>('[data-trial-hint]');
-      let shared = false;
-
-      banner.querySelectorAll<HTMLAnchorElement>('[data-share]').forEach((a) => {
+      // X / LinkedIn / Facebook : liens d'intention classiques.
+      modal.querySelectorAll<HTMLAnchorElement>('a[data-share]').forEach((a) => {
         const net = a.getAttribute('data-share') || '';
         a.href = SHARE_LINKS[net] ?? SHARE_URL;
-        a.addEventListener('click', () => {
-          a.setAttribute('data-shared', '');
-          shared = true;
-          if (activateBtn) activateBtn.disabled = false;
-          if (hint) hint.textContent = 'Merci du partage ! Tu peux activer ton essai.';
-        });
+        a.addEventListener('click', () => a.setAttribute('data-shared', ''));
       });
 
-      const trialMsg = (text: string, kind: 'ok' | 'error') => {
-        const el = banner.querySelector<HTMLElement>('[data-trial-msg]');
+      // Instagram : pas de lien web vers une story. Sur mobile, la feuille de
+      // partage native propose « Stories » ; sinon on copie le lien et on ouvre IG.
+      const igMsg = (text: string) => {
+        const el = modal.querySelector<HTMLElement>('[data-ig-msg]');
         if (!el) return;
-        el.textContent = text;
-        el.dataset.kind = kind;
-        el.hidden = false;
+        el.textContent = text; el.dataset.kind = 'ok'; el.hidden = false;
       };
+      const igBtn = modal.querySelector<HTMLButtonElement>('button[data-share="instagram"]');
+      igBtn?.addEventListener('click', async () => {
+        igBtn.setAttribute('data-shared', '');
+        if (navigator.share) {
+          try { await navigator.share({ title: 'Arnisound Tools', text: SHARE_TXT, url: SHARE_URL }); }
+          catch { /* partage annulé */ }
+          return;
+        }
+        try { await navigator.clipboard.writeText(`${SHARE_TXT} ${SHARE_URL}`); } catch { /* ignore */ }
+        igMsg('Lien copié ✅ Ouvre Instagram et colle-le dans ta story.');
+        window.open('https://www.instagram.com/', '_blank', 'noopener');
+      });
 
+      // Étape 1 : activation de l'essai (appel RPC sécurisé côté serveur).
+      const trialMsg = (text: string, kind: 'ok' | 'error') => {
+        const el = modal.querySelector<HTMLElement>('[data-trial-msg]');
+        if (!el) return;
+        el.textContent = text; el.dataset.kind = kind; el.hidden = false;
+      };
+      const activateBtn = modal.querySelector<HTMLButtonElement>('[data-trial-activate]');
       activateBtn?.addEventListener('click', async () => {
-        if (!shared) return;
         activateBtn.disabled = true;
         activateBtn.textContent = 'Activation…';
         const { data, error } = await supabase.rpc('start_trial');
@@ -344,16 +420,29 @@ import { url } from '../lib/site';
           return;
         }
         if (data === 'ok') {
-          trialMsg('Essai activé 🎉 Tes outils se débloquent…', 'ok');
-          setTimeout(() => window.location.reload(), 1200);
+          activated = true;
+          activateBtn.textContent = 'Essai activé ✅';
+          trialMsg('Tes 15 jours sont ouverts ! Speed RF et RF Shot sont débloqués.', 'ok');
         } else if (data === 'deja_utilise') {
           trialMsg('Tu as déjà profité de ton essai gratuit sur ce compte.', 'error');
+          activateBtn.textContent = 'Activer mes 15 jours';
         } else if (data === 'deja_client') {
           trialMsg("Tu possèdes déjà tous les outils payants, pas besoin d'essai !", 'ok');
+          activateBtn.textContent = 'Activer mes 15 jours';
         } else {
           trialMsg("Connexion requise pour activer l'essai.", 'error');
+          activateBtn.disabled = false;
+          activateBtn.textContent = 'Activer mes 15 jours';
         }
       });
+
+      // Ouverture automatique, une fois par session (sans renagger à chaque reload).
+      try {
+        if (!sessionStorage.getItem('trial-popup-seen')) {
+          openModal();
+          sessionStorage.setItem('trial-popup-seen', '1');
+        }
+      } catch { openModal(); }
     }
   }
 
