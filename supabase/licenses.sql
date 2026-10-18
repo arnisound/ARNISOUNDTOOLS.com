@@ -84,6 +84,75 @@ begin
 end;
 $$;
 
+-- ============================================================================
+--  Essai libre-service 15 jours (déclenché par l'utilisateur connecté)
+--  Appelé depuis le site : supabase.rpc('start_trial')
+--  SECURITY DEFINER : s'exécute avec les droits admin, mais lit auth.uid()
+--  côté serveur → impossible de se faire passer pour un autre compte, et la
+--  clé service_role n'est jamais exposée au navigateur.
+--
+--  Garde-fou : un seul essai par compte, à vie (le marqueur order_id='essai'
+--  reste même après expiration). Retourne un code lisible par le site :
+--    'ok'            → essai activé
+--    'deja_utilise'  → cet essai a déjà été pris une fois
+--    'deja_client'   → tous les outils payants sont déjà possédés
+--    'non_connecte'  → appel sans session (ne devrait pas arriver)
+-- ============================================================================
+create or replace function public.start_trial()
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  uid uuid := auth.uid();
+  trial_days constant int := 15;
+  -- ⚠️ Liste des produits PAYANTS couverts par l'essai.
+  -- À COMPLÉTER si tu ajoutes un outil payant plus tard.
+  paid_products constant text[] := array['speed-rf', 'rf-shot'];
+  prod text;
+  granted int := 0;
+begin
+  if uid is null then
+    return 'non_connecte';
+  end if;
+
+  -- Un seul essai par compte, à vie (même expiré, le marqueur reste).
+  if exists (
+    select 1 from public.licenses
+    where user_id = uid and order_id = 'essai'
+  ) then
+    return 'deja_utilise';
+  end if;
+
+  foreach prod in array paid_products loop
+    -- On ne donne pas d'essai sur un produit déjà possédé définitivement.
+    if exists (
+      select 1 from public.licenses
+      where user_id = uid and product = prod and active and expires_at is null
+    ) then
+      continue;
+    end if;
+    insert into public.licenses (user_id, product, active, order_id, expires_at)
+    values (uid, prod, true, 'essai', now() + make_interval(days => trial_days))
+    on conflict (user_id, product) do update
+      set active     = true,
+          order_id   = 'essai',
+          expires_at = now() + make_interval(days => trial_days);
+    granted := granted + 1;
+  end loop;
+
+  if granted = 0 then
+    return 'deja_client';
+  end if;
+  return 'ok';
+end;
+$$;
+
+-- Seuls les comptes connectés peuvent lancer leur propre essai.
+revoke execute on function public.start_trial() from public, anon;
+grant  execute on function public.start_trial() to authenticated;
+
 -- Révoquer une licence (ex. fin d'essai anticipée).
 --   select public.revoke_license('jean@exemple.fr', 'speed-rf');
 create or replace function public.revoke_license(

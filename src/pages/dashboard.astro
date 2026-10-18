@@ -19,6 +19,39 @@ import { url } from '../lib/site';
       </header>
 
       <h2 class="dash-section-title">Mes outils</h2>
+
+      <div class="trial-banner" data-trial-banner hidden>
+        <span class="eyebrow">Offre découverte</span>
+        <h3>Teste Speed RF et RF Shot pendant 15 jours, gratuitement</h3>
+        <p class="text-muted">
+          Partage Arnisound Tools autour de toi, et on t'ouvre l'accès à tous les
+          outils payants pendant 15 jours. Pas de carte bancaire, pas d'engagement.
+        </p>
+
+        <div class="trial-step">
+          <span class="trial-step__num">1</span>
+          <div class="trial-step__body">
+            <strong>Partage (ça nous aide énormément)</strong>
+            <div class="trial-share">
+              <a class="btn btn--ghost" data-share="x" target="_blank" rel="noopener noreferrer">Partager sur X</a>
+              <a class="btn btn--ghost" data-share="linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a class="btn btn--ghost" data-share="facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="trial-step">
+          <span class="trial-step__num">2</span>
+          <div class="trial-step__body">
+            <strong>Active ton essai</strong>
+            <button class="btn btn--primary" data-trial-activate disabled>Activer mes 15 jours</button>
+            <p class="trial-hint text-muted" data-trial-hint>Clique d'abord sur un bouton de partage ci-dessus.</p>
+          </div>
+        </div>
+
+        <p class="trial-msg" data-trial-msg hidden></p>
+      </div>
+
       <div class="grid grid--3" style="margin-top: 1.25rem;">
         {products.map((p) => {
           const paid = !p.free && !p.comingSoon;
@@ -117,6 +150,39 @@ import { url } from '../lib/site';
   .dash-note { margin-top: 2rem; font-size: 0.85rem; }
   .btn.is-disabled { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
 
+  .trial-banner {
+    margin-top: 1.25rem;
+    padding: 1.5rem 1.6rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+    border-radius: var(--radius, 14px);
+    background:
+      radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+      var(--surface);
+  }
+  .trial-banner h3 { margin: 0.35rem 0 0.4rem; font-size: 1.25rem; }
+  .trial-banner > p { margin: 0 0 1.2rem; max-width: 56ch; }
+  .trial-step { display: flex; gap: 0.9rem; align-items: flex-start; margin-top: 1rem; }
+  .trial-step__num {
+    flex: none; width: 26px; height: 26px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--accent); color: #0c0c0e; font-weight: 800; font-size: 0.85rem;
+  }
+  .trial-step__body { display: flex; flex-direction: column; gap: 0.55rem; }
+  .trial-step__body > strong { font-size: 0.95rem; }
+  .trial-share { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .trial-share .btn { padding: 0.5rem 0.9rem; font-size: 0.85rem; }
+  .trial-share .btn[data-shared] {
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+    color: var(--accent);
+  }
+  .trial-hint { font-size: 0.8rem; margin: 0; }
+  .trial-msg {
+    margin: 1rem 0 0; font-size: 0.88rem;
+    padding: 0.7rem 0.9rem; border-radius: var(--radius-sm); border: 1px solid var(--border);
+  }
+  .trial-msg[data-kind='ok'] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+  .trial-msg[data-kind='error'] { color: var(--warn, #e0a33e); border-color: color-mix(in srgb, var(--warn, #e0a33e) 40%, transparent); }
+
   .settings {
     margin-top: 1.25rem;
     display: grid;
@@ -177,17 +243,21 @@ import { url } from '../lib/site';
 
     // Récupérer les licences actives et débloquer les outils payants concernés.
     // On ignore les licences temporaires expirées (expires_at dépassé).
+    let trialUsed = false;                       // un essai déjà consommé (même expiré)
+    const ownedPermanent = new Set<string>();    // produits possédés à vie
     try {
       const { data: licenses, error } = await supabase
         .from('licenses')
-        .select('product, expires_at')
+        .select('product, expires_at, order_id')
         .eq('active', true);
       if (!error && licenses) {
         const now = Date.now();
         const owned = new Map<string, string | null>();
-        (licenses as { product: string; expires_at: string | null }[]).forEach((l) => {
+        (licenses as { product: string; expires_at: string | null; order_id: string | null }[]).forEach((l) => {
+          if (l.order_id === 'essai') trialUsed = true;
           if (l.expires_at && new Date(l.expires_at).getTime() <= now) return; // expirée → ignorée
           owned.set(l.product, l.expires_at);
+          if (!l.expires_at) ownedPermanent.add(l.product);
         });
         document.querySelectorAll<HTMLElement>('.dash-card[data-paid]').forEach((card) => {
           const slug = card.getAttribute('data-product') || '';
@@ -215,6 +285,76 @@ import { url } from '../lib/site';
         });
       }
     } catch { /* table absente ou hors-ligne : on garde l'état par défaut */ }
+
+    // Essai 15 jours en libre-service (partage pour débloquer, à l'honneur).
+    const banner = document.querySelector<HTMLElement>('[data-trial-banner]');
+    const paidSlugs = [...document.querySelectorAll<HTMLElement>('.dash-card[data-paid]')]
+      .map((c) => c.getAttribute('data-product') || '');
+    const eligible = Boolean(banner) && !trialUsed
+      && paidSlugs.some((s) => s && !ownedPermanent.has(s));
+
+    if (banner && eligible) {
+      banner.hidden = false;
+
+      const SHARE_URL = 'https://arnisoundtools.com';
+      const SHARE_TXT =
+        "Je viens de découvrir Arnisound Tools : des outils en ligne pour le spectacle "
+        + "et l'événementiel (plans de fréquences HF, calculs son et lumière, fiches techniques). "
+        + 'Ça fait gagner un temps fou.';
+      const u = encodeURIComponent(SHARE_URL);
+      const t = encodeURIComponent(SHARE_TXT);
+      const SHARE_LINKS: Record<string, string> = {
+        x: `https://twitter.com/intent/tweet?text=${t}&url=${u}`,
+        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${u}`,
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${u}&quote=${t}`,
+      };
+
+      const activateBtn = banner.querySelector<HTMLButtonElement>('[data-trial-activate]');
+      const hint = banner.querySelector<HTMLElement>('[data-trial-hint]');
+      let shared = false;
+
+      banner.querySelectorAll<HTMLAnchorElement>('[data-share]').forEach((a) => {
+        const net = a.getAttribute('data-share') || '';
+        a.href = SHARE_LINKS[net] ?? SHARE_URL;
+        a.addEventListener('click', () => {
+          a.setAttribute('data-shared', '');
+          shared = true;
+          if (activateBtn) activateBtn.disabled = false;
+          if (hint) hint.textContent = 'Merci du partage ! Tu peux activer ton essai.';
+        });
+      });
+
+      const trialMsg = (text: string, kind: 'ok' | 'error') => {
+        const el = banner.querySelector<HTMLElement>('[data-trial-msg]');
+        if (!el) return;
+        el.textContent = text;
+        el.dataset.kind = kind;
+        el.hidden = false;
+      };
+
+      activateBtn?.addEventListener('click', async () => {
+        if (!shared) return;
+        activateBtn.disabled = true;
+        activateBtn.textContent = 'Activation…';
+        const { data, error } = await supabase.rpc('start_trial');
+        if (error) {
+          trialMsg("Impossible d'activer l'essai pour le moment. Réessaie dans un instant.", 'error');
+          activateBtn.disabled = false;
+          activateBtn.textContent = 'Activer mes 15 jours';
+          return;
+        }
+        if (data === 'ok') {
+          trialMsg('Essai activé 🎉 Tes outils se débloquent…', 'ok');
+          setTimeout(() => window.location.reload(), 1200);
+        } else if (data === 'deja_utilise') {
+          trialMsg('Tu as déjà profité de ton essai gratuit sur ce compte.', 'error');
+        } else if (data === 'deja_client') {
+          trialMsg("Tu possèdes déjà tous les outils payants, pas besoin d'essai !", 'ok');
+        } else {
+          trialMsg("Connexion requise pour activer l'essai.", 'error');
+        }
+      });
+    }
   }
 
   document.querySelector('[data-logout]')?.addEventListener('click', async () => {
