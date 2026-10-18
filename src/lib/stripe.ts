@@ -12,7 +12,7 @@ export const STRIPE_LINKS: Record<string, string> = {
 
 // Fournisseur de paiement actif : 'lemonsqueezy' (actuel) ou 'stripe'.
 // On bascule ici quand les Payment Links sont prêts et testés.
-export const PAYMENT_PROVIDER: 'lemonsqueezy' | 'stripe' = 'lemonsqueezy';
+export const PAYMENT_PROVIDER: 'lemonsqueezy' | 'stripe' = 'stripe';
 
 export const stripeLive =
   PAYMENT_PROVIDER === 'stripe' && Object.keys(STRIPE_LINKS).length > 0;
