@@ -389,16 +389,40 @@ import { url } from '../lib/site';
         if (!el) return;
         el.textContent = text; el.dataset.kind = 'ok'; el.hidden = false;
       };
+      // Visuel story prêt à poster (1080x1920).
+      const STORY_IMG = 'https://arnisoundtools.com/share/story-instagram.png';
       const igBtn = modal.querySelector<HTMLButtonElement>('button[data-share="instagram"]');
       igBtn?.addEventListener('click', async () => {
         igBtn.setAttribute('data-shared', '');
-        if (navigator.share) {
-          try { await navigator.share({ title: 'Arnisound Tools', text: SHARE_TXT, url: SHARE_URL }); }
-          catch { /* partage annulé */ }
+        const prev = igBtn.textContent;
+        igBtn.disabled = true; igBtn.textContent = 'Préparation…';
+
+        let file: File | null = null;
+        try {
+          const resp = await fetch(STORY_IMG, { cache: 'force-cache' });
+          const blob = await resp.blob();
+          file = new File([blob], 'arnisound-story.png', { type: blob.type || 'image/png' });
+        } catch { /* récupération impossible */ }
+
+        igBtn.disabled = false; igBtn.textContent = prev;
+
+        // Mobile : partage du fichier → Instagram propose « Ajouter à ma story ».
+        if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+          try { await navigator.share({ files: [file], title: 'Arnisound Tools' }); }
+          catch { /* partage annulé, rien à signaler */ }
           return;
         }
-        try { await navigator.clipboard.writeText(`${SHARE_TXT} ${SHARE_URL}`); } catch { /* ignore */ }
-        igMsg('Lien copié ✅ Ouvre Instagram et colle-le dans ta story.');
+        // Ordinateur : on télécharge le visuel et on ouvre Instagram.
+        if (file) {
+          const href = URL.createObjectURL(file);
+          const a = document.createElement('a');
+          a.href = href; a.download = 'arnisound-story.png';
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(() => URL.revokeObjectURL(href), 4000);
+          igMsg('Visuel téléchargé ✅ Publie-le en story et ajoute le lien arnisoundtools.com.');
+        } else {
+          igMsg('Visuel indisponible. Ouvre Instagram et partage arnisoundtools.com.');
+        }
         window.open('https://www.instagram.com/', '_blank', 'noopener');
       });
 
