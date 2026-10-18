@@ -160,5 +160,31 @@ Deno.serve(async (req) => {
     return new Response('db error', { status: 500 }); // 500 → Stripe réessaiera
   }
 
+  // Email de bienvenue / confirmation d'accès via Brevo (si configuré).
+  // Secrets facultatifs : BREVO_API_KEY + BREVO_PURCHASE_TEMPLATE_ID.
+  const brevoKey = Deno.env.get('BREVO_API_KEY');
+  const brevoTemplate = Number(Deno.env.get('BREVO_PURCHASE_TEMPLATE_ID') ?? '0');
+  if (brevoKey && brevoTemplate && email && !days) {
+    const NAMES: Record<string, string> = {
+      'speed-rf': 'Speed RF',
+      'rf-shot': 'RF Shot',
+      'reperages': 'Repérages',
+    };
+    const produits = list.map((p) => NAMES[p] ?? p).join(' et ');
+    try {
+      await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: { 'api-key': brevoKey, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          to: [{ email }],
+          templateId: brevoTemplate,
+          params: { produits },
+        }),
+      });
+    } catch (e) {
+      console.error('erreur envoi Brevo:', e); // non bloquant : la licence est créée
+    }
+  }
+
   return new Response('ok', { status: 200 });
 });
