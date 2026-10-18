@@ -175,3 +175,30 @@ begin
    where user_id = uid and product = p_product;
 end;
 $$;
+
+-- ============================================================================
+--  Vue d'administration : licences + email du compte (toujours à jour)
+--  Pratique pour consulter « qui a quoi » dans le Table Editor sans avoir à
+--  chercher le user_id. Lecture réservée à l'admin (dashboard) : la vue n'est
+--  PAS exposée aux rôles anon/authenticated pour ne pas divulguer les emails.
+-- ============================================================================
+create or replace view public.licenses_view as
+select
+  u.email,
+  l.product,
+  case
+    when not l.active            then 'revoquee'
+    when l.expires_at is null    then 'permanente'
+    when l.expires_at > now()    then 'essai en cours'
+    else                              'expiree'
+  end                             as statut,
+  l.expires_at,
+  l.active,
+  l.order_id,
+  l.created_at,
+  l.user_id
+from public.licenses l
+join auth.users u on u.id = l.user_id
+order by l.created_at desc;
+
+revoke all on public.licenses_view from anon, authenticated;
