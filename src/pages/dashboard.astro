@@ -436,25 +436,21 @@ import { url } from '../lib/site';
       activateBtn?.addEventListener('click', async () => {
         activateBtn.disabled = true;
         activateBtn.textContent = 'Activation…';
-        const { data, error } = await supabase.rpc('start_trial');
-        if (error) {
-          trialMsg("Impossible d'activer l'essai pour le moment. Réessaie dans un instant.", 'error');
-          activateBtn.disabled = false;
-          activateBtn.textContent = 'Activer mes 15 jours';
-          return;
-        }
-        if (data === 'ok') {
+        // Edge Function : active l'essai (fonction SQL) puis envoie l'email Brevo.
+        const { data, error } = await supabase.functions.invoke('start-trial');
+        const status = (data && (data as { status?: string }).status) || (error ? 'erreur' : '');
+        if (status === 'ok') {
           activated = true;
           activateBtn.textContent = 'Essai activé ✅';
-          trialMsg('Tes 15 jours sont ouverts ! Speed RF et RF Shot sont débloqués.', 'ok');
-        } else if (data === 'deja_utilise') {
+          trialMsg('Tes 15 jours sont ouverts ! Speed RF et RF Shot sont débloqués. Un email de confirmation arrive.', 'ok');
+        } else if (status === 'deja_utilise') {
           trialMsg('Tu as déjà profité de ton essai gratuit sur ce compte.', 'error');
           activateBtn.textContent = 'Activer mes 15 jours';
-        } else if (data === 'deja_client') {
+        } else if (status === 'deja_client') {
           trialMsg("Tu possèdes déjà tous les outils payants, pas besoin d'essai !", 'ok');
           activateBtn.textContent = 'Activer mes 15 jours';
         } else {
-          trialMsg("Connexion requise pour activer l'essai.", 'error');
+          trialMsg("Impossible d'activer l'essai pour le moment. Réessaie dans un instant.", 'error');
           activateBtn.disabled = false;
           activateBtn.textContent = 'Activer mes 15 jours';
         }
