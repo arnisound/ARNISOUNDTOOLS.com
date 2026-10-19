@@ -19,6 +19,8 @@ alter table public.licenses add column if not exists active     boolean not null
 alter table public.licenses add column if not exists created_at timestamptz not null default now();
 -- Date d'expiration : NULL = licence permanente ; une date = licence temporaire.
 alter table public.licenses add column if not exists expires_at timestamptz;
+-- Relance de fin d'essai déjà envoyée ? (évite les doublons de la relance planifiée)
+alter table public.licenses add column if not exists reminder_sent boolean not null default false;
 
 -- Contrainte « 1 licence par produit et par personne » (indispensable pour le
 -- upsert onConflict du webhook). Ajoutée seulement si absente.
