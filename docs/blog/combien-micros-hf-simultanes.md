@@ -1,5 +1,5 @@
 ---
-title: "Le chiffre sur la boîte n'est pas le vôtre"
+title: "Combien de micros HF en même temps ? Pas le chiffre sur la boîte"
 seoTitle: "Combien de micros HF en même temps ?"
 description: "La vraie limite n'est pas le nombre de canaux annoncé, mais la bande disponible et l'intermodulation. Nos repères pour savoir combien de micros HF faire tourner ensemble."
 slug: combien-micros-hf-simultanes
@@ -77,8 +77,8 @@ vraiment les grosses configurations.
 Au fond, le nombre de micros HF que vous pouvez faire tourner ensemble dépend de votre
 ville, de votre matériel et de votre coordination, pas d'un chiffre universel. Pour une
 petite configuration propre en quelques secondes, Speed RF suffit. Dès que ça devient
-dense, RF Shot coordonne plus de cent fréquences et calcule les intermodulations à votre
-place.
+dense, [RF Shot](https://arnisoundtools.com/rf-shot) coordonne plus de cent fréquences et
+calcule les intermodulations à votre place, produits à trois émetteurs compris.
 
 ## Sources
 

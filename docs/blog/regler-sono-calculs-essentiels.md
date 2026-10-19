@@ -58,8 +58,9 @@ en détail dans [calculer le delay d'une enceinte](https://arnisoundtools.com/bl
 
 Aucun de ces calculs ne prend plus de quelques minutes, et tous se font mieux à plat, avant
 le montage, qu'en catastrophe une fois le matériel accroché. C'est exactement ce que réunit
-AV Calc : plus de soixante-dix calculateurs du métier, du SPL au delay en passant par la
-puissance et la section de câble, dans une seule appli gratuite et en français.
+[AV Calc](https://arnisoundtools.com/av-calc) : plus de soixante-dix calculateurs du métier,
+du SPL au delay en passant par la puissance et la section de câble, dans une seule appli
+gratuite et en français.
 
 ## Sources
 

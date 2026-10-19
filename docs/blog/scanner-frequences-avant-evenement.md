@@ -1,5 +1,5 @@
 ---
-title: "Le spectre de ce soir n'est pas celui de cet après-midi"
+title: "Le plan de fréquences d'hier ne tient pas ici"
 seoTitle: "Scanner les fréquences avant un événement"
 description: "Un scan RF sur place évite la plupart des mauvaises surprises HF. Quand le faire, quoi regarder, quoi éviter : la check-list avant d'arrêter votre plan de fréquences."
 slug: scanner-frequences-avant-evenement
@@ -9,7 +9,7 @@ date: 2026-10-02
 ---
 
 **Chapô :** Le plan de fréquences qui tenait hier dans une autre ville n'a aucune raison
-de tenir ici. Dix minutes de scan sur place valent mieux qu'une certitude recopiée.
+de tenir ici. Un scan sur place vaut mieux qu'une certitude recopiée.
 
 La tentation est permanente, surtout en fin de tournée quand on est fatigué : rejouer le
 plan de la veille. Il a marché hier, les micros étaient propres, pourquoi recommencer ?
@@ -17,8 +17,8 @@ Parce que l'environnement radio, lui, n'a pas fait le déplacement avec vous. Il
 d'une ville à l'autre, d'un bâtiment à l'autre, parfois d'une salle à l'autre dans le
 même bâtiment.
 
-Un scan, c'est dix minutes pour remplacer une supposition par une mesure. Voici ce que je
-regarde, et dans quel ordre.
+Un scan, c'est remplacer une supposition par une mesure. Voici ce que je regarde, et dans
+quel ordre.
 
 ## Scanner là où ça se passe, quand ça se passe
 
@@ -61,9 +61,14 @@ Dernier réflexe, garder une trace. Je sauvegarde le scan et le plan : si un pro
 surgit en cours de soirée, je sais ce qui a changé. Et je garde toujours deux ou trois
 fréquences de secours déjà validées, à l'écart du plan principal.
 
-Le scan vous dit où est la place. Encore faut-il bien la remplir, et c'est exactement ce
-que fait Speed RF : à partir de votre matériel et de votre ville, il calcule des
-fréquences propres, compatibles, qui évitent la TNT française, en quelques secondes.
+Le scan vous dit où est la place. Encore faut-il bien la remplir, et surtout ne pas tout
+recommencer de zéro à chaque date. C'est là que [RF Shot](https://arnisoundtools.com/rf-shot)
+prend tout son sens : il coordonne vos fréquences à partir du scan, en écartant les
+intermodulations, puis vous **sauvegardez le plan**. À la date suivante, dans une autre
+ville, vous ne repartez pas d'une feuille blanche : vous rouvrez votre plan enregistré,
+vous relancez un scan du nouveau lieu, et RF Shot régénère en quelques minutes un plan
+tout aussi stable, adapté au spectre du soir. Votre configuration est saisie une fois ;
+seul l'environnement change, et c'est lui seul qu'on recalcule.
 
 ## Sources
 

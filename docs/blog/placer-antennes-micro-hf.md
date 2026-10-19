@@ -59,9 +59,10 @@ Wi-Fi, murs de LED, gradateurs bon marché rayonnent du bruit radio ; on éloign
 antennes de ces sources [1], et un scan avant le show repère vite une zone polluée.
 
 Une antenne bien placée vous rapporte plus de portée et de stabilité qu'un changement de
-fréquence. Et une fois l'antenne réglée, autant partir d'un plan de fréquences propre :
-c'est le travail de Speed RF, qui vous donne des canaux compatibles pour votre matériel
-et votre ville.
+fréquence. Mais sur les plateaux denses, là où les antennes déportées et la distribution
+deviennent indispensables, la stabilité se joue aussi dans le plan de fréquences : c'est
+le travail de [RF Shot](https://arnisoundtools.com/rf-shot), qui coordonne plus de cent
+fréquences et leurs intermodulations pour qu'aucun émetteur n'en gêne un autre.
 
 ## Sources
 

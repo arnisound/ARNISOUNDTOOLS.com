@@ -57,6 +57,7 @@ de Q&R et en modérant vraiment, parce qu'une salle laissée libre transforme vi
 questions en monologues.
 
 Tenir l'horaire, au fond, c'est donner à chacun la même information : combien de temps il
-reste. C'est précisément ce que fait TimeStage, un chronomètre de scène piloté depuis la
-régie et affiché face à l'orateur, avec seuils de couleur, messages discrets et déroulé de
-session. De quoi garder la main sur le planning, sans braquer personne.
+reste. C'est précisément ce que fait [TimeStage](https://arnisoundtools.com/timestage), un
+chronomètre de scène piloté depuis la régie et affiché face à l'orateur, avec seuils de
+couleur, messages discrets et déroulé de session. De quoi garder la main sur le planning,
+sans braquer personne.

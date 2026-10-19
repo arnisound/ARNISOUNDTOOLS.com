@@ -1,5 +1,5 @@
 ---
-title: "Le fond noir qu'on passe sa soirée à découper"
+title: "Un chrono dans OBS ou vMix, sans le fond noir"
 seoTitle: "Chronomètre dans OBS ou vMix"
 description: "Ajouter un compte à rebours propre dans votre régie vidéo OBS, vMix ou autre : source navigateur, canal alpha, fond d'incrustation. Le tuto pas à pas."
 slug: chronometre-regie-video-obs-vmix
@@ -59,8 +59,9 @@ le mélangeur, et on s'assure qu'ils affichent la même valeur. Un bon système 
 temps depuis une horloge commune, les deux doivent coïncider à la milliseconde, sans
 décalage visible entre ce que voit l'orateur et ce que voit le public.
 
-C'est exactement pour ça que TimeStage propose une fenêtre vidéo dédiée : le chronomètre
-seul, sur fond transparent en alpha réel, à ouvrir comme source navigateur dans le
+C'est exactement pour ça que [TimeStage](https://arnisoundtools.com/timestage) propose une
+fenêtre vidéo dédiée : le chronomètre seul, sur fond transparent en alpha réel, à ouvrir
+comme source navigateur dans le
 mélangeur, avec un fond d'incrustation uni disponible pour les régies sans alpha. Vous
 décidez de ce qui l'accompagne, titre, barre de progression, message, et de la régie à
 l'antenne, c'est le même chrono, à la milliseconde.
