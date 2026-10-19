@@ -1,5 +1,5 @@
 ---
-title: "Tenir une conférence à l'heure : 7 règles qui sauvent le planning"
+title: "Cinq minutes de retard à neuf heures, une heure à midi"
 seoTitle: "Tenir une conférence à l'heure"
 description: "Un intervenant qui déborde et toute la journée prend du retard. Nos tips concrets pour tenir le planning d'une conférence ou d'un événement, sans braquer personne."
 slug: tenir-conference-a-lheure
@@ -7,55 +7,56 @@ keywords: [gérer le temps de parole, conférence à l'heure, timing événement
 statut: brouillon
 date: 2026-10-09
 ---
-Le retard, dans un événement, c'est une boule de neige : le premier intervenant déborde
-de cinq minutes, et à midi vous avez une demi-heure de retard et une pause déjeuner
-sacrifiée. La bonne nouvelle : tenir l'horaire tient à quelques réflexes simples, et
-surtout à **rendre le temps visible**. Voici les règles que j'applique.
 
-## 1. Écrivez un déroulé minuté, pas un ordre du jour
+**Chapô :** Le retard, dans une journée d'événement, ne s'additionne pas, il s'accumule.
+Le tenir ne demande pas d'autorité, seulement de rendre le temps visible.
 
-Un programme liste les sujets ; un déroulé donne à chaque bloc **une durée et une heure
-de fin**. C'est le document de référence de la régie : sans lui, personne ne sait si on
-est en avance ou en retard.
+Le premier intervenant déborde de cinq minutes. Personne ne s'alarme, cinq minutes ce
+n'est rien. Le deuxième part déjà en retard, et comme il tient à son contenu, il déborde
+à son tour. À midi, la pause déjeuner a fondu de moitié et l'après-midi commencera dans
+le stress. Aucun de ces retards n'était grave pris isolément ; c'est leur somme qui casse
+la journée.
 
-## 2. Rendez le temps visible pour l'orateur
+La bonne nouvelle, c'est que tenir l'horaire ne tient pas à l'autorité du régisseur ni à
+sa capacité à couper la parole. Ça tient surtout à une chose : rendre le temps visible,
+pour tout le monde, au bon moment.
 
-Un intervenant absorbé par son propos ne voit pas le temps passer. Un **chronomètre face
-à la scène**, lisible d'un coup d'œil, fait plus que tous les rappels : la personne
-s'auto-régule dès qu'elle voit le compte à rebours.
+## Un déroulé, pas un programme
 
-## 3. Prévenez avant la fin, pas à la fin
+Un programme liste des sujets. Un déroulé donne à chaque bloc une durée et une heure de
+fin. La différence paraît mince, elle est décisive : sans heure de fin, personne en régie
+ne peut dire si on est en avance ou en retard, on le découvre quand il est trop tard. Le
+déroulé minuté est le document de référence de la journée, et il se prépare avant, pas le
+matin même.
 
-Des **seuils de couleur** (orange à l'approche de la fin, rouge pour la dernière ligne
-droite) laissent le temps de conclure proprement. Prévenir à « temps écoulé », c'est
-déjà trop tard.
+Ce déroulé respire ou il déraille. Entre les blocs, il faut des tampons, quelques minutes
+pour une transition, un changement de plateau, une question qui s'étire. Un planning sans
+marge tombe au premier imprévu, et il y a toujours un premier imprévu.
 
-## 4. Parlez à l'orateur sans l'interrompre
+## Le temps doit se voir depuis la scène
 
-Plutôt que des grands gestes au fond de la salle, un **message discret à l'écran**
-(« Merci de conclure », « il vous reste 2 minutes ») passe l'information sans casser le
-rythme ni gêner le public.
+Un intervenant absorbé par son propos ne sent pas le temps passer, c'est humain et ça n'a
+rien à voir avec sa bonne volonté. Un chronomètre face à la scène, lisible d'un coup
+d'œil, fait plus que tous les rappels du monde : la personne s'auto-régule dès qu'elle voit
+le compte à rebours défiler.
 
-## 5. Mettez des tampons entre les blocs
+Encore faut-il prévenir avant la fin, pas à la fin. Des seuils de couleur, orange quand on
+approche, rouge pour la dernière ligne droite, laissent le temps de conclure proprement.
+Afficher « temps écoulé » n'informe plus, ça sanctionne. Et quand il faut vraiment
+intervenir, un message discret à l'écran, « il vous reste deux minutes », « merci de
+conclure », passe l'information sans grands gestes au fond de la salle et sans casser le
+rythme devant le public.
 
-Transitions, changements de plateau, questions qui s'éternisent : prévoyez **quelques
-minutes de marge** entre les sessions. Un planning sans respiration déraille au premier
-imprévu.
+## Ce qui se règle avant la scène
 
-## 6. Briefez les intervenants en amont
+Une partie du travail se fait en amont, loin du chrono. On dit à chaque intervenant son
+temps exact, et on lui explique comment le compte à rebours fonctionnera devant lui : un
+orateur prévenu gère son temps infiniment mieux qu'un orateur surpris. Et on cadre les
+questions du public, premier poste de dérapage de toute conférence, en annonçant une durée
+de Q&R et en modérant vraiment, parce qu'une salle laissée libre transforme vite les
+questions en monologues.
 
-Dites à chacun son temps **exact** et comment le chrono fonctionne. Un orateur prévenu
-qu'un compte à rebours sera face à lui gère son temps bien mieux qu'un orateur surpris.
-
-## 7. Cadrez les questions du public
-
-Les Q&R sont le premier poste de dérapage. Annoncez un temps de Q&R, et **modérez** :
-sélectionner les questions évite les monologues déguisés en questions.
-
----
-
-Tenir l'horaire, au fond, c'est donner à tout le monde la même information : combien de
-temps il reste. C'est précisément ce que fait
-[TimeStage](https://arnisoundtools.com/timestage) : un chronomètre de scène piloté depuis
-la régie, affiché face à l'orateur, avec seuils de couleur, messages discrets et déroulé
-de session. De quoi garder la main sur le planning, sans braquer personne.
+Tenir l'horaire, au fond, c'est donner à chacun la même information : combien de temps il
+reste. C'est précisément ce que fait TimeStage, un chronomètre de scène piloté depuis la
+régie et affiché face à l'orateur, avec seuils de couleur, messages discrets et déroulé de
+session. De quoi garder la main sur le planning, sans braquer personne.

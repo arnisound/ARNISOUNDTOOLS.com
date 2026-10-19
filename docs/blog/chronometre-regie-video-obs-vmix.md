@@ -1,5 +1,5 @@
 ---
-title: "Incruster un chronomètre dans OBS ou vMix (source navigateur)"
+title: "Le fond noir qu'on passe sa soirée à découper"
 seoTitle: "Chronomètre dans OBS ou vMix"
 description: "Ajouter un compte à rebours propre dans votre régie vidéo OBS, vMix ou autre : source navigateur, canal alpha, fond d'incrustation. Le tuto pas à pas."
 slug: chronometre-regie-video-obs-vmix
@@ -7,57 +7,60 @@ keywords: [chronomètre OBS, timer vMix, source navigateur, canal alpha, incrust
 statut: brouillon
 date: 2026-10-12
 ---
-Afficher un compte à rebours propre dans un flux vidéo ou sur un écran de scène piloté
-par un mélangeur, ça semble simple… jusqu'au moment où on se retrouve avec un fond noir à
-découper et un chrono qui saute. Voici comment je l'intègre proprement dans OBS, vMix ou
-n'importe quel mélangeur qui accepte une **source navigateur**.
 
-## 1. Utilisez une page dédiée, pas une capture d'écran
+**Chapô :** Afficher un compte à rebours dans un flux vidéo paraît trivial, jusqu'au
+moment où on se retrouve avec un fond noir à détourer et un chrono qui saute d'une
+seconde sur deux.
 
-Capturer une fenêtre de chrono à l'écran, c'est fragile (résolution, barres de fenêtre,
-curseur). La bonne méthode : une **URL d'affichage dédiée** que vous ajoutez comme
-**source navigateur** dans le mélangeur. Le rendu est net et indépendant de votre bureau.
+La demande arrive toujours au dernier moment : « on peut mettre un chrono sur l'écran ? ».
+Et la première idée, celle qui semble la plus simple, est précisément celle qui pose
+problème. On attrape une fenêtre de chronomètre quelque part, on la capture dans le
+mélangeur, et on hérite d'un fond noir, d'une barre de titre, parfois d'un curseur qui
+traverse l'image, et d'un affichage qui saccade.
 
-## 2. Ajoutez-la en source navigateur
+Le problème n'est pas le chronomètre, c'est la façon de l'amener dans la régie. Voici
+comment je l'intègre proprement dans OBS, vMix ou n'importe quel mélangeur qui accepte une
+source navigateur.
 
-Dans OBS : « + » → **Navigateur** → collez l'URL, réglez la largeur et la hauteur à la
-résolution de votre projet (1920×1080 par exemple). Dans vMix : ajoutez une entrée
-**Web Browser** avec la même URL. Les autres mélangeurs ont un équivalent.
+## Une page, pas une capture
 
-## 3. Profitez du canal alpha (fond transparent)
+Capturer une fenêtre à l'écran est fragile par nature : ça dépend de la résolution, des
+bordures de fenêtre, de ce qui passe au premier plan sur le bureau. La bonne méthode est
+tout autre. On part d'une URL d'affichage dédiée, conçue pour être vue, et on l'ajoute
+comme source navigateur dans le mélangeur. Dans OBS, c'est « + » puis Navigateur ; dans
+vMix, une entrée Web Browser ; les autres mélangeurs ont leur équivalent. On règle la
+largeur et la hauteur sur la résolution du projet, 1920 par 1080 le plus souvent, et le
+rendu devient net, stable, indépendant du bureau.
 
-Une bonne page de chrono pour la vidéo affiche les chiffres sur **fond transparent**
-(canal alpha réel). Résultat : le chrono s'incruste directement sur votre image, **sans
-fond à découper**. OBS et vMix gèrent nativement la transparence d'une source navigateur.
+## La transparence règle le vrai problème
 
-## 4. Pas d'alpha ? Passez par un fond d'incrustation
+C'est là que se joue la propreté de l'incrustation. Une bonne page de chrono pour la vidéo
+affiche ses chiffres sur fond réellement transparent, en canal alpha, et OBS comme vMix
+gèrent nativement cette transparence pour une source navigateur. Résultat : le chrono se
+pose directement sur l'image, sans fond à découper, sans bricolage.
 
-Si votre mélangeur ne gère pas la transparence, utilisez un **fond d'incrustation uni**
-(vert, magenta, bleu…) et appliquez un **chroma key** par-dessus. Choisissez une couleur
-absente du reste de votre image pour un détourage propre.
+Quand le mélangeur ne sait pas gérer l'alpha, on bascule sur l'autre méthode : un fond
+d'incrustation uni, vert, magenta ou bleu, sur lequel on applique un chroma key. Le seul
+soin à prendre est de choisir une couleur absente du reste de l'image, pour que le
+détourage ne vienne pas manger un élément du décor ou un vêtement d'intervenant.
 
-## 5. Réglez taille, position et lisibilité
+## Lisible, placé, synchronisé
 
-Mettez le chrono là où il ne gêne pas (souvent un coin), à une taille lisible à l'écran
-final. Pensez à une **ombre portée** ou un léger contour si l'image du dessous est claire :
-des chiffres blancs sur fond clair disparaissent.
+Restent les détails qui font qu'un chrono est utilisable en direct ou pas. On le place là
+où il ne gêne pas, souvent dans un coin, à une taille lisible sur l'écran final et pas
+seulement sur le moniteur de régie. Sur une image claire, des chiffres blancs disparaissent
+: une ombre portée ou un léger contour les sauve. Selon l'effet voulu, le chrono passe au
+premier plan ou derrière un autre élément, ce qui n'est qu'une question d'ordre des calques
+dans le mélangeur.
 
-## 6. Avant-plan ou arrière-plan
+Le dernier test est le plus important, et c'est celui qu'on saute par manque de temps :
+vérifier la synchro avant le direct. On ouvre la même session sur l'écran de régie et dans
+le mélangeur, et on s'assure qu'ils affichent la même valeur. Un bon système dérive le
+temps depuis une horloge commune, les deux doivent coïncider à la milliseconde, sans
+décalage visible entre ce que voit l'orateur et ce que voit le public.
 
-Selon l'effet voulu, le chrono peut passer **au premier plan** (toujours visible) ou
-**derrière** un autre élément. Dans le mélangeur, c'est juste l'ordre des calques ; côté
-page, vérifiez que seul le chrono (et ce que vous voulez) est affiché.
-
-## 7. Testez la synchro avant le direct
-
-Ouvrez la même session sur l'écran de régie et dans le mélangeur, et vérifiez qu'ils
-affichent **la même valeur**. Un bon système dérive le temps d'une horloge commune : les
-deux doivent être synchronisés à la milliseconde, sans décalage visible.
-
----
-
-C'est exactement pour ça que [TimeStage](https://arnisoundtools.com/timestage) propose
-une **fenêtre vidéo dédiée** : le chronomètre seul, sur fond transparent (alpha réel), à
-ouvrir comme source navigateur dans votre mélangeur, avec un fond d'incrustation uni
-disponible pour les régies sans alpha. Vous décidez aussi de ce qui l'accompagne : titre,
-barre de progression, message. De la régie à l'antenne, le même chrono, à la milliseconde.
+C'est exactement pour ça que TimeStage propose une fenêtre vidéo dédiée : le chronomètre
+seul, sur fond transparent en alpha réel, à ouvrir comme source navigateur dans le
+mélangeur, avec un fond d'incrustation uni disponible pour les régies sans alpha. Vous
+décidez de ce qui l'accompagne, titre, barre de progression, message, et de la régie à
+l'antenne, c'est le même chrono, à la milliseconde.
