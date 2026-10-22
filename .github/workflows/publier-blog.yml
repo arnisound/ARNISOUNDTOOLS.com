@@ -1,0 +1,123 @@
+name: Publier les articles planifiés
+
+# Publie automatiquement les articles de blog à leur date prévue, puis déploie.
+# Ce fichier DOIT vivre sur la branche par défaut (main) : GitHub ne lance les
+# workflows planifiés que depuis elle. Il opère toutefois sur la branche de
+# production claude/relaxed-cray-u37ahp (checkout + push + déploiement).
+#
+# Un commit poussé par GITHUB_TOKEN ne redéclenche pas deploy.yml, donc ce
+# workflow fait lui-même le build et le déploiement GitHub Pages.
+
+on:
+  schedule:
+    - cron: '0 8 * * *'          # chaque jour 08:00 UTC (09:00 Paris en hiver)
+  workflow_dispatch:
+    inputs:
+      date_override:
+        description: "Date simulée AAAA-MM-JJ (vide = aujourd'hui)"
+        required: false
+        default: ''
+      dry_run:
+        description: "true = simulation (ne publie pas, ne déploie pas)"
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.flip.outputs.changed }}
+    steps:
+      - name: Checkout branche de production
+        uses: actions/checkout@v4
+        with:
+          ref: claude/relaxed-cray-u37ahp
+
+      - name: Passer en « publie » les articles dont la date est arrivée
+        id: flip
+        shell: bash
+        run: |
+          set -euo pipefail
+          TODAY="${{ github.event.inputs.date_override }}"
+          if [ -z "$TODAY" ]; then TODAY="$(date -u +%F)"; fi
+          echo "Date de référence : $TODAY"
+
+          # Calendrier de publication : « AAAA-MM-JJ slug »
+          CAL="2026-10-28 regler-sono-calculs-essentiels
+          2026-11-04 placer-antennes-micro-hf
+          2026-11-11 tenir-conference-a-lheure
+          2026-11-18 scanner-frequences-avant-evenement
+          2026-11-25 chronometre-regie-video-obs-vmix"
+
+          CHANGED=0
+          while read -r D SLUG; do
+            [ -z "${SLUG:-}" ] && continue
+            F="docs/blog/$SLUG.md"
+            [ -f "$F" ] || { echo "introuvable: $F"; continue; }
+            if [[ "$TODAY" < "$D" ]]; then continue; fi   # pas encore l'heure
+            if grep -q '^statut: brouillon$' "$F"; then
+              sed -i 's/^statut: brouillon$/statut: publie/' "$F"
+              sed -i "s/^date: .*/date: $D/" "$F"
+              echo "A PUBLIER: $SLUG (date $D)"
+              CHANGED=1
+            fi
+          done <<< "$CAL"
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+          [ "$CHANGED" = "0" ] && echo "Rien a publier aujourd'hui." || true
+
+      - name: Commit + push sur la branche de production
+        if: steps.flip.outputs.changed == '1' && github.event.inputs.dry_run != 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/blog/*.md
+          git diff --cached --quiet || git commit -m "Publication blog planifiee (auto)"
+          git push origin HEAD:claude/relaxed-cray-u37ahp
+
+      - uses: actions/setup-node@v4
+        if: steps.flip.outputs.changed == '1'
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        if: steps.flip.outputs.changed == '1'
+        run: npm ci
+
+      - name: Build
+        if: steps.flip.outputs.changed == '1'
+        env:
+          PAGES_BASE: /ARNISOUNDTOOLS.com/
+          PAGES_SITE: https://arnisound.github.io
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+        if: steps.flip.outputs.changed == '1' && github.event.inputs.dry_run != 'true'
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.flip.outputs.changed == '1' && github.event.inputs.dry_run != 'true'
+        with:
+          path: dist
+
+  deploy:
+    needs: publier
+    if: needs.publier.outputs.changed == '1' && github.event.inputs.dry_run != 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
