@@ -4,8 +4,8 @@ seoTitle: "Combien de micros HF en même temps ?"
 description: "La vraie limite n'est pas le nombre de canaux annoncé, mais la bande disponible et l'intermodulation. Nos repères pour savoir combien de micros HF faire tourner ensemble."
 slug: combien-micros-hf-simultanes
 keywords: [micros HF simultanés, nombre de fréquences, intermodulation, coordination, bande UHF, PMSE]
-statut: brouillon
-date: 2026-09-25
+statut: publie
+date: 2026-10-21
 ---
 
 **Chapô :** La fiche annonce soixante canaux. Sur le terrain, vous en ferez tourner
