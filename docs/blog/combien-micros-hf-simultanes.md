@@ -8,7 +8,7 @@ statut: publie
 date: 2026-10-21
 ---
 
-**Chapô :** La fiche annonce soixante canaux. Sur le terrain, vous en ferez tourner
+La fiche annonce soixante canaux. Sur le terrain, vous en ferez tourner
 bien moins, et ça n'a rien à voir avec la qualité du matériel.
 
 « On peut en mettre combien ensemble ? » C'est une des premières questions qui tombe

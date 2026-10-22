@@ -8,7 +8,7 @@ statut: brouillon
 date: 2026-10-09
 ---
 
-**Chapô :** Le retard, dans une journée d'événement, ne s'additionne pas, il s'accumule.
+Le retard, dans une journée d'événement, ne s'additionne pas, il s'accumule.
 Le tenir ne demande pas d'autorité, seulement de rendre le temps visible.
 
 Le premier intervenant déborde de cinq minutes. Personne ne s'alarme, cinq minutes ce

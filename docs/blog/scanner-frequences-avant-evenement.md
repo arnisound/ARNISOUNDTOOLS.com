@@ -8,7 +8,7 @@ statut: brouillon
 date: 2026-10-02
 ---
 
-**Chapô :** Le plan de fréquences qui tenait hier dans une autre ville n'a aucune raison
+Le plan de fréquences qui tenait hier dans une autre ville n'a aucune raison
 de tenir ici. Un scan sur place vaut mieux qu'une certitude recopiée.
 
 La tentation est permanente, surtout en fin de tournée quand on est fatigué : rejouer le

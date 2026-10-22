@@ -8,7 +8,7 @@ statut: brouillon
 date: 2026-09-29
 ---
 
-**Chapô :** On change la fréquence, on change l'émetteur, on accuse le matériel. On
+On change la fréquence, on change l'émetteur, on accuse le matériel. On
 regarde l'antenne en dernier, alors que c'est souvent là que tout se joue.
 
 Il y a un ordre naturel dans lequel on cherche la panne quand une liaison décroche, et

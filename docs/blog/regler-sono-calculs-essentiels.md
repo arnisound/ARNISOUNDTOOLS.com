@@ -8,7 +8,7 @@ statut: brouillon
 date: 2026-10-06
 ---
 
-**Chapô :** On mixe à l'oreille, et c'est très bien ainsi. Mais sous-dimensionner une
+On mixe à l'oreille, et c'est très bien ainsi. Mais sous-dimensionner une
 diffusion, cramer un ampli ou poser des rappels qui font de l'écho, ça ne s'entend
 qu'une fois qu'il est trop tard.
 

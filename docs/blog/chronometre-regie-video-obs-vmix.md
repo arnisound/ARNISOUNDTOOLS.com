@@ -8,7 +8,7 @@ statut: brouillon
 date: 2026-10-12
 ---
 
-**Chapô :** Afficher un compte à rebours dans un flux vidéo paraît trivial, jusqu'au
+Afficher un compte à rebours dans un flux vidéo paraît trivial, jusqu'au
 moment où on se retrouve avec un fond noir à détourer et un chrono qui saute d'une
 seconde sur deux.
 
